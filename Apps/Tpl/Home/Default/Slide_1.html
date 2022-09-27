@@ -1,0 +1,20 @@
+<div class="main_middle ovh clear">
+	<div class="w1440 auto" style="height:368px;">
+		<div id="adSlideBox" class="tb_slide_box tb_slide_ad">
+			{loop}
+			<a href="{$r['link']}" target="_blank"> <img id="adSlideImg{$key+1}" alt="{$r['title']}" src="{$r['pic']}" class="tb_slide_img" style="transition: transform 250ms linear; backface-visibility: hidden; transform: translateX(0%);
+			{if $key==0}backface-visibility: hidden; transform: translateX(0%);{else}transform: translateX(-100%); backface-visibility: hidden;{/if}"> </a>
+			{/loop}
+			<div id="adSlideBtn" class="tb_slide_btn">
+				{loop}
+				<a href="javascript:" class="tb_slide_{if $key==0}on{else}a{/if}" data-rel="adSlideImg{$key+1}"></a>
+				{/loop}
+
+			</div>
+			<a href="javascript:" class="tb_slide_prev" data-type="prev"></a>
+			<a href="javascript:" class="tb_slide_pause" data-type="pause"></a>
+			<a href="javascript:" class="tb_slide_next" data-type="next"></a>
+		</div>
+		<div class="tb_ad_aside"></div>
+	</div>
+</div>

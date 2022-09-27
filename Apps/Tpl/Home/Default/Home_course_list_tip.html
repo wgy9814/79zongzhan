@@ -1,0 +1,108 @@
+
+<style>
+    
+    center {
+        padding-top:10px;
+    }
+    button {
+        cursor:pointer;
+    }
+    #win {
+        position:absolute;
+        top:50%;
+        left:50%;
+        width:400px;
+        height:200px;
+        background:#fff;
+        border:1px solid #c2c2c2;
+        margin:-102px 0 0 -202px;
+        overflow: hidden;
+        z-index: 999;
+        display:block;
+    }
+    h2 {
+        font-size:12px;
+        height:18px;
+        text-align:right;
+        background:#f9f9f9;
+        border-bottom:1px solid #d6d4d0;
+        padding:5px;
+        cursor:move;
+    }
+    h2 #close {
+        color:#f90;
+        cursor:pointer;
+        background:#fff;
+        border:1px solid #f90;
+        border-radius: 50%;
+        padding:0 2px;
+    }
+    #win h2 .title {
+        float: left;
+    }
+</style>
+
+<div id="win">
+    <h2>
+        <span class="title">使用提醒</span>
+        <span id="close">×</span>
+    </h2>
+
+    <div>
+        <yp:block pos="course_list_tip" />
+    </div>
+</div>
+
+<script>
+    window.onload = function ()
+    {
+        var oWin = document.getElementById("win");
+        var oBtn = document.getElementsByTagName("button")[0];
+        var oClose = document.getElementById("close");
+        var oH2 = oWin.getElementsByTagName("h2")[0];
+        var bDrag = false;
+        var disX = disY = 0;
+//        oWin.style.display = "block"
+        oClose.onclick = function ()
+        {
+            oWin.style.display = "none"
+
+        };
+        oClose.onmousedown = function (event)
+        {
+            (event || window.event).cancelBubble = true;
+        };
+        oH2.onmousedown = function (event)
+        {
+            var event = event || window.event;
+            bDrag = true;
+            disX = event.clientX - oWin.offsetLeft;
+            disY = event.clientY - oWin.offsetTop;
+            this.setCapture && this.setCapture();
+            return false
+        };
+        document.onmousemove = function (event)
+        {
+            if (!bDrag) return;
+            var event = event || window.event;
+            var iL = event.clientX - disX;
+            var iT = event.clientY - disY;
+            var maxL = document.documentElement.clientWidth - oWin.offsetWidth;
+            var maxT = document.documentElement.clientHeight - oWin.offsetHeight;
+            iL = iL < 0 ? 0 : iL;
+            iL = iL > maxL ? maxL : iL;
+            iT = iT < 0 ? 0 : iT;
+            iT = iT > maxT ? maxT : iT;
+
+            oWin.style.marginTop = oWin.style.marginLeft = 0;
+            oWin.style.left = iL + "px";
+            oWin.style.top = iT + "px";
+            return false
+        };
+        document.onmouseup = window.onblur = oH2.onlosecapture = function ()
+        {
+            bDrag = false;
+            oH2.releaseCapture && oH2.releaseCapture();
+        };
+    };
+</script>

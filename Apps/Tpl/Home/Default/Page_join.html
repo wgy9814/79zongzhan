@@ -1,0 +1,137 @@
+
+
+<load href="__PUBLIC__/Js/jquery.validate.js"/>
+<load href="__PUBLIC__/Js/jquery.form.js"/>
+
+<style>
+.p_page_r_con h3{
+	text-align: center;
+}	
+form table, form td, form tr {
+	border: 1px solid #000;
+	border-collapse: collapse;
+	padding-bottom: 2px;
+	text-align: center;
+}	
+form table .title {text-align: center;}
+form table td input{width: 145px;height: 23px; border: none;}
+textarea {
+	width: 100%;
+	border: none;
+	resize: none;
+	font-size: 14px;
+}
+form table td.edit {padding-bottom: 0px;}
+div.btn-container {
+	width: 785px;
+	padding-top: 20px;
+}
+.btn-container .edit {text-align: right;}
+.btn-container .edit input[type="submit"] {
+    width: 80px;
+    height: 30px;
+    margin: 0 auto;
+}
+</style>
+
+<div class="" id="p_page">
+	<div class="mian">
+		<div class="left_nav">
+			<ul>
+				<YP:subcat catid="$Categorys[$catid]['parentid']" id="r" key="k">
+				<li><a href="{$r.url}" class="{if $r[id]==$catid} active {/if}">{$r.catname}</a></li>
+				</YP:subcat>
+			</ul>
+			
+		</div>
+		<div class="p_page_r fr">
+			<div class="p_page_r_top c3 f18">
+				{$catname}
+			</div>
+			<div class="p_page_r_con f16">
+				<h3>加入我们</h3>
+				<div class="description">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;目前公司刚开始运营，很多基础工作的完成还需时间，我们将来需要大量的关于擅长文案编写、PS、网络营销、平台运营、SEM、SEO、新媒体、懂前端、后台、数据库、在线客服、线下招生业务拓展等方面人才，如果您有意，可以留下您的联系方式及简介，需要时我们再和您联系，谢谢！</div>
+				<div>
+					<form id="myform" action="{:URL('Home-Ajax/join')}" method="POST">
+						<table>
+							<tr>
+								<td colspan="4" class="title">个人简介</td>
+							</tr>
+							<tr>
+								<td>姓名：<input type="text" name="name" id="name"></td>
+								<td>性别：<input type="text" name="gender" id="gender"></td>
+								<td>年龄：<input type="text" name="age" id="age"></td>
+								<td>学历：<input type="text" name="degree" id="degree"></td>
+							</tr>
+							<tr>
+								<td><span>求职意向</span></td>
+								<td colspan="3" rowspan="" class="edit"><textarea name="intention" id="intention" rows="3"></textarea></td>
+							</tr>
+							<tr>
+								<td><span>薪资待遇要求/联系方式</span></td>
+								<td colspan="3" rowspan="" class="edit"><textarea name="objective" id="objective" rows="3"></textarea></td>
+							</tr>
+							<tr>
+								<td><span>个人特长</span></td>
+								<td colspan="3" rowspan="" class="edit"><textarea name="strengths" id="strengths" rows="3"></textarea></td>
+							</tr>
+							<tr>
+								<td><span>工作简历</span></td>
+								<td colspan="3" rowspan="" class="edit"><textarea name="resume" id="resume" rows="20"></textarea></td>
+							</tr>
+						</table>
+						<div class="btn-container">
+							<div class="edit"><input type="submit" name="submit" value="提交"></div>
+							<input type="reset" id="reset" style="display: none;"> 
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	
+	
+</div>
+
+<script>
+$(function(){
+	$('#myform').ajaxForm({
+		beforeSubmit : validate,
+		success : complete,
+		dataType: 'json'
+	});
+	function complete(data) {
+		if (0 == data.errno)
+		{
+			alert('提交成功');
+			$('#reset').click();
+		}else {
+			alert('提交失败');
+		}
+	}
+	function validate() {
+		if('' == $('#name').val())
+		{
+			alert('请输入姓名');
+			return false;
+		}
+		if('' == $('#gender').val())
+		{
+			alert('请填写性别信息');
+			return false;
+		}
+		if('' == $('#age').val())
+		{
+			alert('请填写年龄信息');
+			return false;
+		}
+		if ('' == $('#objective').val())
+		{
+			alert('请填写薪资待遇要求/联系方式信息');
+			return false;
+		}
+		return true;
+	}
+})
+</script>

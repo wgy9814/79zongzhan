@@ -1,0 +1,66 @@
+<?php
+ $kclist=M('kecheng')->where("status = 1 AND school_id=$_GET[p]")->order('listorder desc,createtime desc')->select();
+$schoolid=M('school')->where("id=$_GET[p]")->find();
+?>
+<div id="school">
+	<div class="sctop">
+		<div class="mian">
+			<a class="" href="/school2/{$_GET['p']}.html">学校首页</a>
+			<a class="active" href="/kec/{$_GET['p']}.html">最新课程</a>
+			<!-- <a href="/online/?sid={$_GET['sid']}">网上报名</a> -->
+		</div>
+	</div>
+	<div class="Space Course index">
+		<div id="main">
+			<div class="space-col">
+				<div class="sbox">
+					<div class="title">
+						<h1><i class="ico ico-dh"></i><span>{$schoolid.title}热门课程</span></h1>
+						<a href="" class="more">更多课程>></a>
+					</div>
+					<div class="lesson">
+						<ul>
+							<volist name='kclist' id='r'>
+							<li>
+								<p class="img"><img src="{if $r['scpic']}{$r['scpic']}{else}{$schoolid['file']}{/if}" width="182" height="124" alt="{$r.title}"></p>
+								<div class="desc">
+									<PHP>
+										$url = explode('.', $r['url'])[0];
+										//$url .= '_'.$_GET['p'].'.html';
+										$url .= '.html';
+									</PHP>
+									<div class="tit">
+										<h2><a href="{$url}">{$r.title}</a></h2>
+										<span>
+											电询：<em><span class="">{$schoolid.dianhua}</span></em>
+										</span>
+									</div>
+									<p class="txt" style=" white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{$r.content|get_safe_replace|str_cut=###,150}</p>
+									<p class="more"><i><a href="{$url}">查看详情</a></i><em>关注：{$r.guanzhu}</em></p>
+								</div>
+							</li>
+							</volist>
+						</ul>
+						<div style="padding:1em 0;" align="center">
+							<div class="huanye">
+							    {$pages}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<include file="Home:school_right"/>
+		</div>
+	</div>
+</div>
+
+<style type="text/css">
+	.nav_wrap {
+		display: none;
+	}
+	
+	.header {
+		height: 104px;
+	}
+</style>

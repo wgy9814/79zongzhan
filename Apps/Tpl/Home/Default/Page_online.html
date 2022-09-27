@@ -1,0 +1,124 @@
+<?php
+	if($_GET['P'])
+	{
+		$schoolid=M('school')->where("id=$_GET['p']")->find();
+		$userid=M('user')->where("schoolid=".$schoolid['id'])->find();
+	}
+?>
+<div id="school">
+	<div class="sctop">
+		<div class="mian">
+			<a class="" href="/school2/{$_GET['p']}.html}">学校首页</a>
+			<a class="" href="/kec/{$_GET['p']}.html}">最新课程</a>
+			<a class="active" href="/online/{$_GET['p']}">网上报名</a>
+		</div>
+	</div>
+	<div class="Space Index apply">
+		<div id="main">
+			<div class="space-col">
+				<div class="sbox nomb">
+					<div class="title">
+						<h3><i class="ico ico-dh"></i><span>网上报名</span></h3>
+					</div>
+					<div class="bmfrom bmpage">
+						<form action="{:URL('User-Post/insert2')}" method="post" role="form" id="online_form" onsubmit="return tijiao()">
+							<input type="hidden" name="catid" value="{$catid}" />
+							<input type="hidden" id="moduleid" name="moduleid" value="6" />
+							<input type="hidden" id="lang" name="lang" value="{$langid}" />
+						    <input type="hidden" id="title" name="title" value="预约报名" />
+						    <input type="hidden" name="project" value="{$schoolid.title}" />
+							<input type="hidden" name="tel" value="{$userid.mobile}" />
+							<input type="hidden" name="email" value="{$userid.email}" />
+							<ul>
+								<li><i>姓名：</i><input type="text" class="ipt" name="username" value="" placeholder="请输入您的称呼" required="">
+									<p class="tps"><span>*</span> 请输入您和身份证一致的姓名</p>
+								</li>
+								<li><i>电话：</i><input name="telephone" type="number" class="ipt" value="" min="13000000000" max="18999999999" placeholder="请输入手机号码" required="">
+									<p class="tps"><span>*</span>您的随身手机号（若非本人手机号请备注清楚）</p>
+								</li>
+								<li><i>地址：</i><input type="text" id="address" name="address" class="ipt" placeholder="请输入联系地址" required="">
+									<p class="tps"><span>*</span> 城市+区+详细地址</p>
+								</li>
+
+								<!--0814-->
+								<li>
+									<i>优惠券：</i>
+									<select name="coupons">
+										<option value="1" selected="selected">使用</option>
+										<option value="0">不使用</option>
+									</select>
+								</li>
+								<!--0814-->
+								<li><i>内容：</i><textarea name="content" class="ipt sm" style="height:80px;" placeholder="请输入内容"></textarea></li>
+								<li class="" style="clear:both; height:12px; line-height:12px;"></li>
+								<li>
+									<i>验证码：</i>
+									<input type="text" name="verifyCode" class="ipt" maxlength="4" placeholder="请输入右侧验证码" required="">
+									<img SRC="{:U('Home/Index/verify')}" BORDER="0" ALT="{:L('reverify')}" id="verifyImage" onClick="resetVerifyCode()" style="cursor:pointer;height: 30px;" align="absmiddle">
+								</li>
+								<li class="sub"><input type="submit" value="预约报名" class="btn"><input type="reset" value="重置" class="btn res"></li>
+							</ul>
+
+						</form>
+					</div>
+
+				</div>
+				<!--/sbox-->
+
+			</div>
+			<include file="Home:school_right"/>	
+		</div>
+
+	</div>
+</div>
+<script type="text/javascript" src="../Public/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="../Public/js/messages_zh.js"></script>
+<style type="text/css">
+	.nav_wrap {
+		display: none;
+	}
+	
+	.header {
+		height: 104px;
+	}
+</style>
+<script type="text/javascript">
+	function tijiao(){
+	 var verifyCode=$('input[name=verifyCode]').val();
+	 $.ajax({
+	 	type:"post",
+	 	url:"{:URL('User-Post/insert')}",
+	 	dataType:"json",
+	 	data:{'verifyCode':verifyCode},
+	 	success:function(msg){
+	 		if(msg==-1){
+	 			alert("验证码错误");return false;
+	 		}else{
+	 			return true;
+	 		}
+	 	}
+	 	
+	 });
+		
+		
+	}
+	//更换验证码
+function resetVerifyCode(){
+	var timenow = new Date().getTime();
+	var src = './index.php?g=Home&m=Index&a=verify#'+timenow;
+	$('#verifyImage').attr('src',src);
+}
+//表单认证
+$("#online_form").validate({
+	    rules: {
+	      	
+	    },
+	    messages: {
+	      	username:"请输入您的姓名",
+	      	telephone:"请输入您的手机号码",
+	      	address:"请输入您的地址",
+			
+	    }
+	});	
+
+</script>

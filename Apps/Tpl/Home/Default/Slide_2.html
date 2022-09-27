@@ -1,0 +1,18 @@
+{if $catid==0}
+	{loop}
+	<li>
+		<a href="/security/" target="_blank"><img src="{$r['pic']}" /></a>
+	</li>
+	{/loop}
+{else}
+<ul>
+	{loop}
+	<li class="ovef wl{$r.id}">
+		<div class="text">
+			<p>{$r.title}</p>
+			<div name="">{$r.description}</div>
+		</div>
+	</li>
+	{/loop}
+</ul>
+{/if}

@@ -1,0 +1,36 @@
+<!--底部-->
+<div class="footer mt20 clear">
+	<div class="site_map">
+		<div class="site_map_con site_map_con w1100 auto">
+			<ul class="inline_box">
+				<li class="inline_any" style="background:#fff;padding:8px;width: 112px;text-align: center;margin-right: 111px;">
+					<YP:blockdetail pos="weima" id='r'>
+					<p><img src="{$r.image1}" /></p>
+					</YP:blockdetail>
+					<p class="" style="color:#666;">让学习变得更容易</p>
+				</li>
+				<YP:subcat catid="39" id="r" key="k">
+				<li class="inline_any">
+					<h3 class="site_map_title">{$r.catname}</h3>
+					{if $r[child]}
+					<YP:subcat catid="$r[id]" id="rd" key="kd">
+					<p>
+						<a rel="nofollow" target="_bank" href="{$rd.url}">{$rd.catname}</a>
+					</p>
+					</YP:subcat>
+					{/if}
+				</li>
+				</YP:subcat>
+			</ul>
+		</div>
+	</div>
+	<div class=" clear"></div>
+	<div class="lxwm tc mt10 w1100 auto">
+		<ul>
+			<li style="font-size:14px;"><yp:block pos='banquan' /> | Designed bymqu.cn</li>
+		</ul>
+	</div>
+
+</div>
+
+<!--底部 end-->

@@ -1,0 +1,299 @@
+{__NOLAYOUT__}
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit"><!--360 极速模式-->
+	<link rel="shortcut icon" href="/Apps/Tpl/Home/Default/Public/images/favicon.ico" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>账户管理-79招生网</title>
+	<link href="../Public/css/common_header_footer.css" rel="stylesheet" type="text/css" />
+	<link href="../Public/css/common_base.css" rel="stylesheet" type="text/css" />
+	<link href="../Public/css/member.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="/Apps/Tpl/Home/Default/Public/js/jquery.min.js"></script>
+</head>
+<body>
+<div class="header">
+	<!--logo搜索-->
+	<div class="top_nav">
+		<div class="w1200 auto clearfix" id="user_head">
+			<div class="top_logo">
+				<a class="l" href="/"><img src="{$logo}" /></a>
+				<div class="top_qie">
+					你好！欢迎 <span style="color: #00b083;text-decoration:underline;">{$vo.username}</span> 登录！
+					<a href="/User/Login/logout">退出</a>
+				</div>
+			</div>
+			<!--top-->
+			<div class="head_r fr">
+				<p class="f16" style="color: #00b083;">欢迎来到 79招生网，与大家一起共同学习与进步！</p>
+			</div>
+		</div>
+	</div>
+	<!--logo搜索end-->
+	<div class="clear"></div>
+	<!--导航-->
+</div>
+<!--导航end-->
+<div class="Member_wall" id="Member_Index_index">
+	<div class="Member Index index">
+		<div class="main">
+			<div class="container">
+				<div class="main-left">
+					<div class="main-left">
+					<include file="Public:left_nav"/>
+				</div>
+				<div id="news_right">
+					<div class="news_right_t">
+						<!-- <input type="checkbox" name="" id="qx" value="" />
+						<span>全选</span>
+						<button onclick="deleteall();">批量删除</button> -->
+						<div class="fr nsearch">
+							
+						</div>
+						<div class="huanye fr">
+						    {$pages}
+						</div>
+					</div>
+					<div class="news_nva">
+						<div class="nav-tabs">
+							<li class="active"><a href="javascript:;" id="allread">全部消息</a></li>
+							<li><a href="javascript:;" id="unread">未读</a></li>
+						</div>
+						<div class="lis_con">
+							<ul class="list active" id="list_table1">
+								<li class="ct">暂无数据</li>
+							</ul>
+							<ul class="list"  id="list_table2">
+								<li class="ct">暂无数据</li>
+							</ul>
+						</div>
+					</div>
+						
+				</div>			
+			</div>
+		</div>
+		
+	</div>
+</div>
+<link rel="stylesheet" href="../Public/css/ziliao.css" />
+<!--底部-->
+<div class="footer mt20 clear">
+	<div class="site_map">
+		<div class="site_map_con site_map_con w1100 auto">
+			<ul class="inline_box">
+				<li class="inline_any" style="background:#fff;padding:8px;width: 112px;text-align: center;margin-right: 111px;">
+					<YP:blockdetail pos="weima" id='r'>
+					<p><img src="{$r.image1}" /></p>
+					</YP:blockdetail>
+					<p class="" style="color:#666;">让学习变得更容易</p>
+				</li>
+				<YP:subcat catid="39" id="r" key="k">
+				<li class="inline_any">
+					<h3 class="site_map_title">{$r.catname}</h3>
+					{if $r[child]}
+					<YP:subcat catid="$r[id]" id="rd" key="kd">
+					<p>
+						<a rel="nofollow" target="_bank" href="{$rd.url}">{$rd.catname}</a>
+					</p>
+					</YP:subcat>
+					{/if}
+				</li>
+				</YP:subcat>
+			</ul>
+		</div>
+	</div>
+	<div class=" clear"></div>
+	<div class="lxwm tc mt10 w1100 auto">
+		<ul>
+			<li style="font-size:14px;"><yp:block pos='banquan' /> | Designed bymqu.cn</li>
+		</ul>
+	</div>
+</div>
+<script>
+
+	
+var formatDate=function (now,type,style) {
+    type?type=[type,type,'',':']:type=['年','月','日',':'];
+    var year = now.getFullYear();
+    var month = now.getMonth() + 1;
+    var date2 = now.getDate();
+    var hour = now.getHours();
+    var minute = now.getMinutes();
+    var second = now.getSeconds();
+    switch(style){
+    	case 1:
+    		return year + type[0] + month;
+    		break;
+    	case 2:
+    		return date2 + type[2];
+    		break;
+    	case 3:
+    		return hour + type[3] + minute;
+    		break;
+    	default:
+    		return year + type[0] + month + type[1]+ date2 + type[2];
+    		
+    }
+  }
+	//点击切换列表
+	$('#news_right .nav-tabs>li').click(function(){
+		var index = $(this).index();
+		$(this).addClass('active').siblings().removeClass('active');
+		$('#news_right .list').eq(index).addClass('active').siblings().removeClass('active');
+	})
+
+	//点击展开内容
+	$(document).on('click','#news_right .pb a',function(){
+		
+		$('#news_right .list li').removeClass('open');
+		$(this).parents('li').addClass('open');
+	});
+	//点击缩回内容
+	$(document).on('click','#news_right .open .pb a',function(){
+		$(this).parents('li').removeClass('open');
+	});
+	//页面加载时读取消息
+	var url,_json,_success;
+	//封装ajax
+	function _ajax(obj){
+		
+		$.ajax({
+	        type:obj.type?obj.type:"post",
+	        url:obj.url,
+	        data:obj.data?obj.data:null,
+	        dataType:'json',
+	        success:function(msg){
+	            if(typeof(obj.success)=="function"){
+	            	obj.success(msg);
+	            }
+	        },
+	        error:function(e){
+	        	console.log("e---",e);
+	        	alert("请求失败！");
+	        }
+    	});
+	}
+	//读取全部消息
+	_ajax({
+	 	url:"{:URL('User-Post/getMessageList')}",
+	 	data:{'type':2},
+	 	success:function(msg){
+	 		_success(msg,'#list_table1',2);
+	 	}
+	 })
+    //读取未读消息
+    _ajax({
+	 	url:"{:URL('User-Post/getMessageList')}",
+	 	data:{'type':1},
+	 	success:function(msg){
+	 		_success(msg,'#list_table2',1);
+	 	}
+	})
+
+
+    //封装成功事件
+    function _success(msg,id,type){
+    	if(msg){
+    		if(msg.data.length>0){
+	    		var list_html='';
+	        	var message = msg.data;
+	        	for (var i =0;i<message.length;i++) {
+	        		list_html+='<li class="" data-id = "'+message[i].id+'"  data-type = "'+message[i].mtype+'"><div class="posa"><p class="f14">'+formatDate(new Date(message[i].createtime*1000),'-',1)+'</p><p class="f34">'+formatDate(new Date(message[i].createtime*1000),'-',2)+'</p></div>';
+					list_html+='<div class="ovef"><div class="fl"></label></div>';
+					list_html+='<div class="fr list_r"><div class="pt ovef"><span class="red f14">系统通知</span><span class="f16 c3">：'+message[i].title+'</span><span class="time">'+formatDate(new Date(message[i].createtime*1000),'-',3)+'</span></div>';
+					list_html+='<div class="pb"><div class="con c6">'+message[i].content+'</div><a href="javascript:;">点击此查看更多内容详情</a></div></div></div></li>'
+	        	}
+	        	if(msg.count>0){
+	        	    if(type ==1){
+	        	        $('#unread').html('未读<span style="color: red;">['+msg.count+']</span>');
+					}else{
+
+					}
+				}
+
+	        	$(id).html(list_html);
+	       }else{
+	       		list_html = '<li class="ct">暂无数据</li>'
+	       		$(id).html(list_html);
+	       		
+	       }
+        }
+    }
+   	//查看未读消息
+   	$(document).on('click','#news_right .pb a',function(){
+   		var id = $(this).parents('li').attr('data-id');
+   		var type = $(this).parents('li').attr('data-type');
+   		_ajax({
+		 	url:"{:URL('User-Post/changeMessageStatus')}",
+		 	data:{'id':id,'type':type},
+		 	success:function(msg){
+		 		console.log(msg)
+		 	}
+		})
+   	});
+//删除单条
+   	$(document).on('click','#news_right .list_r .pt .delete',function(){
+   		var _this = $(this);
+   		var id = $(this).parents('li').attr('data-id');
+   		var type = $(this).parents('li').attr('data-type');
+   		_ajax({
+		 	url:"{:URL('User-Post/deleteMessage')}",
+		 	data:{'id':id,'type':type},
+		 	success:function(msg){
+		 		if(msg.msg=='success'){
+		 			alert('删除成功！')
+		 			_this.parents('li').remove();
+		 		}else{
+		 			alert('网络错误！');
+		 		}
+		 		
+		 	}
+		 	
+		})
+   	});
+//删除quanbu
+	function deleteall(){
+		var _checkbox=$('#news_right .list.active input[type=checkbox]:checked');
+		var id=[];
+
+		for(var i=0;i<_checkbox.length;i++){
+			id.push({id:_checkbox.eq(i).parents('li').attr('data-id'),type:_checkbox.eq(i).parents('li').attr('data-type')});
+		}
+		_ajax({
+		 	url:"{:URL('User-Post/deleteMessage')}",
+		 	data:{id},
+		 	success:function(msg){
+		 		if(msg.msg=='success'){
+		 			alert('删除成功！');
+		 			_this.parents('li').remove();
+		 		}else{
+		 			alert('网络错误！');
+		 		}
+		 		
+		 	}
+		 	
+		})
+
+	}
+//全选
+
+	var flas=false;
+	$(document).on('click','#qx',function(){
+		if(!flas){
+			$('#news_right .list.active li input[type=checkbox]').prop('checked',true);
+			flas=true;
+		}else{
+			$('#news_right .list.active li input[type=checkbox]').prop('checked',false);
+			flas=false;
+		}
+	});
+
+</script>
+
+<!--底部 end-->
+</body>
+</html>

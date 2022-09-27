@@ -1,0 +1,57 @@
+<?php 
+	$_GET[p] &&( $kcorder=M('kecheng')->where("school_id=$_GET[p]")->order('guanzhu desc')->limit('5')->select()) || ($kcorder=array());
+	
+	$new=M('new')->order('id desc')->limit('5')->select();
+?>
+
+			<div class="space-side">
+				<div class="online-bm school-info">
+					<h3><i></i>学校信息</h3>
+					<div class="info"> <b>{$schoolid.title}</b>
+						<p>详细地址：{$schoolid.address}</p>
+					</div>
+					<div class="space-kf">
+						<div class="mycall"><em><span class="">{$schoolid.dianhua}</span></em></div>
+						<p class="course-bar">
+							<a href="http://wpa.qq.com/msgrd?v=3&uin={$schoolid.QQ}&site=caimaozsw.com&menu=yes" class="qqzx" target="_blank" rel="nofollow" style="margin-right: 80px;">QQ咨询</a>
+						</p>
+					</div>
+				</div>
+
+				<div class="sbox">
+					<div class="title">
+						<h3><i class="ico ico-distr"></i><span>热门课程</span></h3>
+						<a href="" class="more">更多>></a>
+					</div>
+					<ul class="hot-list space-hotkc">
+						<volist name='kcorder' id='r' key='k'>
+						<li><i class="n{$k}">0{$k}</i>
+							<PHP>
+								$url = explode(',', $r['url'])[0];
+								$url1 = '_'.$_GET['p'].'.html';
+							</PHP>
+							<p>
+								<a href="{$url}">{$r.title}</a>
+							</p>
+						</li>
+						</volist>
+						
+					</ul>
+				</div>
+				<div class="sbox">
+					<div class="title">
+						<h3><i class="ico ico-distr"></i><span>最新动态</span></h3>
+						<a href="/new/" class="more">更多>></a>
+					</div>
+					<ul class="hot-list space-hotkc hot-new">
+						<volist name='new' id='r'>
+							<li class="diandiandian"><a href="{$r.url}">{$r.title}</a></li>
+						</volist>
+						
+					</ul>
+				</div>
+				<div class="wa" >
+					<img src="/Uploads/201705/5929409fca920.jpg" alt="">
+					
+				</div>
+			</div>

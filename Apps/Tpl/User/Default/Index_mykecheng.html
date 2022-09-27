@@ -1,0 +1,216 @@
+{__NOLAYOUT__}
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta name="description" content=" ">
+	<meta name="keywords" content=" ">
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit"><!--360 极速模式-->
+	<link rel="shortcut icon" href="/Apps/Tpl/Home/Default/Public/images/favicon.ico" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>账户管理-79招生网</title>
+	<link href="../Public/css/common_header_footer.css" rel="stylesheet" type="text/css" />
+	<link href="../Public/css/common_base.css" rel="stylesheet" type="text/css" />
+	<link href="../Public/css/member.css" rel="stylesheet" type="text/css" />
+
+	<script type="text/javascript" src="/Apps/Tpl/Home/Default/Public/js/jquery.min.js"></script>
+</head>
+<body>
+<?php 
+	$mykc=M('user')->where("id=$_GET[sid]")->find();
+
+	if($mykc['schoolid']){
+		$kclist=M('kecheng')->where("school_id=".$mykc['schoolid'])->order('createtime desc')->select();
+	}else{
+		$kclist = array();
+	}
+?><script>console.log({:json_encode($kclist)});</script>
+<div class="header">
+	<!--logo搜索-->
+	<div class="top_nav">
+		<div class="w1200 auto clearfix" id="user_head">
+			<div class="top_logo">
+				<a class="l" href="/"><img src="{$logo}" /></a>
+				<div class="top_qie">
+					你好！欢迎 <span style="color: #00b083;text-decoration:underline;">{$vo.username}</span> 登录！
+					<a href="/User/Login/logout">退出</a>
+				</div>
+			</div>
+			<!--top-->
+			<div class="head_r fr">
+				<p class="f16" style="color: #00b083;">欢迎来到 79招生网，与大家一起共同学习与进步！</p>
+			</div>
+		</div>
+	</div>
+	<!--logo搜索end-->
+	<div class="clear"></div>
+	<!--导航-->
+</div>
+<!--导航end-->
+<div class="Member_wall" id="Member_Index_index">
+	<div class="Member Index index">
+		<div class="main">
+			<div class="container">
+				<div class="main-left">
+					<div class="main-left">
+					<include file="Public:left_nav"/>
+				</div>
+				<div id="kecheng_right">
+					<div class="kecheng_right_t">
+						<!-- <input type="checkbox" name="" id="qx" value="" />
+						<span>全选</span>
+						<button onclick="deleteall();">批量删除</button> -->
+						<div class="huanye fr">
+						    {$pages}
+						</div>
+					</div>
+					<ul class="list">
+						<volist name='kclist' id='r' key='k'>
+							
+						<li class="" data-dal = "{$r.id}">
+							<div class="kctop ovef">
+								<!-- <input type="checkbox" class="fl" name="" id="" value="{$r.id}" /> -->
+								<p class="fbai fl">发布时间：{$r.createtime|toDate=###,'Y-m-d'}</p>
+							</div>
+							<div class="ovef">
+								<div class="img fl">
+									<img src="{$r.scpic}" width="125"/>
+								</div>
+								<div class="con fl">
+									<h4 class="f18 c3 nofw" style="padding-bottom: 10px;">{$r.title}</h4>
+									<div style="color: #999999;">{$r.content|strip_tags|match|str_cut=###,100}</div>
+									{if $r['status'] == '0'}<div style="color: red;">此课程审核未通过，请联系客服处理</div>{/if}
+								</div>
+								<div class="a_groud">
+									<a class="xiugai" href="/User/Index/amend?id={$r.id}&?sid=8">修改</a>
+									 <a class="delete" title="{$r.id}" href="javascript:;">删除</a>
+								</div>
+							</div>
+						</li>
+						</volist>
+					</ul>
+					<a href="/User/Index/release?id={$r.id}&user={$mykc.user}" id="fabu_btn" class="btn">发布新课程</a>
+				</div>			
+			</div>
+		</div>
+		
+	</div>
+</div>
+
+<link rel="stylesheet" href="../Public/css/ziliao.css" />
+<!--底部-->
+<div class="footer mt20 clear">
+	<div class="site_map">
+		<div class="site_map_con site_map_con w1100 auto">
+			<ul class="inline_box">
+				<li class="inline_any" style="background:#fff;padding:8px;width: 112px;text-align: center;margin-right: 111px;">
+					<YP:blockdetail pos="weima" id='r'>
+					<p><img src="{$r.image1}" /></p>
+					</YP:blockdetail>
+					<p class="" style="color:#666;">让学习变得更容易</p>
+				</li>
+				<YP:subcat catid="39" id="r" key="k">
+				<li class="inline_any">
+					<h3 class="site_map_title">{$r.catname}</h3>
+					{if $r[child]}
+					<YP:subcat catid="$r[id]" id="rd" key="kd">
+					<p>
+						<a rel="nofollow" target="_bank" href="{$rd.url}">{$rd.catname}</a>
+					</p>
+					</YP:subcat>
+					{/if}
+				</li>
+				</YP:subcat>
+			</ul>
+		</div>
+	</div>
+	<div class=" clear"></div>
+	<div class="lxwm tc mt10 w1100 auto">
+		<ul>
+			<li style="font-size:14px;"><yp:block pos='banquan' /> | Designed bymqu.cn</li>
+		</ul>
+	</div>
+</div>
+
+<script>
+	$(function(){
+        var thisId = window.location.hash;
+        console.log(thisId)
+        if(thisId == '#fabu_btn'){
+            $('.layui-layer-content').hide();
+        }
+		//全选
+		var flas=false;
+		$(document).on('click','#qx',function(){
+			if(!flas){
+				$('#kecheng_right ul.list li input[type=checkbox]').prop('checked',true);
+				flas=true;
+			}else{
+				$('#kecheng_right ul.list li input[type=checkbox]').prop('checked',false);
+				flas=false;
+			}
+		});
+		
+		
+		$(document).on('click','#kecheng_right ul.list li .a_groud .delete',function(){
+			var _this=$(this);
+			var id=$(this).attr('title');
+			
+			var user={$mykc.schoolid};
+            if(confirm("确定要删除课程吗？")) {
+                $.ajax({
+                    type: "post",
+                    url: "{:URL('User-Index/kcdelete')}",
+                    async: true,
+                    data: {'id': id, 'user': user},
+                    dataType: 'json',
+                    success: function (msg) {
+                        if (msg) {
+                            alert('删除成功');
+                            _this.parents('li').remove();
+                        } else {
+                            alert('删除失败');
+                        }
+                    }
+                })
+            }
+		})
+	});	
+	
+	//全选删除
+	
+	function deleteall(){
+		var _checkbox=$('#kecheng_right ul.list li input[type=checkbox]:checked');
+		var user={$mykc.schoolid};
+		var id=[];
+		for(var i=0;i<_checkbox.length;i++){
+			id[i]=_checkbox.eq(i).val();
+		}
+		console.log(id);
+		$.ajax({
+                type:"post",
+                url:"{:URL('User-Index/kcdelete')}",
+                async:true,
+                data:{'id':id,'user':user},
+                dataType:'json',
+                success:function(msg){
+                    if(msg){
+                    	alert('删除成功');
+                    	window.location.reload();
+                    }else {
+                    	alert('删除失败');
+                    	window.location.reload();
+                    }
+                }
+            });
+	}
+	function join_zl(){
+		alert('你尚未上传用户认证资料，请到[个人资料->机构认证资料]添加您的机构认证资料吧！');
+		window.location.href='/User/Index';
+	}
+</script>
+
+<!--底部 end-->
+</body>
+</html>

@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /Public/
+Disallow: /Yourphp/
+Disallow: /Install/
+Disallow: /Core/
+Sitemap: https://www.79zsw.com/sitemap.xml
+Sitemap: https://www.79zsw.com/sitemap.txt
+Sitemap: https://www.79zsw.com/sitemap2.txt
+Sitemap: http://www.79zsw.com/sitemap1.txt
+Disallow: /*?*
+Disallow: /fsza

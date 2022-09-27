@@ -1,0 +1,330 @@
+<?php
+
+$kecheng= M('kecheng')->where("posid=12")->order('listorder asc')->limit('10')->select();//由后台最新课程 首页培训课程推荐_新
+
+$ban = M('kecheng')->where("posid=13")->order('listorder asc')->limit('10')->select();//由后台最新课程 首页培训班推荐_新
+
+
+$jigou = M('school')->where("posid=14")->order('listorder asc')->limit('10')->select();//由后台学校模型 首页培训机构推荐_新
+
+$jian =  M('new')->where("posid=15")->order('listorder asc')->limit('10')->select();//由后台新闻模型 首页招生简章推荐_新
+
+$kecheng_zixun = M('new')->where("catid=326 and posid=17")->order('listorder asc')->limit('10')->select();//由后台新闻模型 79招生网培训课程资讯 catid栏目
+
+$ban_zixun = M('new')->where("catid=327 and posid=18")->order('listorder asc')->limit('10')->select();//由后台新闻模型 79招生网培训班资讯 catid栏目
+
+$jigou_zixun = M('new')->where("catid=328 and posid=19")->order('listorder asc')->limit('10')->select();//由后台新闻模型 79招生网培训机构资讯 catid栏目
+
+$zonghe_zixun = M('new')->where("catid=329 and posid=20")->order('listorder asc')->limit('10')->select();//由后台新闻模型 79招生网培训综合资讯 catid栏目
+?>
+<div class="Home Index index">
+    <!-- 轮换 -->
+    <YP:flash flashid="1"/>
+    <!-- 轮换end -->
+    <!--79招生网特别推荐 -->
+    <div class="w1200 auto six-sec clear">
+
+        <div class="floor bgW offFloor mt_pass">
+            <p style="font-size:22px"><strong>79招生网特别推荐</strong></p>
+            <div class="w1200 auto">
+                &nbsp &nbsp &nbsp &nbsp &nbsp </br>
+                <div class="clear">
+                    <ul class="news-ul fl">
+                        <h3>培训课程</h3>
+                        <?php foreach($kecheng as $key => $value){ ?>
+                            <li class="news-li clear four_px_gap">
+                                <a rel="nofollow" class="clear" target="_blank" href="<?php echo $value['url'];?>" title="<?php echo $value['title'];?>">
+                                    <span class="news-li-lf fl c6 _link inlineB ellip"><?php echo subtext($value['title'],14);?>&nbsp </span>
+                                    <span class="news-li-ri c6 fr">培训课程&nbsp &nbsp &nbsp &nbsp &nbsp </span>
+                                </a>
+                            </li>
+                        <?php }?>
+                    </ul>
+                    <ul class="news-ul fl">
+                        <h3>培训班</h3>
+                        <?php foreach($ban as $key => $value){ ?>
+                        <li class="news-li clear four_px_gap">
+                            <a rel="nofollow" class="clear" target="_blank" href="<?php echo $value['url'];?>" title="<?php echo $value['title'];?>">
+                                <span class="news-li-lf fl c6 _link inlineB ellip"><?php echo subtext($value['title'],14);?>&nbsp </span>
+                                <span class="news-li-ri c6 fr">培训班&nbsp &nbsp &nbsp &nbsp &nbsp </span>
+                            </a>
+                        </li>
+                        <?php }?>
+                    </ul>
+                    <ul class="news-ul fl">
+                        <h3>培训机构</h3>
+                        <?php foreach($jigou as $key => $value){ ?>
+                        <li class="news-li clear four_px_gap">
+                            <a rel="nofollow" class="clear" target="_blank" href="/school2/<?php echo $value['id'];?>.html" title="<?php echo $value['title'];?>">
+                                <span class="news-li-lf fl c6 _link inlineB ellip"><?php echo subtext($value['title'],14);?>&nbsp </span>
+                                <span class="news-li-ri c6 fr">培训机构&nbsp &nbsp &nbsp &nbsp &nbsp </span>
+                            </a>
+                        </li>
+                        <?php }?>
+                    </ul>
+                    <ul class="news-ul fl">
+
+
+                        <h3>招生简章</h3>
+                        <?php foreach($jian as $key => $value){ ?>
+                        <li class="news-li clear four_px_gap">
+                            <a rel="nofollow" class="clear" target="_blank" href="<?php echo $value['url'];?>" title="<?php echo $value['title'];?>">
+                                <span class="news-li-lf fl c6 _link inlineB ellip"><?php echo subtext($value['title'],14);?>&nbsp </span>
+                                <span class="news-li-ri c6 fr">招生简章&nbsp &nbsp &nbsp &nbsp &nbsp </span>
+                            </a>
+                        </li>
+                        <?php }?>
+                    </ul>
+                    &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+                    <include file="Home:bottom_message"/>
+                    <div class="clear"></div>
+                </div>
+
+
+                <!--楼层-->
+                <!--1f-->
+                <div class="w1200 auto">
+                    <div class="w1200 auto">
+                        <span>&nbsp &nbsp &nbsp &nbsp &nbsp </span></br>
+                        <span>&nbsp &nbsp &nbsp &nbsp &nbsp </span></br>
+                        <span>&nbsp &nbsp &nbsp &nbsp &nbsp </span></br>
+                        <div style="font-size:22px"><strong>79招生网名校馆</strong></div>
+                        <YP:subcat catid="0" id="r" key="k">
+                            {if $k<11 && '/'!=$r['url']}
+
+                            <div class="w1200 auto clear h480">
+
+                                <div class="floor-tit">
+                                    <div class="layout_title_l">{$k-1}F{$r.catname}</div>
+                                    <div class="layout_con_r">
+                                        <div class="r" style="font-size:14px; line-height:40px">
+                                            <a href="{$r.url}">更多培训机构行业分类&gt;&gt;</a>
+                                        </div>
+                                        <div class="title_list">
+                                            <ul class="ml20 f14">
+                                                {if $r[child]}
+                                                <YP:subcat catid="$r[id]" id="rd" key="kd">
+                                                    {if $kd<9}
+                                                    <li>
+                                                        <a href="{$rd.url}">{$rd.catname}</a>
+                                                    </li>
+                                                    {/if}
+                                                </YP:subcat>
+                                                {/if}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class=" w1200 clear main_layout block_theme_2" id="Block_3">
+                                    <a href="/{$r.catdir}">
+                                        <div class="floor-img"><img src="{$r.image}" width="230" height="412"
+                                                                    alt="{$city}79招生网{$r['catname']}"/></div>
+                                    </a>
+                                    <div class="floor-center">
+                                        <ul class="grid">
+                                            <?php $kschool=M('school')->where("industryx=$r[id]")->order('listorder
+                                            desc')->limit(6)->select();?>
+                                            <volist name='kschool' id='rv' key='rvj'>
+                                                <li>
+                                                    <figure class="effect-goliath">
+                                                        <a target="_blank" href="/school2/{$rv.id}.html">
+                                                            <img src="{$rv.file}" alt="{$rv.title}">
+                                                            <figcaption>
+                                                                <p>{$rv.title}</p>
+                                                            </figcaption>
+                                                        </a>
+                                                    </figure>
+                                                </li>
+                                            </volist>
+                                        </ul>
+                                    </div>
+                                    <div class="floor-right layout_con fix">
+                                        <!--左边课程-->
+                                        <div class="layout_con_l">
+                                            <p style="line-height:30px; font-size:16px; color:#333; text-align:left;">
+                                                名校优质培训课程</p>
+                                            <ul class="mt10 blockLUl">
+                                                <yp:list
+                                                        sql="SELECT * FROM mqu_kecheng WHERE catid in($r[arrchildid]) AND posid=4"
+                                                        id='rvz' key='rvx' order='listorder asc'>
+                                                    {if $rvx<9}
+                                                    <li class="con_l_list_li {if $rvx==1}current_left{/if}">
+                                                        <div class="fw pl10 fix">
+                                                            <span class="num_list vm">0{$rvx}</span>
+                                                            <a class="f14 vm dib w140 ell diandiandian"
+                                                               href="{$rvz.url}" class="f14 vm dib w160 ell"
+                                                               target="_blank" rel="nofollow">{$rvz.title}</a>
+                                                        </div>
+                                                        <div class="school_add">{$rvz.content}&hellip;</div>
+                                                    </li>
+                                                    {/if}
+                                                </yp:list>
+                                            </ul>
+                                        </div>
+                                        <!--左边课程 end-->
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/if}
+                        </YP:subcat>
+
+                        <!--1f end-->
+                        <div class="floor bgW offFloor mt_pass">
+                            <div class="w1200 auto">
+                                <div class="clear">
+                                    &nbsp &nbsp &nbsp &nbsp &nbsp </br>
+                                    &nbsp &nbsp &nbsp &nbsp &nbsp </br>
+                                    &nbsp &nbsp &nbsp &nbsp &nbsp </br>
+                                    <p style="font-size:22px"><strong>79招生网培训资讯</strong></p>
+                                    &nbsp &nbsp &nbsp &nbsp &nbsp </br>
+                                    &nbsp &nbsp &nbsp &nbsp &nbsp </br>
+                                    <ul class="news-ul fl">
+                                        <h3>培训资讯（培训课程）</h3>
+                                        <?php foreach($kecheng_zixun as $key => $value){ ?>
+                                        <li class="news-li clear four_px_gap">
+                                            <a rel="nofollow" class="clear" target="_blank" href="<?php echo $value['url'];?>" title="<?php echo $value['title'];?>">
+                                                <span class="news-li-lf fl c6 _link inlineB ellip"><?php echo subtext($value['title'],14);?>&nbsp </span>
+                                                <span class="news-li-ri c6 fr">培训课程&nbsp &nbsp &nbsp &nbsp &nbsp </span>
+                                            </a>
+                                        </li>
+                                        <?php }?>
+                                    </ul>
+                                    <ul class="news-ul fl">
+                                        <h3>培训资讯（培训班）</h3>
+                                        <?php foreach($ban_zixun as $key => $value){ ?>
+                                        <li class="news-li clear four_px_gap">
+                                            <a rel="nofollow" class="clear" target="_blank" href="<?php echo $value['url'];?>" title="<?php echo $value['title'];?>">
+                                                <span class="news-li-lf fl c6 _link inlineB ellip"><?php echo subtext($value['title'],14);?>&nbsp </span>
+                                                <span class="news-li-ri c6 fr">培训班&nbsp &nbsp &nbsp &nbsp &nbsp </span>
+                                            </a>
+                                        </li>
+                                        <?php }?>
+                                    </ul>
+                                    <ul class="news-ul fl">
+                                        <h3>培训资讯（培训机构）</h3>
+                                        <?php foreach($jigou_zixun as $key => $value){ ?>
+                                        <li class="news-li clear four_px_gap">
+                                            <a rel="nofollow" class="clear" target="_blank" href="<?php echo $value['url'];?>" title="<?php echo $value['title'];?>">
+                                                <span class="news-li-lf fl c6 _link inlineB ellip"><?php echo subtext($value['title'],14);?>&nbsp </span>
+                                                <span class="news-li-ri c6 fr">培训机构&nbsp &nbsp &nbsp &nbsp &nbsp </span>
+                                            </a>
+                                        </li>
+                                        <?php }?>
+                                    </ul>
+                                    <ul class="news-ul fl">
+                                        <h3>培训资讯（招生网综合）</h3>
+                                        <?php foreach($zonghe_zixun as $key => $value){ ?>
+                                        <li class="news-li clear four_px_gap">
+                                            <a rel="nofollow" class="clear" target="_blank" href="<?php echo $value['url'];?>" title="<?php echo $value['title'];?>">
+                                                <span class="news-li-lf fl c6 _link inlineB ellip"><?php echo subtext($value['title'],14);?>&nbsp </span>
+                                                <span class="news-li-ri c6 fr">招生网</span>
+                                            </a>
+                                        </li>
+                                        <?php }?>
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--楼层end-->
+
+                        <div class="links w1200 auto mt20 cl">
+                            &nbsp &nbsp &nbsp &nbsp &nbsp </br>
+                            &nbsp &nbsp &nbsp &nbsp &nbsp </br>
+                            <h2 style="border-bottom:1px #d1d1d1 dashed; margin-bottom:10px;" class="f15 fw pb5">
+                                友情链接</h2>
+                            <div class="links_con clearfix">
+                                <yp:list name='Youqing' id='r' field='*' limit="999">
+                                    <a title="{$r.title}" target="_blank" href="{$r.link}" style="float: left;">{$r.title}</a>
+                                </yp:list>
+
+                            </div>
+                        </div>
+                        {if 1 == $index_tip}
+                        <include file="Home:index_tip"/>
+                        {/if}
+
+                    </div>
+                    <!--js的导入-->
+                    <!--<script src="../Public/js/jquery.scrollTo.min.js" type="text/javascript"></script>-->
+                    <!--<script src="../Public/js/scroll.js" type="text/javascript"></script>-->
+                    <!--<script type="text/javascript" src="../Public/js/jquery.validate.min.js"></script>-->
+                    <script type="text/javascript" src="../Public/js/jquery.validation.min.js"></script>
+
+                    <script type="text/javascript" src="../Public/js/messages_zh.js"></script>
+                    <script>console.log({$index_tip});
+                   
+
+                    </script>
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            $(".list_lh").myScroll({
+                                speed: 40, //数值越大，速度越慢
+                                rowHeight: 68 //li的高度
+                            });
+
+                            // IE10+ ...
+                            if (typeof history.pushState !== "function") {
+                                document.body.className = "fuck-ie6-ie9";
+                            }
+
+                            // 图片轮换
+                            $("#adSlideBtn a").powerSwitch({
+                                autoTime: 4000,
+                                animation: "translate",
+                                classAdd: "tb_slide_on",
+                                classRemove: "tb_slide_a",
+                                classPrefix: "tb_slide",
+                                container: $("#adSlideBox"),
+                                onSwitch: function (image) {
+                                    if (!image.attr("src")) {
+                                        image.attr("src", image.attr("data-src"));
+                                    }
+                                }
+                            });
+
+                            //左侧列表10个
+                            $(".blockLUl li:first-child").addClass('current_left');
+                            $(".blockLUl li:first-child").find('.f14').addClass('current_link');
+                            $(".blockLUl li").mouseover(function () {
+                                $(this).siblings().removeClass('current_left');
+                                $(this).siblings().find('.f14').removeClass('current_link');
+                                $(this).addClass('current_left');
+                                $(this).find('.f14').addClass('current_link');
+                            });
+                            //右侧列表8个
+                            $(".blockRUl li:first-child").addClass('current_right');
+                            $(".blockRUl li").mouseover(function () {
+                                $(this).siblings().removeClass('current_right');
+                                $(this).addClass('current_right');
+                            });
+                            // 左侧分类
+                            $('.small_type li').mouseover(function () {
+                                $(this).addClass('current');
+                            }).mouseleave(function () {
+                                $(this).removeClass('current');
+                            });
+                            //兼容性处理，勿删
+                            $('.small_type').find('ul li').mouseover(function () {
+
+                            });
+                            $('#submitSearch').click(function () {
+                                $("#search").submit();
+                            });
+                            $('#search .search_input input').focus(function () {
+                                $(this).attr('placeholder', '');
+                            }).blur(function () {
+                                $(this).attr('placeholder', '请输入课程名字，学校名称，地址');
+                            });
+
+                        });
+                        function resetVerifyCode(){
+                            var timenow = new Date().getTime();
+                            document.getElementById('verifyImage').src='./index.php?g=Home&m=Index&a=verify#'+timenow;
+                        }
+                        //左侧立即报名
+
+
+                    </script>

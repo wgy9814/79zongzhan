@@ -1,0 +1,80 @@
+
+<div id="msg"></div>
+<form name="myform" id="myform" action="<if condition="$action_name=='add'">{:U($module_name.'/insert')}<else />{:U($module_name.'/update')}</if>&iscreatehtml=1" method="post">
+<div id="filelist" class="hide"></div>
+<div class="error"><ul></ul></div>
+
+<table cellpadding=0 cellspacing=0 class="table_form" width="100%">
+        <volist name="fields" id="r">
+        <if condition="!empty($r['status'])">
+        	{if 'Kecheng' == MODULE_NAME && 'kccity' == $r['field']}
+        	<tr>
+        		<td width="10%" ><if condition="$r['required']"><font color="red">*</font></if>{$r.name}</td>
+                <td width="90%" id="box_{$r['field']}">
+                <select name="kccity">
+                <PHP>
+                	$city = M('Category')->where(array('parentid' => 69))->field('id,catname')->select();
+                	foreach($city as $c)
+                	{
+                		echo '<option value="'.$c['id'].'">'.$c['catname'].'</option>';
+                	}
+                </PHP> 
+                </select>
+                <script>console.log('{$vo["kccity"]}')
+                	$(function(){
+                		var kccity = "{$vo['kccity']}";
+                		$('select[name="kccity"]').find('option').each(function(){
+                			if($(this).val()==kccity)
+                			{
+                				$(this).attr('selected', 'selected');
+                				return false;
+                			}
+                		});
+                	});
+                </script>
+                </td>
+        	</tr>
+        	{else}
+            <tr>
+                <td width="10%" ><if condition="$r['required']"><font color="red">*</font></if>{$r.name}</td>
+                <td width="90%" id="box_{$r['field']}">
+                {$r|getform=$form,###}
+                <if condition="$r[field]=='title'&&$fields[cc]"><span style="position: absolute;left:510px; top:170px">缩略图尺寸为：<?php echo($fields['cc']['setup']['default']); ?></span></if>    
+                </td>
+            </tr>
+            {/if}
+            {if $r['field']=='title' && $module_name=='System'}
+            <tr>
+            	<td width="10%">指定用户</td>
+            	<td width="90%" id="box_user">
+            		<select name="userid" id="userid">
+            		<PHP>
+            			$user = M('User')->where(array('status'=>1, 'id'=>array('neq', 3)))->select();
+            		</PHP>
+            		<volist name="user" id="u">
+            			<option value="{$u.id}" {if $vo['userid']==$u['id']}selected="selected"{/if}>[{$u.id}] {$u.username}</option>
+            		</volist>
+            		</select>
+            	</td>
+            </tr>
+            {/if}
+        </if>
+        </volist>
+</table>
+<div id="bootline"></div>
+<div id="btnbox" class="btn">
+<if condition="$vo['id']!=''"><input TYPE="hidden" name="id" value="{$vo.id}"></if>
+ 
+<input type='hidden' name='{$parentModuleKey}' value='{$parentModuleValue}'>
+<input type="hidden"  name="lang" value="{$langid}" />
+<input type="hidden" name="forward" value="{$_SERVER['HTTP_REFERER']}" />
+<INPUT TYPE="submit"  value="{:L('dosubmit')}" class="button" >
+<input TYPE="reset"  value="{:L('cancel')}" class="button">
+</div>
+</form>
+</div>
+<script>
+    $(function(){
+        $('#userid').searchableSelect();
+    });
+</script>

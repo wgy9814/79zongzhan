@@ -1,0 +1,60 @@
+<?php
+return array ( 'name' => array ( 'id' => '331', 'moduleid' => '24', 'field' => 'name', 'name' => '姓名', 'tips' => '', 'required' => '0', 'minlength' => '0', 'maxlength' => '0', 'pattern' => '0', 'errormsg' => '', 'class' => '', 'type' => 'text', 'setup' => 'array (
+  \'size\' => \'\',
+  \'default\' => \'\',
+  \'ispassword\' => \'0\',
+  \'fieldtype\' => \'varchar\',
+)', 'ispost' => '0', 'unpostgroup' => '', 'listorder' => '0', 'status' => '1', 'issystem' => '0', ), 'gender' => array ( 'id' => '332', 'moduleid' => '24', 'field' => 'gender', 'name' => '性别', 'tips' => '', 'required' => '0', 'minlength' => '0', 'maxlength' => '0', 'pattern' => '0', 'errormsg' => '', 'class' => '', 'type' => 'text', 'setup' => 'array (
+  \'size\' => \'\',
+  \'default\' => \'\',
+  \'ispassword\' => \'0\',
+  \'fieldtype\' => \'varchar\',
+)', 'ispost' => '0', 'unpostgroup' => '', 'listorder' => '1', 'status' => '1', 'issystem' => '0', ), 'age' => array ( 'id' => '333', 'moduleid' => '24', 'field' => 'age', 'name' => '年龄', 'tips' => '', 'required' => '0', 'minlength' => '0', 'maxlength' => '0', 'pattern' => '0', 'errormsg' => '', 'class' => '', 'type' => 'text', 'setup' => 'array (
+  \'size\' => \'\',
+  \'default\' => \'\',
+  \'ispassword\' => \'0\',
+  \'fieldtype\' => \'varchar\',
+)', 'ispost' => '0', 'unpostgroup' => '', 'listorder' => '2', 'status' => '1', 'issystem' => '0', ), 'objective' => array ( 'id' => '335', 'moduleid' => '24', 'field' => 'objective', 'name' => '求职意向/薪资待遇要求/联系方式', 'tips' => '', 'required' => '0', 'minlength' => '0', 'maxlength' => '0', 'pattern' => '0', 'errormsg' => '', 'class' => '', 'type' => 'textarea', 'setup' => 'array (
+  \'fieldtype\' => \'mediumtext\',
+  \'rows\' => \'8\',
+  \'cols\' => \'100\',
+  \'default\' => \'\',
+)', 'ispost' => '0', 'unpostgroup' => '', 'listorder' => '3', 'status' => '1', 'issystem' => '0', ), 'degree' => array ( 'id' => '334', 'moduleid' => '24', 'field' => 'degree', 'name' => '学历', 'tips' => '', 'required' => '0', 'minlength' => '0', 'maxlength' => '0', 'pattern' => '0', 'errormsg' => '', 'class' => '', 'type' => 'text', 'setup' => 'array (
+  \'size\' => \'\',
+  \'default\' => \'\',
+  \'ispassword\' => \'0\',
+  \'fieldtype\' => \'varchar\',
+)', 'ispost' => '0', 'unpostgroup' => '', 'listorder' => '4', 'status' => '1', 'issystem' => '0', ), 'strengths' => array ( 'id' => '336', 'moduleid' => '24', 'field' => 'strengths', 'name' => '个人特长', 'tips' => '', 'required' => '0', 'minlength' => '0', 'maxlength' => '0', 'pattern' => '0', 'errormsg' => '', 'class' => '', 'type' => 'editor', 'setup' => 'array (
+  \'edittype\' => \'kindeditor\',
+  \'default\' => \'\',
+  \'height\' => \'\',
+  \'show_add_description\' => \'0\',
+  \'show_auto_thumb\' => \'0\',
+  \'showpage\' => \'0\',
+  \'enablekeylink\' => \'0\',
+  \'replacenum\' => \'\',
+  \'enablesaveimage\' => \'0\',
+  \'flashupload\' => \'0\',
+  \'alowuploadexts\' => \'\',
+  \'alowuploadlimit\' => \'\',
+)', 'ispost' => '0', 'unpostgroup' => '', 'listorder' => '5', 'status' => '1', 'issystem' => '0', ), 'resume' => array ( 'id' => '337', 'moduleid' => '24', 'field' => 'resume', 'name' => '工作简历', 'tips' => '', 'required' => '0', 'minlength' => '0', 'maxlength' => '0', 'pattern' => '0', 'errormsg' => '', 'class' => '', 'type' => 'editor', 'setup' => 'array (
+  \'edittype\' => \'kindeditor\',
+  \'default\' => \'\',
+  \'height\' => \'\',
+  \'show_add_description\' => \'0\',
+  \'show_auto_thumb\' => \'0\',
+  \'showpage\' => \'0\',
+  \'enablekeylink\' => \'0\',
+  \'replacenum\' => \'\',
+  \'enablesaveimage\' => \'0\',
+  \'flashupload\' => \'0\',
+  \'alowuploadexts\' => \'\',
+  \'alowuploadlimit\' => \'\',
+)', 'ispost' => '0', 'unpostgroup' => '', 'listorder' => '6', 'status' => '1', 'issystem' => '0', ), 'createtime' => array ( 'id' => '329', 'moduleid' => '24', 'field' => 'createtime', 'name' => '发布时间', 'tips' => '', 'required' => '1', 'minlength' => '0', 'maxlength' => '0', 'pattern' => '', 'errormsg' => '', 'class' => '', 'type' => 'datetime', 'setup' => '', 'ispost' => '0', 'unpostgroup' => '3,4', 'listorder' => '93', 'status' => '1', 'issystem' => '1', ), 'status' => array ( 'id' => '330', 'moduleid' => '24', 'field' => 'status', 'name' => '状态', 'tips' => '', 'required' => '0', 'minlength' => '0', 'maxlength' => '0', 'pattern' => '0', 'errormsg' => '', 'class' => '', 'type' => 'radio', 'setup' => 'array (
+  \'options\' => \'已审核|1
+未审核|0\',
+  \'fieldtype\' => \'tinyint\',
+  \'numbertype\' => \'1\',
+  \'labelwidth\' => \'75\',
+  \'default\' => \'1\',
+)', 'ispost' => '1', 'unpostgroup' => '3,4', 'listorder' => '99', 'status' => '1', 'issystem' => '1', ), ); ?>

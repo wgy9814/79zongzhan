@@ -1,0 +1,401 @@
+<?php
+	if($school_id){
+		$schoolid=M('school')->where("id=$school_id")->find();
+		$userid=M('user')->where("schoolid=".$schoolid['id'])->find();
+	}
+	$kcorder=M('kecheng')->where("catid=$catid AND id<>$id")->order('guanzhu desc')->limit('5')->select();
+	$sql = M()->getLastSql();
+	$review_list = M('View')->where("viewid=".$id." and status=1")->order('listorder desc')->limit('255')->select();
+
+
+	$tuijain = M('kecheng')->where("school_id=$school_id AND id<>$id")->order('guanzhu desc')->limit('4')->select();;
+
+
+?>
+<style type="text/css">
+	#tuijian {
+		width: 800px;
+		margin: 15px 45px 5px;
+		height: 70px;
+	}
+	#tuijian li {
+		list-style:none; /* 将默认的列表符号去掉 */
+		margin:0; /* 将默认的外边距去掉 */
+	}
+
+	#tuijian a{
+		display: block;
+		float: left;
+		width: 200px;
+		border: none;
+		font-size: 16px;
+		padding: 8px 98px 20px;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+
+	}
+</style>
+<link href="/Public/Css/layer.css" rel="stylesheet" type="text/css"/>
+<div id="artycle">
+	<div class="main course" style="overflow: hidden;">
+		<div class="m_left">
+
+			<div class="course-info">
+				<div class="location">
+					<a href="/">首页</a> &gt <YP:catpos  catid="catid" space=" > " />
+
+				</div>
+				<div class="infopic"><img src="{if $scpic}{$scpic}{else}{$schoolid.file}{/if}" alt="{$schoolid.title}"></div>
+				<div class="info">
+					<h1>{$title}</h1>
+					<ul>
+						<li style="overflow: hidden;line-height: 22px;max-height: 86px;"><strong>授课对象：</strong>{$dx}</li>
+						<li><strong>授课地址：</strong>{$address}</li>
+						<li><strong>授课学校：</strong>{$schoolid.title}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$user_mark}
+						</li>
+						<li><strong>关注人数：</strong>{$guanzhu}</li>
+					    <li><strong>网上报名：</strong>{$pc}</li>
+						<li><strong>线下原价：</strong>{$price}</li>
+					
+					</ul>
+					<!--<div class="price"><strong>课程价格：</strong><s></s><b>网上报名{:floatval($pc)}&nbsp;&nbsp;&nbsp;线下原价{:floatval($price)}</b></div>-->
+					<div class="course-bar">
+						<a href="#apply" class="yuyue">咨询留言</a>
+						{if $user_mark}
+						<a href="javascript:;" class="tips" title="{$userid.tel}" data-val="电话">电话</a>
+						<a href="javascript:;" class="tips" title="{$userid.wechat}" data-val="微信">微信</a>
+						<a href="javascript:;" class="tips" title="{$userid.email}" data-val="邮箱">邮箱</a>
+						{/if}
+					</div>
+				</div>
+			</div>
+			<div class="col-kc active">
+				<div class="kecheng">
+					<div class="title">
+						<ul>
+							<li class="active">课程详情</li>
+							<!--<li>学校环境</li>
+							<li>课程评价</li>-->
+						</ul>
+						<div class="bdsharebuttonbox">
+							<a href="#" class="bds_more" data-cmd="more"></a>
+							<a href="#" class="bds_qzone" data-cmd="qzone"></a>
+							<a href="#" class="bds_tsina" data-cmd="tsina"></a>
+							<a href="#" class="bds_tqq" data-cmd="tqq"></a>
+							<a href="#" class="bds_renren" data-cmd="renren"></a>
+							<a href="#" class="bds_weixin" data-cmd="weixin"></a>
+						</div>
+					</div>
+					<div class="bd">
+						<div class="kc-bd active">
+							<div class="endtext">
+								{$content}
+							</div>
+							<h2 style="margin-left: 50px;">更多课程推荐：</h2>
+							<ul id="tuijian">
+								<volist name='tuijain' id='r' key='k'>
+									<li><a href="/applications/show/{$r.id}.html" title="{$r.title}">{$r.title}</a></li>
+
+								</volist>
+
+							</ul>
+
+						</div>
+
+						<!---->
+						<!--/kc-bd-->
+						<div class="kc-bd">
+							<div class="endtext">
+								{$schoolid.description}
+							</div>
+						</div>
+						<div class="kc-bd ">
+							<div class="comment" id="reviews">
+								<form action="{:URL('User-Index/addview')}" method="post" name="reviews" onsubmit="return review();">
+									<input name="viewid" type="hidden" value="{$id}">
+									<input name="title" type="hidden" value="{$title}">
+									<div class="post">
+										<div class="textarea">
+											<textarea name="content" required="" maxlength="150"></textarea>
+										</div>
+										<div class="btns">
+											<div class="face">
+												<label>
+                            <input name="score" type="radio" value="1">
+                            1星</label>
+												<label>
+                            <input name="score" type="radio" value="2">
+                            2星</label>
+												<label>
+                            <input name="score" type="radio" value="3">
+                            3星</label>
+												<label>
+                            <input name="score" type="radio" value="4">
+                            4星</label>
+												<label>
+                            <input name="score" type="radio" value="5" checked="">
+                            5星</label>
+												<div class="face-ico"></div>
+											</div>
+											<p></p>
+											<button type="submit">发表评论</button>
+										</div>
+									</div>
+								</form>
+								
+								<div class="comment-list" id="preview_list">
+									<ul>
+										<volist name='review_list' id='r' key='k'>
+											
+										<li class="ovef">
+											<div class="fl ct viewone">
+												<div class="img ">
+													<!--查询用户信息-->
+													<?php 
+														if($r['ruserid']){
+															$user_man = M('user')->where("id=".$r['ruserid'])->find(); 
+														}
+														
+													?>
+													<img src="{$user_man.file|thumb2=###,60,60,3}"/>
+												</div>
+												<p class="diandiandian">{$user_man.username}</p>
+											</div>
+											<div class="fl viewtwo">
+												<p class="p1"><span>评分：</span><em class="lstar" title=""><i  title="{$r.score}"></i></em></p>
+												<p class="p2"><span>内容：</span><i>{$r.content}</i></p>
+											</div>
+											<div class="fr viewtime">
+												{$r.createtime|toDate=###,'Y-m-d'}
+											</div>
+										</li>
+										
+										
+										
+										</volist>
+										
+										{if !$review_list}
+										<li class=" pd ct f18">
+											暂无评论！
+										</li>
+										{/if}
+									</ul>
+								</div>
+							</div>
+							
+						</div>
+						<P>&nbsp &nbsp &nbsp 79招生网为第三方平台，不会向学员收取任何费用；内容素材如有侵权、虚假不实、违法违规信息等请联系我们 020-26225931。</P>
+						<P>&nbsp &nbsp &nbsp 课程信息由培训机构（或其代理）自行发布（或提供），请用户在自辨课程虚实、有效性、及时性时留意以实际授课为准。</P>
+						</br>
+						</br>
+					</div>
+					
+				</div>
+				<div class="new-box baoming">
+					<div class="title" id="apply">
+						<h3 class="ico-bm">报名咨询</h3><span>&nbsp &nbsp &nbsp &nbsp您好，在此留下您的联系方式，我们将第一时间与您联系！</span>
+					</div>
+					<form method="post" action="{:URL('User-Post/insert2')}" id="jg_form" >
+						<input type='hidden' name='formhash' value='{$formhash}' />
+						<input type="hidden" name="form_submit" value="ok" />
+						<input type="hidden"  name="catid" value="{$catid}" />
+						<input type="hidden" id="moduleid" name="moduleid" value="6" />
+						<input type="hidden" id="lang" name="lang" value="{$langid}" />
+					    <input type="hidden" id="title" name="title" value="预约报名" />
+						<input type="hidden" name="project" value="{$schoolid.title}" />
+						<input type="hidden" name="tel" value="{$userid.mobile}" />
+						<input type="hidden" name="email" value="{$userid.email}" />
+						<input type="hidden" name="kctitle" value="{$title}" />
+						<input type="hidden" name="kcid" value="{$id}" />
+						<ul>
+							<li>
+								<label>姓名：</label>
+								<input name="username" type="text" class="ipt" value="" placeholder="请输入您的称呼" required>
+							</li>
+							<li>
+								<label>手机：</label>
+								<input name="telephone" type="number" class="ipt" value="" min="11000000000" max="18999999999" placeholder="请输入手机号码"  required>
+							</li>
+							<li>
+								<label>地址：</label>
+								<input name="address" type="text" class="ipt">
+							</li>
+							<li>
+								<label>验证码：</label>
+								<input name="cord" type="text" class="ipt yzm" placeholder="请输入手机验证码" required="">
+								<button type="button" class="btm duanx" id="duanxpt">点击获取短信验证码</button>
+								<button type="button" class="btm dengd" id="" style="display: none;">点击获取短信验证码</button>
+							</li>
+							<li class="verifys">
+								<label>验证码：</label>
+								<input type="text" maxlength="4" name="verify" class="ipt input-text" class="inputbox"
+									   id="verify" placeholder="请输入图形验证码"/>
+								<img id="verifyImage" class=" checkcode" style="height: 35px; width: 70px;"
+									 src="{:U('Home/Index/verify')}" onclick="javascript:resetVerifyCode();" class="checkcode"
+									 title="{:L('resetVerifyCode')}"/>
+							</li>
+							<!--0814-->
+							<li style="display: none;">
+								<input type="hidden" name="coupons" value="1">
+								<!-- <label>报名编码：</label>
+								<select name="coupons" class="ipt">
+									<option value="1" selected="selected">使用</option>
+									<option value="0">不使用</option>
+								</select> -->
+							</li>
+							<!--0814-->
+
+							<li class="saytext">
+								<label>内容：</label>
+								<textarea name="content" id="content" placeholder="报名咨询课程请留言" required=""></textarea>
+							</li>
+							<li class="sub">
+								<input type="hidden" name="ckid" value="{$id}" class="">
+								<input type="submit" value="提交" class="btn">
+								<input type="reset" value="重置" class="btn res">
+							</li>
+						</ul>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="side-kc">
+			<div class="new-box">
+				<div class="title">
+					<h3 class="ico-school">学校信息</h3>
+				</div>
+				<div class="school">
+					<div class="name"><b><a href="/school2/{$school_id}.html">{$schoolid.title}</a></b><i class="ico ico-rz3"></i></div>
+					<p class="lstar" title="4.00"><i style="width:80%;"></i></p>
+					<div class="text"></div>
+					<h3>学校优势：</h3>
+					<div class="school-tags">{$schoolid.description|str_cut=###,100}</div>
+				</div>
+				<!--/school-->
+			</div>
+			<!--/box-->
+			<div class="new-box">
+				<div class="title">
+					<h3>同类课程推荐</h3>
+				</div>
+				<ul class="hot-list">
+					<volist name='kcorder' id='r' key='k'>
+					<li>
+						<i class="n{$k}">0{$k}</i>
+						<p>
+							<a href="{$r.url}">{$r.title}</a>
+						</p>
+					</li>
+					</volist>
+				</ul>
+			</div>
+			<div class="wa">
+				<yp:block pos='wa' />					
+			</div>
+			<!--/box-->
+
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="../Public/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="../Public/js/messages_zh.js"></script>
+<script type="text/javascript" src="/Public/Js/layer.js"></script>
+<script type="text/javascript">
+//表单认证
+$("#jg_form").validate({
+    rules: {
+    },
+    messages: {
+      	username:"请输入用户名",
+      	telephone:"请输入手机号码",
+        cord:"请输入验证码",
+		
+    }
+});
+
+//function tijiao(){
+// var verifyCode=$('input[name=verifyCode]').val();
+// $.ajax({
+// 	type:"post",
+// 	url:"{:URL('User-Post/insert2')}",
+// 	dataType:"json",
+// 	data:{'verifyCode':verifyCode},
+// 	success:function(msg){
+// 		if(msg==-1){
+// 			alert("验证码错误");return false;
+// 		}else{
+// 			return true;
+// 		}
+// 	}
+// 	
+// });	
+//}
+	function resetVerifyCode(){
+	var timenow = new Date().getTime();
+	var src = './index.php?g=Home&m=Index&a=verify#'+timenow;
+	$('.img3').attr('src',src);
+	}
+	
+	$(document).on('click','.kecheng .title ul li',function(){
+		var index = $(this).index();
+		$(this).addClass('active').siblings().removeClass('active');
+		$('.kecheng .kc-bd').eq(index).addClass('active').siblings().removeClass('active');
+	});
+	//评论前准备
+	function review(){
+		var viewid=$('#reviews form input[name=viewid]').val();
+		var title=$('#reviews form input[name=title]').val();
+		var content=$('#reviews form textarea').val();
+		var score=$('#reviews form input:radio:checked').val();
+		$.ajax({
+		   	type:"post",
+		   	url:"{:URL('User-Index/addview')}",
+		   	dataType:"json",
+		   	data:{'viewid':viewid,'title':title,'content':content,'score':score},
+		   	success:function(msg){
+		   		switch(msg){
+	                    case "-1":  
+	                        alert("您未登陆会员（请先登录并且报名该课程才能评论！）"); 
+
+	                        break;
+	                    case "-2":  
+	                        alert("您尚未报名该课程（请先登录并且报名该课程才能评论！）"); 
+	                        break;  
+	                    case "1":  
+	                        alert("评论成功！");
+	                        break;  
+	                    default:  
+	                        alert("系统繁忙，请稍后再试");  
+	            }
+				
+		   	}
+		});
+		return false;
+	}
+	//评论星星返回
+	$(function (){
+        $(".tips").click( function () {
+            var data = $(this).data('val');
+            var title = $(this).attr('title');
+            var html = data+'：'+title
+            layer.alert(html)
+
+        });
+		$("#preview_list .viewtwo .lstar i").each(function(){
+			_this = $(this)
+			var star_mub = _this.attr('title');
+		    _this.css('width',''+star_mub*20+'%');
+		  });
+		
+
+	})
+</script>
+<script>
+	window._bd_share_config = {
+
+		"share": {},
+
+	};
+	with(document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
+</script>

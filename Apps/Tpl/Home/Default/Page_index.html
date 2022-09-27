@@ -1,0 +1,71 @@
+<?php
+if($catdir == 'pxjg'){
+	//培训机构页面
+	//echo '<pre>';
+	$cat = array();
+
+	foreach($Categorys as $key=>$r){
+		$cat[$key] = $r['catname'];
+	}
+
+	//print_r($cat);
+	$data = array();
+	$kschool=M('school')->where("status=1 and posid=16")->order('listorder asc')->select();
+	foreach($kschool as $key=>$v){
+		if(isset($v['industryx']) && is_numeric($v['industryx'])){
+			$data[$v['industryx']][] = $v;
+		}
+	}
+	//print_r($data);
+}
+?>
+<div class="" id="p_page">
+	<div class="mian">
+		<div class="left_nav">
+			<ul>
+				<YP:subcat catid="$Categorys[$catid]['parentid']" id="r" key="k">
+				<li><a href="{$r.url}" class="{if $r[id]==$catid} active {/if}">{$r.catname}</a></li>
+				</YP:subcat>
+			</ul>
+			
+		</div>
+		<div class="p_page_r fr">
+			<h1>
+				<div class="p_page_r_top c3 f18">
+					{$catname}
+				</div>
+			</h1>
+			<div class="p_page_r_con f16">
+
+				{if $catdir == 'pxjg'}
+					<?php foreach($data as $key=>$val){?>
+						<br>
+						<h3>
+							<span style="font-size:16px;color:#666666;background-color:#FFFFFF;">
+								<?php if (array_key_exists($key,$cat)){?>
+									<?php echo $cat[$key];?>
+								<?php }?>
+							</span>
+						</h3>
+						<p>
+							<span style="font-size:14px;color:#333333;"><br />
+							</span>
+						</p>
+						<p>
+						<?php foreach($val as $k=>$v){?>
+							<span style="font-size:16px;color:#666666;background-color:#FFFFFF;">
+									<a href="/school2/<?php echo ($v['id']); ?>.html" target="_blank" ><?php echo $v['title'];?> </a> &nbsp; &nbsp; &nbsp;
+							</span>
+						<?php }?>
+						</p>
+					<?php }?>
+				{else}
+					{$content}
+				{/if}
+			</div>
+		</div>
+		
+	</div>
+	
+	
+</div>

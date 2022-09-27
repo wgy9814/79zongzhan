@@ -1,0 +1,31 @@
+<?php  $pre=M($module)->where("id<$id and catid=$catid and lang=$lang")->find();
+       $next=M($module)->where("id>$id and catid=$catid and lang=$lang")->find();      
+?> 
+<div class="" id="p_page">
+	<YP:flash flashid="4" />
+	<div class="mian" id="new">
+		<div class="locat f14">
+			<a href="/">首页</a> &gt; <YP:catpos  catid="catid" space=" &gt;" />
+		</div>
+		
+		<div class="datail">
+			<h1>
+			<div class="title ct c3">{$title}</div>
+			</h1>
+			<div class="ovef ct">
+				{$createtime|toDate=###,'Y-m-d H:i'} | 来源：{$source} | 编辑：{$editor}
+			</div>
+			<div class="con c3">
+				{$content}
+			</div>
+			<div class="sx f16">
+				<div class="fl">
+					<span>上一篇</span>：<a href="{$pre.url}">{$pre.title}</a>
+				</div>
+				<div class="fr">
+					<span>下一篇</span>：<a href="{$next.url}">{$next.title}</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

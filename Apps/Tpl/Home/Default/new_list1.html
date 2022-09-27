@@ -1,0 +1,44 @@
+<div class="" id="p_page">
+	<YP:flash flashid="4" />
+	<div class="mian" id="new">
+		<div class="locat f14">
+			<a href="/">首页</a> > <YP:catpos  catid="catid" space=" >" />
+		</div>
+		<div class="new_top ovef">
+			<YP:blockdetail pos="newpos" id='r'>
+			<div class="fl">
+				<img src="{$r.image2|thumb2=###,540,350,3}"/>
+			</div>
+			<div class="fr">
+				{$r.content}
+			</div>
+			</YP:blockdetail>
+		</div>
+		<div class="list">
+			<ul class="con">
+				<volist name='list' id='r' key='k'>
+				<li>
+					<dl class="ovef">
+						<dt class="fl">
+							<img src="{$r.thumb|thumb2=###,285,165,3}" width="285" height="165"/>
+						</dt>
+						<dd class="fr">
+							<a href="{$r.url}">
+								<h4 class="diandiandian f18 nofw c3">
+									{$r.title} 
+									<span class="fr f16">{$r.createtime|toDate=###,'Y-m-d'}</span>
+								</h4>
+							</a>
+							<p class="lh25">{$r.description}</p>
+							<a href="{$r.url}" class="lv">查看详情 >></a>
+						</dd>
+					</dl>
+				</li>
+				</volist>
+			</ul>
+			<div class="huanye">
+			    {$pages}
+			</div>
+		</div>
+	</div>
+</div>

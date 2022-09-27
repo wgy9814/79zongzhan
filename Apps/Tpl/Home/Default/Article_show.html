@@ -1,0 +1,243 @@
+<?php
+	$res=M('')->query("SELECT a.content,a.sc_hj FROM mqu_kecheng AS a LEFT JOIN mqu_article AS b ON a.school_id=b.school_id WHERE b.school_id='$school_id'");
+	if($res) $info=$res[0];
+?>
+<div id="artycle">
+	<div class="main course" style="overflow: hidden;">
+		<div class="m_left">
+
+			<div class="course-info">
+				<div class="location">
+					<a href="/">首页</a> &gt <YP:catpos  catid="catid" space=" &gt; " />
+
+				</div>
+				<div class="infopic"><img src="../Public/images/index_06.jpg" alt="会计实操培训"></div>
+				<div class="info">
+					<h1>会计实操培训</h1>
+					<ul>
+						<li style="overflow: hidden;max-height: 116px;"><strong>授课对象：</strong></li>
+						<li><strong>授课地址：</strong>安康</li>
+						<li><strong>授课学校：</strong>仁和会计培训学校</li>
+						<li><strong>关注人数：</strong>92</li>
+					</ul>
+					<div class="price"><strong>课程价格：</strong><s></s><b>
+            电询 : <span class="website_telphone">400-6387-883</span>
+                          </b><i class="ico ico-hui"></i></div>
+					<div class="course-bar">
+						<a href="#apply" class="yuyue">预约报名</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-kc">
+				<div class="kecheng">
+					<div class="title">
+						<ul>
+							<li class="active">课程详情</li>
+							<li>学校环境</li>
+							<li>课程评价</li>
+						</ul>
+						<div class="bdsharebuttonbox">
+							<a href="#" class="bds_more" data-cmd="more"></a>
+							<a href="#" class="bds_qzone" data-cmd="qzone"></a>
+							<a href="#" class="bds_tsina" data-cmd="tsina"></a>
+							<a href="#" class="bds_tqq" data-cmd="tqq"></a>
+							<a href="#" class="bds_renren" data-cmd="renren"></a>
+							<a href="#" class="bds_weixin" data-cmd="weixin"></a>
+						</div>
+					</div>
+					<div class="bd">
+						<div class="kc-bd active">
+							<div class="endtext">
+								{$info.content}
+							</div>
+						</div>
+						<!--/kc-bd-->
+						<div class="kc-bd">
+							<div class="endtext">
+								{$info.sc_hj}
+							</div>
+						</div>
+						<div class="kc-bd">
+							<div class="comment" id="reviews">
+								<form action="#" method="post" name="reviews">
+									<input name="data[tid]" type="hidden" value="287">
+									<div class="post">
+										<div class="textarea">
+											<textarea name="content"></textarea>
+										</div>
+										<div class="btns">
+											<div class="face">
+												<label>
+                            <input name="score" type="radio" value="1">
+                            1星</label>
+												<label>
+                            <input name="score" type="radio" value="2">
+                            2星</label>
+												<label>
+                            <input name="score" type="radio" value="3">
+                            3星</label>
+												<label>
+                            <input name="score" type="radio" value="4">
+                            4星</label>
+												<label>
+                            <input name="score" type="radio" value="5" checked="">
+                            5星</label>
+												<div class="face-ico"></div>
+											</div>
+											<p></p>
+											<button type="submit">发表评论</button>
+										</div>
+									</div>
+								</form>
+								<div class="comment-list"> </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="new-box baoming">
+					<div class="title" id="apply">
+						<h3 class="ico-bm">网上报名</h3>
+					</div>
+					<form method="post" action="/" id="jg_form">
+						<input type="hidden"  name="catid" value="{$catid}" />
+						<input type="hidden" id="moduleid" name="moduleid" value="6" />
+						<input type="hidden" id="lang" name="lang" value="{$langid}" />
+					    <input type="hidden" id="title" name="title" value="{$title}" />
+						<ul>
+							<li>
+								<label>姓名：</label>
+								<input name="username" type="text" class="ipt" value="" placeholder="请输入您的称呼" required>
+							</li>
+							<li>
+								<label>手机：</label>
+								<input name="telephone" type="number" class="ipt" value="" min="13000000000" max="18999999999" placeholder="请输入手机号码"  required>
+							</li>
+							<li>
+								<label>地址：</label>
+								<input name="address" type="text" class="ipt">
+							</li>
+							<li>
+								<label>验证码：</label>
+								<input name="verify" type="text" class="ipt yzm" placeholder="请输入验证码" required="">
+								<img class="img3" id="verifyImg" src="?g=Home&amp;m=Index&amp;a=verify" onclick="javascript:resetVerifyCode();"  class="checkcode" align="absmiddle" title="点击刷新验证码" >
+								
+							</li>
+
+							<!--0814-->
+							<li>
+								<label>优惠券：</label>
+								<select name="volume" class="ipt">
+									<option value="1" selected="selected">使用</option>
+									<option value="0">不使用</option>
+								</select>
+							</li>
+							<!--0814-->
+
+							<li class="saytext">
+								<label>内容：</label>
+								<textarea name="content" id="content" placeholder="报名内容">会计实操培训</textarea>
+							</li>
+							<li class="sub">
+								<input type="submit" value="立即报名" class="btn">
+								<input type="reset" value="重置" class="btn res">
+							</li>
+						</ul>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="side-kc">
+			<div class="new-box">
+				<div class="title">
+					<h3 class="ico-school">学校信息</h3>
+				</div>
+				<div class="school">
+					<div class="name"><b><a href="#">仁和会计培训学校</a></b><i class="ico ico-rz3"></i></div>
+					<p class="lstar" title="4.00"><i style="width:80%;"></i></p>
+					<div class="text"></div>
+					<h3>学校优势：</h3>
+					<div class="school-tags"> 仁和会计教育历练12年，全国百所直营分校，成功培训会计师50万余人，建校伊始就努力打造行业品质，建立资深名师团队，坚守战略发…</div>
+				</div>
+				<!--/school-->
+			</div>
+			<!--/box-->
+			<div class="new-box">
+				<div class="title">
+					<h3>同类课程推荐</h3>
+				</div>
+				<ul class="hot-list">
+					<li>
+						<i class="n1">01</i>
+						<p>
+							<a href="/">会计实操培训</a>
+						</p>
+						<span>训学校开设的实操课程：V7新锐会计班V7精英实战班V7金管…</span>
+					</li>
+					<li>
+						<i class="n1">01</i>
+						<p>
+							<a href="/">会计实操培训</a>
+						</p>
+						<span>训学校开设的实操课程：V7新锐会计班V7精英实战班V7金管…</span>
+					</li>
+					<li>
+						<i class="n1">01</i>
+						<p>
+							<a href="/">会计实操培训</a>
+						</p>
+						<span>训学校开设的实操课程：V7新锐会计班V7精英实战班V7金管…</span>
+					</li>
+					
+				</ul>
+			</div>
+			<div class="wa">
+				<yp:block pos='wa' />					
+			</div>
+			<!--/box-->
+
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="../Public/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="../Public/js/messages_zh.js"></script>
+<script type="text/javascript">
+//表单认证
+$("#jg_form").validate({
+    rules: {
+    },
+    messages: {
+      	username:"请输入用户名",
+      	telephone:"请输入手机号码",
+      	verify:"请输入验证码",
+		
+    }
+});		
+	function resetVerifyCode(){
+	var timenow = new Date().getTime();
+	var src = './index.php?g=Home&m=Index&a=verify#'+timenow;
+	$('.img3').attr('src',src);
+}
+	
+	</script>
+<script>
+	$(document).on('click','.kecheng .title ul li',function(){
+		var index = $(this).index();
+		$(this).addClass('active').siblings().removeClass('active');
+		$('.kecheng .kc-bd').eq(index).addClass('active').siblings().removeClass('active');
+	})
+	
+	
+</script>
+<script>
+	window._bd_share_config = {
+		"common": {
+			"bdSnsKey": {},
+			"bdText": "",
+			"bdMini": "2",
+			"bdPic": "",
+			"bdStyle": "0",
+			"bdSize": "16"
+		},
+	};
+	with(document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
+</script>

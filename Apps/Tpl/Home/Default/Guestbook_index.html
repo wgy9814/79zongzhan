@@ -1,0 +1,98 @@
+<script type="text/javascript" src="../Public/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="../Public/js/messages_zh.js"></script>
+<div class="" id="p_page">
+	<div class="mian">
+		<div class="left_nav">
+			<ul>
+				<YP:subcat catid="$Categorys[$catid]['parentid']" id="r" key="k">
+				<li><a href="{$r.url}" class="{if $r[id]==$catid} active {/if}">{$r.catname}</a></li>
+				</YP:subcat>
+			</ul>
+			
+		</div>
+		<div class="p_page_r fr">
+			<div class="p_page_r_top c3 f18">
+				{$catname}
+			</div>
+			<div class="p_page_r_con f16">
+				<p>目前公司刚开始运营，很多基础工作的完成还需时间，我们将来需要大量的关于擅长文案编写、PS、网络营销、平台运营、SEM、SEO、新媒体、懂前端、后台、数据库、在线客服、线下招生业务拓展等方面人才，如果您有意，可以留下您的联系方式及简介，需要时我们再和您联系，谢谢！</p>
+				<form id="join_b" action="{:URL('User-Post/insert')}" method="post" >
+					<input type="hidden"  name="catid" value="{$catid}" />
+					<input type="hidden" id="moduleid" name="moduleid" value="24" />
+					<input type="hidden" id="lang" name="lang" value="{$langid}" />
+				    <input type="hidden" id="title" name="title" value="加入我们" />
+					<ul class="">
+				        <li class="li1 clearfix">
+				        	<p class="p1">姓名</p>
+				        	<input id="name" name="name" class="c-input w248" type="text">
+				        	<p>性别</p>
+				        	<select name="gender" id="gender">
+				        		<option value="男">男</option>
+				        		<option value="女">女</option>
+				        	</select>
+				        	<p>年龄</p>
+				        	<input  id="age" name="age" class="c-input" type="text">
+				        	<p>学历</p>
+							<select name="degree" id="degree">
+			                    <option value="" selected="selected">请选择</option>
+			                    <option value="大专">大专</option>
+								<option value="本科">本科</option>
+								<option value="硕士">硕士</option>
+								<option value="博士">博士</option>
+								<option value="MBA">MBA</option>
+								<option value="EMBA">EMBA</option>
+								<option value="中专">中专</option>
+								<option value="中技">中技</option>
+								<option value="高中">高中</option>
+								<option value="初中">初中</option>
+								<option value="其他">其他</option>
+			                </select>
+				        </li>
+						<li class="li2 clearfix">
+				            <p class="p1">求职意向</p>
+				        	<input id="objective" name="objective" class="c-input w248" type="text">
+				        </li>
+				        <li class="li3 clearfix">
+				        	<p class="p1">个人特长</p>
+				            <textarea name="strengths" id="strengths" class="c-textarea lh22" ></textarea>
+				        </li>
+				        <li class="li4 clearfix">
+				        	<p class="p1">工作简历</p>
+				            <textarea name="resume" id="resume" class="c-textarea lh22" ></textarea>
+				        </li>
+				        <li class="li6 ct">
+				            <button type="submit" class="sub_btn">提交</button></button>
+				        </li>
+				    </ul>
+				</form>
+			</div>
+		</div>
+		
+	</div>
+	
+	
+</div>
+<script>
+$(function(){
+	
+// 在键盘按下并释放及提交后验证提交表单
+//$("#join_b").validate({
+//	    rules: {
+//	      	email: {
+//	        	required: true,
+//	        	email: true
+//	      	},
+//
+//	       	password: {
+//				required: true,
+//			    minlength: 5,
+//			    maxlength: 16,
+//			},
+//	    },
+//	    messages: {
+//	      	email:"请输入一个正确的邮箱",
+//			password:'请输入密码',
+//	    }
+//	});
+//});
+</script>

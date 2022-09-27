@@ -1,0 +1,60 @@
+<h2><p style="margin-left:40%; margin-bottom:15px;">找课程，找学生，找79招生网</p></h2>
+<div class="" id="p_page">
+	<div class="mian" id="city">
+		<h3>切换分站</h3>
+		<div class="city_box">
+			<div class="city_search">
+				<p>请直接输入你所关心的城市</p>
+				<form action="" method="post" onsubmit="return false;">
+					<input type="text" name="city" id="city_input" value="" class="f_input"/>
+					<input type="submit" class="btm" id="q_btn" value="进入"/>
+				</form>
+			</div>
+			<div class="entrance">
+				<p>热门城市入口：</p>
+				<div class="entrance_a">
+					<yp:list name='City' id='r' key='k' posid='1' field='*' limit='12'>
+						<a href="{$r.link}">{$r.title}</a>
+					</yp:list>
+				</div>
+				
+			</div>
+			<div class="list">
+   			<YP:subcat catid="61" id="r" key="k">
+   				<?php 	$plist=M('City')->where(array('catid'=>$r['id']))->select();?> 
+				<dl class="{if $k%2==0} bg {/if}">
+					<dt>{$r.catname}</dt>
+					<volist name='plist' id='rd'>
+					<dd><a class="{if $rd['link'] && 1==$rd['status']}on{else}alert{/if}" href="{if $rd['link']}{$rd.link}{else}<yp:block pos='tem_site' />{/if}">{$rd.title}</a></dd>
+					</volist>
+				</dl>
+				</YP:subcat>
+			</div>
+			<h3>如果您有意加盟创业、运营城市分站，请联系电话  ：<yp:block pos='city_contact' /></h23>
+		</div>
+	</div>
+</div>
+<style>
+	.nav_wrap,.msearch_box{display:none !important;}
+	.header{height: 104px;}
+	.header_nav{padding-top:40px;}
+</style>
+<script>
+	$(function(){
+		$('#q_btn').click(function(){
+			var city = $('#city_input').val();
+			if('' == city)
+			{
+				return false;
+			}else {
+				$('dd a').each(function(){
+					if($(this).text() == city)
+					{
+						window.location.href = $(this).attr('href');
+					}
+				});
+			}
+		});
+	})
+	
+</script>

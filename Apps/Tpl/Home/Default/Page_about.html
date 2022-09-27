@@ -1,0 +1,28 @@
+<div class="" id="p_page">
+	<div class="mian">
+		<div class="left_nav">
+			<ul>
+				<YP:subcat catid="$Categorys[$catid]['parentid']" id="r" key="k">
+				<li><a href="{$r.url}" class="{if $r[id]==$catid} active {/if}">{$r.catname}</a></li>
+				</YP:subcat>
+			</ul>
+			
+		</div>
+		<div class="p_page_r fr">
+			<div class="p_page_r_top c3 f18">
+				{$catname}
+			</div>
+			<div class="p_page_r_con f16">
+				{$content}
+			</div>
+		</div>
+		
+	</div>
+	
+	
+</div>
+<style>
+	
+	
+	
+</style>

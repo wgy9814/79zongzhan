@@ -1,0 +1,89 @@
+/* 会员等级样式*/
+.nc-grade-mini {
+    font: 500 italic 12px/16px Georgia, Arial;
+    /*text-shadow: 1px 1px 0 rgba(0,0,0,0.25);*/
+    color: #000000	;
+    background-color: #4169E1;
+    vertical-align: middle;
+    display: inline-block;
+    *display: inline;
+    height: 20px;
+    width: 20px;
+    padding: 1px 3px;
+    border-radius: 2px;
+    *zoom: 1;
+}
+.nc-grade-middle {
+    font: 500 italic 12px/16px Georgia, Arial;
+    /*text-shadow: 1px 1px 0 rgba(0,0,0,0.25);*/
+    color: #000000;
+    background-color: #FFD700;
+    vertical-align: middle;
+    display: inline-block;
+    *display: inline;
+    height: 20px;
+    width: 20px;
+    padding: 1px 3px;
+    border-radius: 2px;
+    *zoom: 1;
+}
+.nc-grade-top {
+    font: 500 italic 12px/16px Georgia, Arial;
+    /*text-shadow: 1px 1px 0 rgba(0,0,0,0.25);*/
+    color: #000000;
+    background-color: #FFFF00;
+    vertical-align: middle;
+    display: inline-block;
+    *display: inline;
+    height: 20px;
+    width: 20px;
+    padding: 1px 3px;
+    border-radius: 2px;
+    *zoom: 1;
+}
+#user_head .top_qie span, .pic_box .user-name{
+    color: #00b083;
+    text-decoration: underline;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 150px;
+    line-height: initial;
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -5px;
+}
+/* layui-layer样式*/
+#new_kecheng_tip  {
+    text-align: center;
+    font-size: 16px;
+}
+
+#new_kecheng_tip>:first-child {
+    margin: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+#new_kecheng_tip .button {
+    margin: 20px 0 20px;
+
+}
+#new_kecheng_tip  a {
+    font-size: 20px;
+    width: 150px;
+    height: 40px;
+    margin: 20px 0 20px;
+    color: #FFFFFF;
+    background: #40b477;
+    border: none;
+    border-radius: 3px;
+    padding: 3px 13px;
+}
+
+#fuwu_content_tip{
+    margin: 10px 0 20px;
+    font-size: 16px;
+}
+#fuwu_content_tip table{
+    width: 100%;
+}

@@ -1,0 +1,159 @@
+<?php
+	if($_GET['id']){
+		if($_GET['id']!=69){
+			if($catid==$bcid){
+				$where = 'kccity='.$_GET['id'].' AND catid in (' . $Categorys[$bcid]['arrchildid'] . ')';
+			}else{
+				$where = 'kccity='.$_GET['id'].' and catid='.$catid;
+				
+			}
+			$count=M('kecheng')->where($where)->count();
+            if($count)
+            {
+                $page = new Page ( $count, $listRows );
+                $pages = $page->show();
+                $list=M('kecheng')->where($where)->limit($page->firstRow . ',' . $page->listRows)->order('listorder desc,createtime desc')->select();
+            }else {
+                $list = array();
+            }
+        }
+    }else{
+        $sql=$catid==$bcid?"catid in (".$Categorys[$bcid]['arrchildid'].")":"catid=".$catid;
+        $schools = M('School')->field('id')->select();
+        $schoolIds = array();
+        foreach($schools as $school)
+        {
+            $schoolIds[] = $school['id'];
+        }
+        if($schoolIds)
+        {
+            $sql .= ' AND school_id in (' . implode(',', $schoolIds) . ')';
+        }
+        $count=M('kecheng')->where($sql)->count();
+    }
+?>
+<div id="artycle">
+    <div class="mian">
+        <div class="filter ">
+            <ul class="">
+                <li>
+                    <span>类型:<em></em></span>
+                    <p>
+                        <a href="{$Categorys[$bcid][url]}" class="{if $catid==$Categorys[$bcid][id]} curr {/if}">全部</a>
+                        <YP:subcat catid="$bcid" id="r" key="k">
+                            <a class="{if $catid==$r['id']} curr {/if}" href="{$r.url}">{$r.catname}</a>
+                        </YP:subcat>
+                    </p>
+                </li>
+                <li id="kcciti">
+                    <span class="area">地区:<em></em></span>
+                    <p>
+                        <a class="curr" href="?id=69" data-title='69'>全部</a>
+                        <YP:subcat catid="69" id="r" key="k">
+                            <a class="{if $_GET['id']==$r['id']} curr {/if}" href="/{$catdir}/{$r.id}/1.html" data-title='{$r.id}'>{$r.catname}</a>
+                        </YP:subcat>
+                    </p>
+                </li>
+            </ul>
+        </div>
+        <div class="col">
+            <div class="courselist">
+                <div class="ctitle">
+                    <h4>共找到<b>{$count}</b>条信息</h4>
+                    <span></span></div>
+                <ul>
+                    <volist name='list' id='r' key='k'>
+
+                        <li class="list{$k}">
+                            <p class="img">
+                                <a href="/school2/{$r.school_id}.html">
+                                    <img src="<?php echo M('school')->where(" id='$r[school_id]'")->getfield('file');?>" alt="{$r.title}" width="162" height="110">
+                                </a>
+                            </p>
+                            <div class="info">
+                                <div class="name">
+                                    <h2><a href="{$r.url}">{$r.title}</a></h2>
+                                    {$r.user_mark}
+                                    <p>
+                                        <a href="/school2/{$r.school_id}.html"><?php echo M('school')->where("id='$r[school_id]'")->getfield('title');?></a>
+                                    </p>
+                                    <i class="ico ico-rz"></i></div>
+                                <dl>
+                                    <dd style="height: 48px;"><span>简介：</span><?php echo str_cut(M('school')->where("id='$r[school_id]'")->getfield('description'),105);?></dd>
+                                    <!--<dd><span>群体：</span></dd>-->
+                                    <dd>
+                                        <!--p><span>校区：</span>陕西等1地址</p-->
+                                        <p><span>学制：</span> {$r.systme} </p>
+                                    </dd>
+                                </dl>
+                                <div class="mod">
+                                    <a href="{$r.url}" class="yuyue">我要预约</a>
+                                    <!--<p>已有<i>92</i>人预约</p>-->
+                                    <p>&nbsp;</p>
+                                    <span><a href="{$r.url}">我要评论</a></span><em class="lstar" title="{$avgScore}"><i style="width:80%;"></i></em></div>
+                            </div>
+                            <p class="price"><b>
+                                电询
+                            </b><span><a href="{$r.url}">查看详情</a></span></p>
+                        </li>
+                    </volist>
+                </ul>
+                <div class="huanye">
+                    {$pages}
+                </div>
+            </div>
+            <div class="side">
+                <div class="side_con">
+                    <div class="ctitle">
+                        <h3>全部课程分类</h3>
+                    </div>
+                    <ul class="course-nav">
+                        <YP:subcat catid="0" id="r" key="k">
+                            <li>
+                                <a href="{$r.url}">{$r.catname}</a>
+                            </li>
+                        </YP:subcat>
+                    </ul>
+                </div>
+                <div class="wa" style="padding-top: 20px;">
+                    <yp:block pos='wa'/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <include file="Home:bottom_message"/>
+    <div class="clear"></div>
+</div>
+</div>
+{if 1==$course_list_tip}
+<include file="Home:course_list_tip"/>
+{/if}
+<script type="text/javascript" src="../Public/js/jquery.validation.min.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        //筛选地区加类名
+        if ("{$_GET['id']}" != undefined) {
+            var id = "{$_GET['id']}";
+            var kc = $('#kcciti a');
+            kc.removeClass('curr');
+            if (id == '') {
+                //没有带参数默认第一个
+                $('#kcciti a').eq(0).addClass('curr');
+            } else {
+                for (var i = 0; i < kc.length; i++) {
+                    //判断哪个a带有这个id，加类名
+                    var title = kc.eq(i).attr('data-title');
+                    if (title == id) {
+                        kc.eq(i).addClass('curr');
+                    }
+                }
+            }
+        }
+    })
+
+    function resetVerifyCode() {
+        var timenow = new Date().getTime();
+        document.getElementById('verifyImage').src = './index.php?g=Home&m=Index&a=verify#' + timenow;
+    }
+</script>

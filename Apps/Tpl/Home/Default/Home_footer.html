@@ -1,0 +1,222 @@
+<!--底部-->
+<div class="footer mt20 clear">
+	<div class="site_map">
+		<div class="site_map_con site_map_con w1100 auto">
+			<ul class="inline_box">
+				<li class="inline_any" style="background:#fff;padding:8px;width: 112px;text-align: center;margin-right: 111px;">
+					<YP:blockdetail pos="weima" id='r'>
+					<p><img src="{$r.image1}" alt="79招生网微信公众号" /></p>
+					</YP:blockdetail>
+					<p class="" style="color:#666;">让学习变得更容易</p>
+				</li>
+				<YP:subcat catid="39" id="r" key="k">
+				<li class="inline_any">
+					<h3 class="site_map_title">{$r.catname}</h3>
+					{if $r[child]}
+					<YP:subcat catid="$r[id]" id="rd" key="kd">
+					<p>
+						<a rel="nofollow" target="_bank" href="{$rd.url}">{$rd.catname}</a>
+					</p>
+					</YP:subcat>
+					{/if}
+				</li>
+				</YP:subcat>
+			</ul>
+		</div>
+	</div>
+	<div class=" clear"></div>
+	<div class="lxwm tc mt10 w1100 auto">
+		<ul>
+			<li style="font-size:14px;"><yp:block pos='banquan' /> | Designed by site.nuo.cn</li>
+		</ul>
+	</div>
+
+</div>
+
+<!-- 右侧客服 -->
+<style>
+	.pan_right{
+		    width: 160px;
+		    margin: 0px auto;
+		    padding-bottom: 16px;
+		    position: fixed;
+		    right: 0px;
+		    top: 15%;
+		    background: #FFF;
+		    border: 1px solid #e5e5e5;
+		    border-radius: 5px;
+	}
+	
+	.pan_div h2{
+		padding: 3px 0;
+		margin: 10px 0;
+		font-size: 14px;
+		border-bottom: 1px solid #e5e5e5;
+		border-top: 1px solid #e5e5e5;
+		font-weight: normal;
+		text-align: center;
+	}
+	.pan_div:first-child h2{border-top: none;}
+	.pan_qq img{vertical-align: middle;}
+	.pan_qq a{text-decoration: none;color: #04529a;font-size: 14px;}
+	.pan_tel{font-size: 16px;text-align: center;font-weight: bold;color: #ff6600;}
+	
+	.pan_img img{width: 120px;height: 120px;}
+	.pan_img,.pan_qq{text-align: center;}
+</style>
+
+<div class="pan_right">
+	<div class="pan_div">
+		<h2>QQ客服</h2>
+		<div class="pan_qq">
+			<a href="http://wpa.qq.com/msgrd?v=3&uin=<yp:block pos='contact_qq' />&site=qq&menu=yes" target="_blank">
+				<img src="../Public/images/qq.png" alt="{$city}79招生网招生QQ客服"/>
+				<yp:block pos='contact_qq' />
+			</a>
+		</div>
+	</div>
+	
+	<div class="pan_div">
+		<h2>联系电话</h2>
+		<div class="pan_tel"><yp:block pos='contact_tel' /></div>
+	</div>
+	
+	
+	<div class="pan_div">
+		<h2>微信公众号</h2>
+		<div class="pan_img">
+			<yp:block pos='contact_qrcode' />
+		</div>
+	</div>
+</div>
+
+
+
+
+
+<!--底部 end-->
+<script type="text/javascript">
+	$(function () {
+		$('#myhouxue').mouseenter(function () {
+			$('.my_hx').fadeIn(100);
+		}).mouseleave(function () {
+			$('.my_hx').fadeOut(100);
+		});
+		$('#webguide').mouseenter(function () {
+			$('.my_wz').fadeIn(100);
+		}).mouseleave(function () {
+			$('.my_wz').fadeOut(100);
+		});
+		$('.sj').mouseenter(function () {
+			$('.my_sj').fadeIn(100);
+		}).mouseleave(function () {
+			$('.my_sj').fadeOut(100);
+		});
+		$('.wx').mouseenter(function () {
+			$('.my_wx').fadeIn(100);
+		}).mouseleave(function () {
+			$('.my_wx').fadeOut(100);
+		});
+
+		/*右侧官方微信、最新动态 */
+		$('#dynamic').find('#dynamic_up a').click(function () {
+			$('#dynamic').find('#dynamic_up a').attr('class', '');
+			$('#dynamic').find('.dynamic_hide').css('display', 'none');
+			$(this).attr('class', 'dynamic_up_one');
+			$('#dynamic').find('.dynamic_hide').eq($(this).index()).css('display', 'block');
+		});
+
+	});
+	//左侧列表10个
+	$(".blockLUl li:first-child").addClass('current_left');
+	$(".blockLUl li:first-child").find('.f14').addClass('current_link');
+	$(".blockLUl li").mouseover(function () {
+		$(this).siblings().removeClass('current_left');
+		$(this).siblings().find('.f14').removeClass('current_link');
+		$(this).addClass('current_left');
+		$(this).find('.f14').addClass('current_link');
+	});
+	//右侧列表8个
+	$(".blockRUl li:first-child").addClass('current_right');
+	$(".blockRUl li").mouseover(function () {
+		$(this).siblings().removeClass('current_right');
+		$(this).addClass('current_right');
+	});
+	// 左侧分类
+	$('.small_type li').mouseover(function () {
+		$(this).addClass('current');
+	}).mouseleave(function () {
+		$(this).removeClass('current');
+	});
+	//兼容性处理，勿删
+	$('.small_type').find('ul li').mouseover(function () {
+
+	});
+	$('#submitSearch').click(function () {
+		$("#search").submit();
+	});
+	$('#search .search_input input').focus(function () {
+		$(this).attr('placeholder', '');
+	}).blur(function () {
+		$(this).attr('placeholder', '请输入课程名字，学校名称，地址');
+	});
+	// 图片轮换
+	$("#adSlideBtn a").powerSwitch({
+		autoTime: 4000,
+		animation: "translate",
+		classAdd: "tb_slide_on",
+		classRemove: "tb_slide_a",
+		classPrefix: "tb_slide",
+		container: $("#adSlideBox"),
+		onSwitch: function (image) {
+			if (!image.attr("src")) {
+				image.attr("src", image.attr("data-src"));
+			}
+		}
+	});
+
+	$('.search_course').mouseenter(function () {
+		$('.search_course_down').fadeIn(100);
+	}).mouseleave(function () {
+		$('.search_course_down').fadeOut(100);
+	});
+	$('.sj').mouseenter(function () {
+		$('.my_sj').fadeIn(100);
+	}).mouseleave(function () {
+		$('.my_sj').fadeOut(100);
+	});
+	$('.wx').mouseenter(function () {
+		$('.my_wx').fadeIn(100);
+	}).mouseleave(function () {
+		$('.my_wx').fadeOut(100);
+	});
+	$('.search_course a').click(function (e) {
+		var se_value = $(this).attr('data');
+		$("input[name='type']").val(se_value);
+
+
+		var buffer = $('.visible_text').html();
+		var text = $(this).html();
+		$('.visible_text').html(text);
+		$(this).html(buffer);
+		var buffer1 = $('.visible_text').attr('data');
+		$(this).attr('data', buffer1);
+		$('.visible_text').attr('data', se_value);
+		$('.search_course_down').hide();
+
+	});
+
+</script>
+<script type="text/javascript" src="../Public/js/common.js"></script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?c3dbbebf1a09edcf81f1c610ca25a91a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+{$b_gas ? $b_gas : ''}
+</body>
+</html>

@@ -1,0 +1,10 @@
+RewriteEngine on
+
+RewriteBase /
+
+Order Deny,Allow
+
+Deny from 104.151.46.233   ##输入要屏蔽的IP地址
+
+Deny from 47.56.158.94   ##输入要屏蔽的IP地址
+Deny from 172.121.25  ## 屏蔽IP段

@@ -1,0 +1,38 @@
+<div class="seachs">
+	<div class="container">
+        <div class="location" id="location"><a href="/"><font color="green" class="fa fa-home"></font> 首页</a> &gt; 搜索结果</div>
+	</div>
+	<div class="main col-new">
+		<div class="panel panel-text">
+			<div id="panel-heading"><font class="panel-title">搜索结果</font></div>
+			<div id="panel-body">
+				<ul class="news-list">
+					{if $_GET['module']==School}
+					<volist name="list" id="r">
+                    <li>
+                    	<font color="silver" class="more">[{$r.createtime|toDate=###,'Y-m-d'}]</font><a href="/school2/{$r.id}.html">{$r.title}</a>
+                    </li>
+                    </volist>
+                    {elseif $_GET['module']==Kecheng}
+                    <volist name="list" id="r">
+                    <li>
+                    	<font color="silver" class="more"></font><a href="{$r.url}">{$r.title}</a>
+                    </li>
+                    </volist>
+                    {else}
+                    <volist name="list" id="r">
+                    <li>
+                    	<font color="silver" class="more">[{$r.createtime|toDate=###,'Y-m-d'}]</font><a href="{$r.url}">{$r.title}</a>
+                    </li>
+                    </volist>
+                    {/if}
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+

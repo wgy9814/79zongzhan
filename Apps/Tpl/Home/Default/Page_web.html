@@ -1,0 +1,41 @@
+
+<div class="" id="p_page">
+	<div class="mian">
+		<div class="left_nav">
+			<ul>
+				<YP:subcat catid="$Categorys[$catid]['parentid']" id="r" key="k">
+				<li><a href="{$r.url}" class="{if $r[id]==$catid} active {/if}">{$r.catname}</a></li>
+				</YP:subcat>
+			</ul>
+			
+		</div>
+		<div class="p_page_r fr">
+			<div class="p_page_r_top c3 f18">
+				{$catname}
+			</div>
+			<div class="p_page_r_con f16">
+				<table class="pa" cellpadding="0" cellspacing="0">
+					<YP:subcat catid="0" id="r" key="k">
+						<tr class="">
+							<td class="w100">
+								<a href="{$r.url}"><span>{$r.catname}</span></a>
+							</td>
+							<td>
+								<ul>
+									<YP:subcat catid="$r[id]" id="rd" key="kd">
+									<li>
+										<a href="{$rd.url}"><span>{$rd.catname}</span></a>
+									</li>
+									</YP:subcat>
+								</ul>
+							</td>
+						</tr>
+					</YP:subcat>
+				</table>
+			</div>
+		</div>
+		
+	</div>
+	
+	
+</div>

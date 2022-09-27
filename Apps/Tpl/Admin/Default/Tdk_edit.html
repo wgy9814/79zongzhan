@@ -1,0 +1,162 @@
+
+<div id="msg"></div>
+<form name="myform" id="myform" action="<if condition="$action_name=='add'">{:U($module_name.'/insert')}<else />{:U($module_name.'/update')}</if>&iscreatehtml=1" method="post">
+<div id="filelist" class="hide"></div>
+<div class="error"><ul></ul></div>
+<input type="hidden" name="action_name" id='action_name' value="{$action_name}">
+<table cellpadding=0 cellspacing=0 class="table_form" width="100%">
+    <tr>
+    <td width="10%">类型</td>
+    <td width="90%" id="">
+        <select id="type" name="type" class=" " validate=" minlength:1, maxlength:6,required:true" title="必须选择一个类型" onchange="change_type(this.options[this.options.selectedIndex].value)">
+            <option value="">请选择</option>
+            <option value="1" {if  $vo['type']==1}selected{/if}>学校首页</option>
+            <option value="2" {if  $vo['type']==2}selected{/if}>最新课程页面</option>
+            <option value="3" {if  $vo['type']==3}selected{/if}>课程文章页面</option>
+            <option value="4" {if  $vo['type']==4}selected{/if}>行业页面</option>
+
+        </select>
+    </td>
+    </tr>
+    <tr>
+        <td width="10%">上级栏目</td>
+        <td width="90%" id="box_catid">
+            <select id="parentid" name="parentid" class=" " validate=" minlength:1, maxlength:6,required:true" title="必须选择一个上级栏目" onchange="show_sub(this.options[this.options.selectedIndex].value)">
+                <option value="">请选择</option>
+                <option value="0"  {if  $vo['parentid']==0}selected{/if}>一级栏目</option>
+                <option value="1" {if  $vo['parentid']!=0}selected{/if}>下级栏目</option>
+            </select>
+        </td>
+    </tr>
+    {if $vo['parentid'] !=0}
+    <tr id="child_select">
+        <td width="10%">子栏目</td>
+        <td width="90%" >
+            <select id="child_id" name="child_id" class=" " validate=" minlength:1, maxlength:6,required:true" title="必须选择一个子栏目">
+                <option value="">请选择</option>
+                <volist name="child_list" id="r">
+                    <option value="{$r.id}" {if  $vo['child_id']==$r['id']}selected{/if}>{$r.title}</option>
+                </volist>
+            </select>
+        </td>
+    </tr>
+    {else}
+    <tr id="child_select">
+    </tr>
+    {/if}
+        <volist name="fields" id="r">
+        <if condition="!empty($r['status'])">
+        	{if 'Kecheng' == MODULE_NAME && 'kccity' == $r['field']}
+        	<tr>
+        		<td width="10%" ><if condition="$r['required']"><font color="red">*</font></if>{$r.name}</td>
+                <td width="90%" id="box_{$r['field']}">
+                <select name="kccity">
+                <PHP>
+                	$city = M('Category')->where(array('parentid' => 69))->field('id,catname')->select();
+                	foreach($city as $c)
+                	{
+                		echo '<option value="'.$c['id'].'">'.$c['catname'].'</option>';
+                	}
+                </PHP> 
+                </select>
+                <script>console.log('{$vo["kccity"]}')
+                	$(function(){
+                		var kccity = "{$vo['kccity']}";
+                		$('select[name="kccity"]').find('option').each(function(){
+                			if($(this).val()==kccity)
+                			{
+                				$(this).attr('selected', 'selected');
+                				return false;
+                			}
+                		});
+                	});
+                </script>
+                </td>
+        	</tr>
+        	{else}
+            <tr>
+                <td width="10%" ><if condition="$r['required']"><font color="red">*</font></if>{$r.name}</td>
+                <td width="90%" id="box_{$r['field']}">
+                {$r|getform=$form,###}
+                <if condition="$r[field]=='title'&&$fields[cc]"><span style="position: absolute;left:510px; top:170px">缩略图尺寸为：<?php echo($fields['cc']['setup']['default']); ?></span></if>    
+                </td>
+            </tr>
+            {/if}
+            {if $r['field']=='title' && $module_name=='System'}
+            <tr>
+            	<td width="10%">指定用户</td>
+            	<td width="90%" id="box_user">
+            		<select name="userid" id="userid">
+            		<PHP>
+            			$user = M('User')->where(array('status'=>1, 'id'=>array('neq', 3)))->select();
+            		</PHP>
+            		<volist name="user" id="u">
+            			<option value="{$u.id}" {if $vo['userid']==$u['id']}selected="selected"{/if}>[{$u.id}] {$u.username}</option>
+            		</volist>
+            		</select>
+            	</td>
+            </tr>
+            {/if}
+        </if>
+        </volist>
+</table>
+<div id="bootline"></div>
+<div id="btnbox" class="btn">
+<if condition="$vo['id']!=''"><input TYPE="hidden" name="id" value="{$vo.id}"></if>
+ 
+<input type='hidden' name='{$parentModuleKey}' value='{$parentModuleValue}'>
+<input type="hidden"  name="lang" value="{$langid}" />
+<input type="hidden" name="forward" value="{$_SERVER['HTTP_REFERER']}" />
+<INPUT TYPE="submit"  value="{:L('dosubmit')}" class="button" >
+<input TYPE="reset"  value="{:L('cancel')}" class="button">
+</div>
+</form>
+</div>
+<script>
+
+    function change_type(type){
+        $("#parentid").val("0");
+        $("#child_select").empty();
+    }
+    function show_sub(type){
+        if(type == 0){
+            $("#child_select").empty();
+        }else{
+            var type = $("#type").val();
+            if(type) {
+                $.ajax({
+                    type: "post",
+                    url: "{:URL('Admin-Ajax/get_tdk')}",
+                    async: true,
+                    data: {'type': type},
+                    dataType: 'json',
+                    success: function (msg) {
+                        if (msg) {
+
+                            var str = '<td width="10%">子栏目</td> <td width="90%" >';
+                            str+= '<select id="child_id" name="child_id" class=" " validate=" minlength:1, maxlength:6,required:true" title="必须选择一个子栏目">';
+                            str+=msg
+                            str+= '</select></td>'
+                            $('#child_select').html(str);
+                        } else {
+                            alert('删除失败');
+                        }
+                    }
+                })
+            }
+        }
+    }
+    $('#type').on('change',function(){
+//判断是否选取prompt属性，无返回值；
+        if($(this).val()){
+            var selectText = $(this).find('option:selected').text();
+            var index = selectText.indexOf('-');
+            var price = selectText.substring(index+1);
+            $('#price_buy').val(price);
+        }else{
+
+
+            $('#price_buy').val('');
+        }
+    });
+</script>

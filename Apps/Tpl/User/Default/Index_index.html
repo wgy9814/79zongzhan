@@ -1,0 +1,427 @@
+{__NOLAYOUT__}
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta name="description" content=" ">
+	<meta name="keywords" content=" ">
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit"><!--360 极速模式-->
+	<link rel="shortcut icon" href="/Apps/Tpl/Home/Default/Public/images/favicon.ico" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>账户管理-79招生网</title>
+	<link href="../Public/css/common_header_footer.css" rel="stylesheet" type="text/css" />
+	<link href="../Public/css/common_base.css" rel="stylesheet" type="text/css" />
+	<link href="../Public/css/member.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="/Apps/Tpl/Home/Default/Public/js/jquery.min.js"></script>
+
+</head>
+<body>
+<div class="header">
+	<!--logo搜索-->
+	<div class="top_nav">
+		<div class="w1200 auto clearfix" id="user_head">
+			<div class="top_logo">
+				<a class="l" href="/"><img src="{$logo}" /></a>
+				<div class="top_qie">
+					你好！欢迎 <span style="color: #00b083;text-decoration:underline;" title="{$vo['username']}">{$vo['username']}</span> 登录！
+					<a href="/User/Login/logout">退出</a>
+				</div>
+			</div>
+			<!--top-->
+			<div class="head_r fr">
+				<p class="f16" style="color: #00b083;">欢迎来到 79招生网，与大家一起共同学习与进步！</p>
+			</div>
+		</div>
+	</div>
+	<!--logo搜索end-->
+	<div class="clear"></div>
+	<!--导航-->
+</div>
+<!--导航end-->
+<div class="Member_wall" id="Member_Index_index">
+	<div class="Member Index index">
+		<div class="main">
+			<div class="container">
+				<div class="main-left">
+					<div class="main-left">
+						<include file="Public:left_nav"/>
+				</div>
+				<div class="main-right">
+					<div class="tab-panel">
+						<div style="padding-bottom: 5px;">我的账户管理</div>
+						<ul class="nav nav-tabs" id="myTab">
+						    
+							<li class="active">
+								<a href="javascript:;" >基本资料</a>
+							</li>
+							
+							<li class="">
+								<a href="javascript:;">修改头像</a>
+							</li>
+							<li class="">
+								<a href="javascript:;">修改密码</a>
+							</li>
+							{if cookie('user')==1}
+							<li class="">
+								<a href="javascript:;">机构认证资料</a>
+							</li>
+							{/if}
+						</ul>
+						<div class="tab-content">
+							{if cookie('user')==1}
+							<form class="tab-pane " id="tab1" method="post" action="{:URL('User-Index/Modify')}">
+								<div class="form-group">
+									<label class="col-sm-2 control-label">机构名称：</label>
+									<div class="col-sm-7">
+										<input name="title" type="text" class="form-control" maxlength="16" required="" value="{$vo['title']}">
+									</div>
+									<div class="col-sm-3"></div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">主营行业：</label>
+									<div class="col-sm-7">
+										<select name="industry" class="form-control" id='industry' >
+                                        	<option>请选择</option>
+                                        	<YP:subcat catid="0" id="r" key="k">
+                                        	<option value="{$r.id}">{$r.catname}</option>
+                                        	</YP:subcat>
+                                        </select>
+									</div>
+									<div class="col-sm-3"></div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">机构地址：</label>
+									<div class="col-sm-7">
+										<input name="address" type="text" class="form-control" value="{$vo['address']}">
+									</div>
+									<div class="col-sm-3"></div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">联系电话：</label>
+									<div class="col-sm-7">
+										<input name="mobile" type="number" class="form-control" value="{$vo['mobile']}"  maxlength="11">
+									</div>
+									<div class="col-sm-3"></div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">授课对象：</label>
+									<div class="col-sm-7">
+										<input name="give_instruction" type="text" class="form-control" value="{$vo['give_instruction']}">
+									</div>
+									<div class="col-sm-3"></div>
+								</div>
+								<!--<div class="form-group">-->
+									<!--<label class="col-sm-2 control-label">客服QQ：</label>-->
+									<!--<div class="col-sm-7">-->
+										<!--<input name="qq" type="number" class="form-control" value="{$vo['qq']}" min="10001" maxlength="11">-->
+									<!--</div>-->
+									<!--<div class="col-sm-3"></div>-->
+								<!--</div>-->
+								<div class="form-group">
+									<label class="col-sm-2 control-label">电子邮箱：</label>
+									<div class="col-sm-7">
+										<input name="email" type="email" class="form-control" value="{$vo['email']}">
+									</div>
+									<div class="col-sm-3"></div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">微信号：</label>
+									<div class="col-sm-7">
+										<input name="wechat" type="text" class="form-control" value="{$vo['wechat']}">
+									</div>
+									<div class="col-sm-3"></div>
+								</div>
+								<!--<div class="form-group">
+									<label class="col-sm-2 control-label">学校主页：</label>
+									<div class="col-sm-7">
+										<input name="web" type="text" class="form-control" value="{$vo['web']}">
+									</div>
+									<div class="col-sm-3"></div>
+								</div>-->
+								
+								<div class="form-group">
+									<label class="col-sm-2 control-label">简      介：</label>
+									<div class="col-sm-7">
+										<textarea class="form-control text_t"  name="description" >{$vo['description']}</textarea>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<div class="col-sm-7 col-sm-offset-2" align="center">
+										<input type="hidden" name="schoolid" id="schoolid" value="{$vo.schoolid}" />
+										<button type="submit" class="btn btn-info">保存修改</button>
+									</div>
+								</div>
+							</form>
+							{else}
+							<form class="tab-pane " id="tab1" style="display: block;" method="post" action="{:URL('User-Index/Modify2')}">
+								<div class="form-group">
+									<label class="col-sm-2 control-label">用户昵称：</label>
+									<div class="col-sm-7">
+										<input name="username" type="text" class="form-control" value="{$vo['username']}" maxlength="16" required="">
+									</div>
+									<div class="col-sm-3"></div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">真实姓名：</label>
+									<div class="col-sm-7">
+										<input name="linkman" type="text" class="form-control" value="{$vo['linkman']}" maxlength="8">
+									</div>
+									<div class="col-sm-3"></div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">电子邮箱：</label>
+									<div class="col-sm-7">
+										<input name="email" type="email" class="form-control" value="{$vo['email']}">
+									</div>
+									<div class="col-sm-3"></div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">手机号码：</label>
+									<div class="col-sm-7">
+										<input name="mobile" type="number" class="form-control" value="{$vo['mobile']}" min="13000000000" maxlength="11">
+									</div>
+									<div class="col-sm-3"></div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">ＱＱ号码：</label>
+									<div class="col-sm-7">
+										<input name="qq" type="number" class="form-control" value="{$vo['qq']}" min="10001" maxlength="11">
+									</div>
+									<div class="col-sm-3"></div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">个人签名：</label>
+									<div class="col-sm-7">
+										<input name="motto" type="text" class="form-control" value="{$vo['motto']}">
+									</div>
+									<div class="col-sm-3"></div>
+								</div>
+								<div class="form-group" id="areaList">
+									<label class="col-sm-2 control-label">所在地区：</label>
+									<div class="col-sm-2">
+										<input name="address" type="text" class="form-control" value="{$vo['address']}">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">个人简介：</label>
+									<div class="col-sm-7">
+										<textarea class="form-control text_t"  name="description" >{$vo['description']}</textarea>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-7 col-sm-offset-2" align="center">
+										<button type="submit" class="btn btn-info">保存修改</button>
+									</div>
+								</div>
+							</form>
+							{/if}
+							<div class="tab-pane" id="tab2" align="center" >
+								<form method="post" action="{:URL('User-Index/Modifypic')}" enctype="multipart/form-data">
+								<div class="scpix_box">
+									<div id="up_images">
+                                       <img class="fileImg" src="../Public/images/sc_pic.jpg"/ onclick="text()">
+                                    </div>
+                                    <label for="file" class="scpix_up"></label>
+		                            <input type="file" name="file" id="file" class="file" value=" 132" style="outline: none;width: 0;height: 0;	"/>
+		                            <p class="p1">请点击按钮选择图片</p>
+		                            <p>仅支持JPG、JPEG、GIF、PNG格式的图片文件不能大于2MB</p>
+								</div>
+								<button type="submit" class="btn btn-info">保存修改</button>
+								</form>
+							</div>
+							<form action="{:URL('User-Index/password')}" class="form-horizontal tab-pane" id="tab3" method="post" onsubmit="return repasswrod();">
+								<div class="form-group">
+									<label class="control-label col-sm-2">用 户 名</label>
+									<div class="col-sm-7">
+										<input type="text" value="{$vo['username']}" class="form-control" disabled="">
+									</div>
+									<font class="col-sm-3" color="silver">用户名不能更改</font>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-2">原 密 码</label>
+									<div class="col-sm-7">
+										<input name="oldpassword"  type="password" class="form-control" placeholder="原密码" required="">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-2">新 密 码</label>
+									<div class="col-sm-7">
+										<input name="password" id="mpassword" type="password" class="form-control" placeholder="新密码" pattern="\w{6,32}" required="">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-2">确认密码</label>
+									<div class="col-sm-7">
+										<input name="repassword" type="password" class="form-control" id="mrepassword" placeholder="重复输入一次新密码" required="">
+									</div>
+									<font class="col-sm-3" color="silver">重复上面的密码</font>
+								</div>
+								<div class="col-sm-7 col-lg-offset-2" align="center">
+									<INPUT TYPE="hidden"  name="dosubmit" value="{:L('dosubmit')}" class="button" >
+									<button type="submit" class="btn btn-primary btn-info">保存修改</button>
+								</div>
+							</form>
+							{if cookie('user')==1}
+							<form action="" class="form-data tab-pane active"  style="display: block;" id="tab4" method="post" onsubmit="">
+								<lab>注：机构认证资料的种类：法人（或负责人）身份证照片、营业执照照片、机构招牌照片等等；选择其中之一上传即可,认证后您可以获得更加优先的推广机会</lab>
+								<div class="form-group">
+									<label class="control-label col-sm-2">资料上传：</label>
+						            <div class="col-sm-7">
+										<div id='container'>
+											<button id='addfile' class="add-file" type="button">浏览</button>
+											<button id='up-file' class="up-file" type="button">上传</button>
+										</div>
+									</div>
+									<div class="uploadMsg col-sm-3">
+                                        <span>共 <i class="lv">4</i> 张，还能上传 <i class="lv"><PHP>echo 4-count($orgimages); </PHP></i> 张</span>
+                                    </div>
+						        </div><script>console.log('<?=count($orgimages)?>')</script>
+						        <div class="form-group">
+						            <label class="control-label col-sm-2"> </label>
+						            <div class="col-sm-9">
+						                <div class="file-list" {if count($orgimages)}style="display: block;"{/if}>
+						                    <ul id='file-list'>
+						                        <volist name="orgimages" id="r" key="i">
+						                        	<?php $time = time()+$i; ?>
+						                        	<li class="pic_list" id="{$time}">
+						                        		<div class="file-img">
+						                        			<img src="{$r}">
+						                        		</div>
+						                        		<div class="file-text">
+						                        			<a class="cg-del" href="javascript:void(0);" data-val="{$time}">移除</a>
+						                        		</div>
+						                        		<span class="progress" style="width: 100%"></span>
+						                        	</li>
+						                        </volist>
+						                    </ul>
+						                </div>
+						            </div>
+						        </div>
+							</form>
+							{/if}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</div>
+<link rel="stylesheet" href="../Public/css/ziliao.css" />
+<script>
+	function repasswrod(){
+		var pass1=$('#mpassword').val();
+		var pass2=$('#mrepassword').val();
+		if(pass1!=pass2){
+			alert('两次密码不一致');
+			return false
+		}
+	}
+</script>
+<script type="text/javascript" src="../Public/js/plupload/moxie.js"></script>
+<script type="text/javascript" src="../Public/js/plupload/plupload.dev.js"></script>
+<script type="text/javascript" src="../Public/js/plupload/jUploader.js"></script>
+<script>
+    var juploader = new jUploader();
+    juploader.start();
+    // 上传完， 可以通过juploader.uploadFiles()方法得到最终需要上传的文件对象（此对象为数组， 每个对象是每上传一个文件后，服务器返回过来的json对象）
+    /*$("#up-file").click(function(){
+		console.log(juploader.uploader())
+    })*/
+</script>
+<!--底部-->
+<div class="footer mt20 clear">
+	<div class="site_map">
+		<div class="site_map_con site_map_con w1100 auto">
+			<ul class="inline_box">
+				<li class="inline_any" style="background:#fff;padding:8px;width: 112px;text-align: center;margin-right: 111px;">
+					<YP:blockdetail pos="weima" id='r'>
+					<p><img src="{$r.image1}" /></p>
+					</YP:blockdetail>
+					<p class="" style="color:#666;">让学习变得更容易</p>
+				</li>
+				<YP:subcat catid="39" id="r" key="k">
+				<li class="inline_any">
+					<h3 class="site_map_title">{$r.catname}</h3>
+					{if $r[child]}
+					<YP:subcat catid="$r[id]" id="rd" key="kd">
+					<p>
+						<a rel="nofollow" target="_bank" href="{$rd.url}">{$rd.catname}</a>
+					</p>
+					</YP:subcat>
+					{/if}
+				</li>
+				</YP:subcat>
+			</ul>
+		</div>
+	</div>
+	<div class=" clear"></div>
+	<div class="lxwm tc mt10 w1100 auto">
+		<ul>
+			<li style="font-size:14px;"><yp:block pos='banquan' /> | Designed bymqu.cn</li>
+		</ul>
+	</div>
+</div>
+<script>
+	$(function(){
+		//行业选择
+		var industrys = '{$vo['industry']}'
+		var hy = industrys == '请选择' ? 0 : parseInt({$vo['industry']});
+		
+		for(var i=0;i<$('#industry option').length;i++){
+			var hyb=parseInt($('#industry option').eq(i).val());
+			
+			if(hyb==hy){
+				
+				$('#industry option').eq(i).attr('selected',true);
+			}else{
+					
+				$('#industry option').eq(i).attr('selected',false);
+			}
+		}
+		$('.nav-tabs>li').click(function(){
+			var index = $(this).index();
+			$(this).addClass('active').siblings().removeClass('active');
+			$('.tab-content .tab-pane').eq(index).css('display','block').siblings().css('display','none')
+		});
+		
+		
+		
+		$(".file").change(function(){
+        var fileImg = $(".fileImg");
+        var explorer = navigator.userAgent;
+        var imgSrc = $(this)[0].value;
+        if (explorer.indexOf('MSIE') >= 0) {
+            if (!/\.(jpg|jpeg|png|JPG|PNG|JPEG)$/.test(imgSrc)) {
+                imgSrc = "";
+                fileImg.attr("src","../Public/images/sc.jpg");
+                alert('只允许上传jpg,jpeg,png,JPG,PNG,JPEG')
+                return false;
+            }else{
+                fileImg.attr("src",imgSrc);
+            }
+        }else{
+            if (!/\.(jpg|jpeg|png|JPG|PNG|JPEG)$/.test(imgSrc)) {
+                imgSrc = "";
+                fileImg.attr("src","../Public/images/sc.jpg");
+                alert('只允许上传jpg,jpeg,png,JPG,PNG,JPEG')
+                return false;
+            }else{
+                var file = $(this)[0].files[0];
+                var url = URL.createObjectURL(file);
+                fileImg.attr("src",url);
+            }
+        }
+		if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion.match(/8./i)=="8."){ 
+		alert("IE浏览器暂不支持预览图片"); 
+		}
+    });
+	});
+	
+</script>
+
+<!--底部 end-->
+</body>
+</html>

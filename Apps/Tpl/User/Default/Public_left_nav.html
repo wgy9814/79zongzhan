@@ -1,0 +1,82 @@
+<link href="/Public/Css/layer.css" rel="stylesheet" type="text/css"/>
+<link href="/Public/Css/common.css" rel="stylesheet" type="text/css"/>
+
+<div class="pic_box">
+    <div class="side-adorn">
+        <div class="pic-box"><img src="{$vo['file']}" alt="{$vo['username']}"></div>
+    </div>
+    <div class="" style="text-align: center;">
+        <a href="javascript:;" class="user-name" title="{$vo['username']}">{$vo['username']}</a>&nbsp;
+        {if $user_mark}
+        {$user_mark}
+        {/if}
+    </div>
+    <div class="user-info">
+        <dl class="user-info-dl">
+            {if $user_mark}
+            <dd class="">V生效时间
+                <a href="javascript:;">{$user_level.updatetime|toDate=###,'Y-m-d H:i:s'}</a>
+            </dd>
+            <dd class="">V失效时间
+                <a href="javascript:;"><font {if $is_expire}color="red" {/if}>{$user_level.expire_time|toDate=###,'Y-m-d
+                    H:i:s'}</font></a>
+            </dd>
+            {/if}
+            <dd class="">最后登录
+                <a href="javascript:;">{$vo.last_logintime|toDate=###,'Y-m-d H:i:s'}</a>
+            </dd>
+            <dd class="">注册时间
+                <a href="javascript:;">{$vo.createtime|toDate=###,'Y-m-d H:i:s'}</a>
+            </dd>
+        </dl>
+    </div>
+</div>
+<div class="side-manu">
+    <dl>
+        <dt>账户管理</dt>
+        <dd>
+            <a class="active" href="/User/Index">个人资料</a>
+        </dd>
+        <dd>
+            {if $vo['user']}
+            <a class="" id="fabu" href="javascript:;">我的课程及发布新课程</a>
+            {else}
+            <a class="" href="/User/Index/mykecheng2?sid={$vo['id']}">我的课程</a>
+            {/if}
+        </dd>
+        {if $vo['user']}
+
+        {else}
+        <dd>
+            <a href="/User/Index/mycoupon?sid={$vo['id']}">优惠卷</a>
+        </dd>
+        {/if}
+        <dd>
+            <a href="/User/Index/news">我的消息</a>
+        </dd>
+        {if $vo['groupid'] != '3'}
+        <dd>
+            <a href="/User/Index/vip">自主招生服务V</a>
+        </dd>
+        <dd>
+            <a href="javascript:;" id="treaty">代理招生服务D</a>
+        </dd>
+        {/if}
+    </dl>
+</div>
+</div>
+<div id="tip" style="display: none;">
+    <div id="new_kecheng_tip">
+        <yp:block pos="new_kecheng_tip"/>
+        <p class="button">
+            <a onclick="new_href('/User/Index/mykecheng?sid={$vo[id]}#fabu_btn')" class="sub-btn">点击发布课程</a>
+        </p>
+    </div>
+</div>
+<div id="fuwu_content" style="display: none;">
+    <div id="fuwu_content_tip">
+        <yp:block pos="treaty"/>
+    </div>
+</div>
+<script type="text/javascript" src="/Public/Js/layer.js"></script>
+<script type="text/javascript" src="/Public/Js/common.js"></script>

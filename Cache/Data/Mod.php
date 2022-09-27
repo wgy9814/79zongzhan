@@ -1,0 +1,2 @@
+<?php
+return array ( 'Page' => '1', 'Article' => '2', 'City' => '27', 'View' => '28', 'Product' => '3', 'Picture' => '4', 'Download' => '5', 'Feedback' => '6', 'Link' => '7', 'Guestbook' => '8', 'Kefu' => '9', 'New' => '18', 'Kecheng' => '19', 'School' => '21', 'Youqing' => '22', 'Join' => '24', 'Contact' => '25', 'Course' => '29', 'Sitemap' => '30', 'Message' => '31', 'System' => '32', 'User_message' => '33', 'Tdk' => '35', 'Blacklist' => '36', 'Vip' => '37', 'User_level' => '39', ); ?>

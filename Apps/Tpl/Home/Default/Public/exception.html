@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content=""/>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" charset="width=device-width,initial-scale=1">
+	 <title>你所访问的网页不存在或者已被删除_米趋</title>
+
+<meta name="Generator" content="EditPlus"/>
+<style>
+body{
+	font-family: 'Microsoft Yahei', Verdana, arial, sans-serif;
+	font-size:14px;
+}
+a{text-decoration:none;color:#174B73;}
+a:hover{ text-decoration:none;color:#FF6600;}
+h2{
+	border-bottom:1px solid #DDD;
+	padding:8px 0;
+    font-size:25px;
+}
+.title{
+	margin:4px 0;
+	color:#F60;
+	font-weight:bold;
+}
+.message,#trace{
+	padding:1em;
+	border:solid 1px #000;
+	margin:10px 0;
+	background:#FFD;
+	line-height:150%;
+}
+.message{
+	background:#FFD;
+	color:#2E2E2E;
+		border:1px solid #E0E0E0;
+}
+#trace{
+	background:#E7F7FF;
+	border:1px solid #E0E0E0;
+	color:#535353;
+}
+.notice{
+    padding:10px;
+	margin:5px;
+	color:#666;
+	background:#FCFCFC;
+	border:1px solid #E0E0E0;
+}
+.red{
+	color:red;
+	font-weight:bold;
+}
+
+
+*{
+    margin: 0;
+    padding: 0;
+}
+.box{
+    background: url("../Public/images/404_bg.png") no-repeat center;
+    height: 453px;
+    position: relative;
+    margin-top: 150px;
+}
+.box .right{
+    position: absolute;
+    top: 220px;
+    left: 694px;
+}
+.box span{
+    display: block;
+    height: 60px;
+    width: 265px;
+    line-height: 60px;
+    background: #fa5934;
+    text-align: center;
+    font-size: 18px;
+    margin-top: 20px;
+}
+.box span a{
+    text-decoration: none;
+    color: #fff;
+}
+</style>
+</head>
+<body>
+<?php 
+ if (APP_DEBUG) :?>
+
+<div class="notice">
+<h2>系统发生错误 </h2>
+<div >您可以选择 [ <A HREF="<?php echo(strip_tags($_SERVER['PHP_SELF']))?>">重试</A> ] [ <A HREF="javascript:history.back()">返回</A> ] 或者 [ <A HREF="<?php echo(__APP__);?>">回到首页</A> ]</div>
+<?php if(isset($e['file'])) {?>
+<p><strong>错误位置:</strong>　FILE: <span class="red"><?php echo $e['file'] ;?></span>　LINE: <span class="red"><?php echo $e['line'];?></span></p>
+<?php }?>
+<p class="title">[ 错误信息 ]</p>
+<p class="message"><?php echo strip_tags($e['message']);?></p>
+<?php if(isset($e['trace'])) {?>
+<p class="title">[ TRACE ]</p>
+<p id="trace">
+<?php echo nl2br($e['trace']);?>
+</p>
+<?php }?>
+</div>
+<?php 
+else :
+?>
+<div class="box 22">
+    <div class="right">
+        <p>您可以通过以下方式继续访问...</p>
+        <span><a href="/">返回首页</a></span>
+    </div>
+</div>
+
+<?php
+	endif;
+?>
+</body>
+</html>

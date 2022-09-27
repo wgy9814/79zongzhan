@@ -1,0 +1,26 @@
+<div class="" id="p_page">
+	<YP:flash flashid="4" />
+	<div class="mian" id="contact">
+		<div class="locat f14">
+			<a href="/">首页</a> &gt; <YP:catpos  catid="catid" space=" &gt;" />
+		</div>
+		<div class="con">
+			<h2 class="lv f26 fw">总部业务（总平台城市切换页面在线客服）</h2>
+			<div class="c3 f16 lh30">
+				{$content}
+			</div>
+			
+			<h2 class="lv f26 fw">分站招生业务（分站页面在线客服）</h2>
+			<ul class="ovef f16 c3">
+				<yp:list name='Contact' id='r' limit='255' field='*'>
+				<li class="ovef diandiandian">
+					{$r.title}: 电话: <span class="" title="{$r.dianhua}">{$r.dianhua}</span>QQ: <span>{$r.qq}</span>
+				</li>
+				</yp:list>
+				
+			</ul>
+		</div>
+	</div>
+	
+	
+</div>

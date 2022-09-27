@@ -1,0 +1,143 @@
+{__NOLAYOUT__}
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta name="description" content=" ">
+	<meta name="keywords" content=" ">
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit"><!--360 极速模式-->
+	<link rel="shortcut icon" href="/Apps/Tpl/Home/Default/Public/images/favicon.ico" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>账户管理-79招生网</title>
+	<link href="../Public/css/common_header_footer.css" rel="stylesheet" type="text/css" />
+	<link href="../Public/css/common_base.css" rel="stylesheet" type="text/css" />
+	<link href="../Public/css/member.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="/Apps/Tpl/Home/Default/Public/js/jquery.min.js"></script>
+
+</head>
+<body>
+<?php 
+	$clist = M('Feedback')->where('user='.$vo[id])->select();
+	
+ ?>
+<div class="header">
+	<!--logo搜索-->
+	<div class="top_nav">
+		<div class="w1200 auto clearfix" id="user_head">
+			<div class="top_logo">
+				<a class="l" href="/"><img src="{$logo}" /></a>
+				<div class="top_qie">
+					你好！欢迎 <span style="color: #00b083;text-decoration:underline;">{$vo['username']}</span> 登录！
+					<a href="/User/Login/logout">退出</a>
+				</div>
+			</div>
+			<!--top-->
+			<div class="head_r fr">
+				<p class="f16" style="color: #00b083;">欢迎来到 79招生网，与大家一起共同学习与进步！</p>
+			</div>
+		</div>
+	</div>
+	<!--logo搜索end-->
+	<div class="clear"></div>
+	<!--导航-->
+</div>
+<!--导航end-->
+<div class="Member_wall" id="Member_Index_index">
+	<div class="Member Index index">
+		<div class="main">
+			<div class="container">
+				<div class="main-left">
+					<div class="main-left">
+					<include file="Public:left_nav"/>
+				</div>
+				<div id="mycoupon">
+					<div class="mycoupon_t">
+						我的优惠券
+					</div>
+					<div class="tab">
+						<div style="margin-top:25px;">
+                        	<table class="table table-hover table-bordered " width="100%" cellpadding="0" cellspacing="0">
+	                            <tbody>
+	                            	<tr>
+		                                <th scope="col">ID</th>
+		                                <th scope="col">序列号</th>
+		                                <th scope="col">使用说明</th>
+		                            </tr>
+		                            {if $clist}
+		                            <volist name='clist' id='r' key='k'>
+		                            	<tr>
+			                                <td>{$r.id}</td>
+			                                <td>{$r.promotion}</td>
+			                                <td>报名项目：<span class="red">{$r.project}</span><br>(请按网上报名时收到的短信提示使用报名编码，如有不明，请咨询分站客服)</td>
+			                            </tr>
+		                            </volist>
+		                            {else}
+		                            <tr>
+		                                <td>1</td>
+		                                <td>暂无优惠券</td>
+		                                <td>请按网上报名时收到的短信提示使用报名编码，如有不明，请咨询分站客服</td>
+		                            </tr>
+		                            {/if}
+	                            </tbody>
+                        	</table>
+                        </div>
+					</div>
+				</div>			
+			</div>
+		</div>
+		
+	</div>
+</div>
+<link rel="stylesheet" href="../Public/css/ziliao.css" />
+<!--底部-->
+<div class="footer mt20 clear">
+	<div class="site_map">
+		<div class="site_map_con site_map_con w1100 auto">
+			<ul class="inline_box">
+				<li class="inline_any" style="background:#fff;padding:8px;width: 112px;text-align: center;margin-right: 111px;">
+					<YP:blockdetail pos="weima" id='r'>
+					<p><img src="{$r.image1}" /></p>
+					</YP:blockdetail>
+					<p class="" style="color:#666;">让学习变得更容易</p>
+				</li>
+				<YP:subcat catid="39" id="r" key="k">
+				<li class="inline_any">
+					<h3 class="site_map_title">{$r.catname}</h3>
+					{if $r[child]}
+					<YP:subcat catid="$r[id]" id="rd" key="kd">
+					<p>
+						<a rel="nofollow" target="_bank" href="{$rd.url}">{$rd.catname}</a>
+					</p>
+					</YP:subcat>
+					{/if}
+				</li>
+				</YP:subcat>
+			</ul>
+		</div>
+	</div>
+	<div class=" clear"></div>
+	<div class="lxwm tc mt10 w1100 auto">
+		<ul>
+			<li style="font-size:14px;"><yp:block pos='banquan' /> | Designed bymqu.cn</li>
+		</ul>
+	</div>
+</div>
+<script>
+	$(function(){
+		var flas=false;
+		$(document).on('click','#qx',function(){
+			if(!flas){
+				$('#kecheng_right ul.list li input[type=checkbox]').prop('checked',true);
+				flas=true;
+			}else{
+				$('#kecheng_right ul.list li input[type=checkbox]').prop('checked',false);
+				flas=false;
+			}
+		})
+	});	
+</script>
+
+<!--底部 end-->
+</body>
+</html>

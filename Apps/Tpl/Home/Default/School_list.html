@@ -1,0 +1,55 @@
+
+
+<div id="school">
+	<div class="sctop">
+		<div class="mian">
+			<a class="active" href="/school2/{$_GET['p']}.html">学校首页</a>
+			<a class="" href="/kec/{$_GET['p']}.html">最新课程</a>
+			<!-- <a href="/online/?sid={$_GET['sid']}">网上报名</a> -->
+		</div>
+	</div>
+	<div class="Space Index index">
+		<div id="main">
+			<div class="space-col">
+				<div class="sbox">
+					<div class="title">
+						<h1><i class="ico ico-spacehome"></i><span style="font-size: 28px;">{$schoolid.title}</span></h1>
+					</div>
+					<div class="endtext">
+						<img src="{$schoolid.file}" alt="{$schoolid.title}" style="margin-right: 45px; max-width: 256px; max-height: 256px; float: left;">
+						{$schoolid.description}
+					</div>
+				</div>
+				<div class="sbox nomb">
+					<div class="title">
+						<h3><i class="ico ico-contact"></i><span>联系我们</span></h3>
+					</div>
+					<ul class="space-contact">
+						<li><span>学校名称：</span>{$schoolid.title}</li>
+						<li><span>注册时间：</span>{$schoolid.createtime|toDate=###,'Y-m-d'}</li>
+						<li><span>联系电话：</span><span class="">{$schoolid.dianhua}</span></li>
+						<!--<li><span>客服 QQ：</span>-->
+							<!--<a href="http://wpa.qq.com/msgrd?v=3&uin={$schoolid.QQ}&site=caimaozsw.com&menu=yes" target="_blank" title="点击这里给我发消息" ><span class="">{$schoolid.QQ}</span></a>-->
+						</li>
+						<li><span>详细地址：</span>{$schoolid.address}</li>
+						<!--<li><span>学校主页：</span>
+							<a href="/" target="_blank" >{$schoolid.zhuye}</a>
+						</li>-->
+					</ul>
+
+				</div>
+			</div>
+			<include file="Home:school_right"/>
+		</div>
+	</div>
+
+</div>
+<style type="text/css">
+	.nav_wrap {
+		display: none;
+	}
+	
+	.header {
+		height: 104px;
+	}
+</style>

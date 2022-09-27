@@ -1,0 +1,264 @@
+
+<link rel="stylesheet" type="text/css" href="../Public/css/bootstrap.css"/>
+<link rel="stylesheet" type="text/css" href="../Public/css/common_base.css?{$now_time}"/>
+<div class="main" id="zhuce">
+		<div class="zhucu_con" style="">
+                <div class="panel panel-default">
+                    <ul class="nav nav-tabs" id="myTab">
+                        <li class="active"><a href="javascript:;" >机构会员注册</a></li>
+                        <li class=""><a href="javascript:;" >普通会员注册</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <form enctype='multipart/form-data' method="post" action="{:U('User/Register/doreg')}" class="tab-pane form-horizontal" id="tab1" style="display: block;">
+                            <input type='hidden' name='formhash' value='{$formhash}' />
+                            <input type="hidden" name="form_submit" value="ok" />
+                        	<input type="hidden" name="user" id="user" value="1" />
+                        	<input type="hidden" id="forward" name="forward" value="{$forward}"/>
+                        	<div class="panel-body">
+                                <div class="form-group">
+                                    <div class="col-sm-2" align="center" style="color:#F15771; font-weight: bold;"><h4>基本信息</h4></div> 
+                                </div>
+                                <div class="form-group">
+                                    <span class="col-sm-2 control-span">用 户 名：</span>
+                                    <div class="col-sm-6">
+                                        <input name="username" id="username" type="text" class="form-control" placeholder="请输入用户名" required>
+                                    </div>
+                                    <span class="col-sm-4"><font color="red">*</font></span>
+                                </div>
+                                <div class="form-group">
+                                    <span class="col-sm-2 control-span">登录密码：</span>
+                                    <div class="col-sm-6">
+                                        <input name="password" id="password" type="password" class="form-control" placeholder="请输入密码" required>
+                                    </div>
+                                    <span class="col-sm-4"><font color="red">*</font></span>
+                                </div>
+                                <div class="form-group">
+                                    <span class="col-sm-2 control-span">确认密码：</span>
+                                    <div class="col-sm-6">
+                                        <input name="repassword" type="password" class="form-control" placeholder="请确认密码" required>
+                                    </div>
+                                    <span class="col-sm-4" style="color: #666666;"><font color="red">*</font> 重复一次上面的密码</span>
+                                </div>
+                                <div class="form-group">
+                                    <span class="col-sm-2 control-span">手机号码：</span>
+                                    <div class="col-sm-6">
+                                        <input name="mobile" id="mobile" type="number" class="form-control" placeholder="请输入手机号码" required>
+                                    </div>
+                                   	<span class="col-sm-4"><font color="red">*</font></span>
+                                </div>
+                                <div class="form-group">
+                                    <span class="col-sm-2 control-span">短信验证码：</span>
+                                    <div class="col-sm-3">
+                                        <input name="cord" type="number" class="form-control" placeholder="请输入验证码" maxlength="6" required>
+                                    </div>
+                                    <div class="col-sm-3 sm3">
+                                        <button type="button" class="btm duanx" id="duanjg">点击获取短信验证码</button>
+                                        <button type="button" class="btm dengd" id="" style="display: none;">点击获取短信验证码</button>
+                                    </div>
+                                    <span class="col-sm-4"><font color="red" >*</font></span>
+                                </div>
+                                <div class="form-group">
+                                    <span class="col-sm-2 control-span">图形验证码：</span>
+                                    <div class="col-sm-3">
+                                        <input name="verify" type="text" class="form-control" placeholder="请输入验证码" maxlength="4" required>
+                                    </div>
+                                    <div class="col-sm-3 sm3">
+                                    <img id="verifyImage" class="checkcode" style="height: 35px; width: 70px;"
+                                         src="{:U('Home/Index/verify')}" onclick="javascript:resetVerifyCode();" class="checkcode"
+                                         title="{:L('resetVerifyCode')}"/>
+                                    </div>
+                                    <span class="col-sm-4"><font color="red" >*</font></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <span class="col-sm-2 control-span">电子邮箱：</span>
+                                    <div class="col-sm-6">
+                                        <input name="email" id="email" type="email" class="form-control" placeholder="请输入电子邮箱">
+                                    </div>
+                                    <span class="col-sm-4"><font color="red" >*</font></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <span class="col-sm-2 control-span">微信号：</span>
+                                    <div class="col-sm-6">
+                                        <input name="wechat" id="wechat" type="text" class="form-control" placeholder="请输入微信号">
+                                    </div>
+                                    <span class="col-sm-4">可选项</span>
+
+                                </div>
+
+                                <br>
+
+                                <div class="form-group">
+                                    <div class="col-sm-2" align="center" style="color:#F15771; font-weight: bold;"><h4>机构信息</h4></div> 
+                                </div>
+                                
+                                <div class="form-group"><div class="col-sm-8" align="center"><font color="gray">以下信息请认真填写(不真实的信息将会导致审核失败) <font color="red">*</font> 号为必填项</font></div><span class="col-sm-4"></span></div>
+
+                                <div class="form-group">
+                                    <span class="col-sm-2 control-span">机构名称：</span>
+                                    <div class="col-sm-6">
+                                        <input name="title" id="title" type="text" class="form-control" placeholder="请输入机构名称" required>
+                                    </div>
+                                    <span class="col-sm-4"><font color="red">*</font></span>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <span class="col-sm-2 control-span">主营行业：</span>
+                                    <div class="col-sm-6">
+                                        <select name="industry" id='industry' >
+                                        	<option>请选择</option>
+                                        	<YP:subcat catid="0" id="r" key="k">
+                                        	<option value="{$r.id}">{$r.catname}</option>
+                                        	</YP:subcat>
+                                        </select>                                 
+                                    </div>
+                                    <span class="col-sm-4"><font color="red">*</font></span>
+                                </div>
+                                <div class="form-group">
+                                    <span class="col-sm-2 control-span">授课地区：</span>
+                                    <div class="col-sm-6">
+                                        <input name="areas" type="text" class="form-control" placeholder="请输入授课地区" required>
+                                    </div>
+                                    <span class="col-sm-4"><font color="red">*</font></span>
+                                </div>
+                                <div class="form-group">
+                                    <span class="col-sm-2 control-span">机构简介：</span>
+                                    <div class="col-sm-6">
+                                        <textarea name="description" rows="4" class="form-control" placeholder="请输入机构简介" required></textarea>
+                                    </div>
+                                    <span class="col-sm-4"><font color="red">*</font></span>
+                                </div>
+                                <div class="form-group">
+                                    <span class="col-sm-2 control-span">联 系 人：</span>
+                                    <div class="col-sm-6">
+                                        <input name="linkman" type="text" class="form-control" placeholder="请输入联系人" required>
+                                    </div>
+                                    <span class="col-sm-4"><font color="red">*</font></span>
+                                </div>
+                                <div class="form-group">
+                                    <span class="col-sm-2 control-span">联系电话：</span>
+                                    <div class="col-sm-6">
+                                        <input name="tel" type="number" class="form-control" min="13000000000" max="18999999999" placeholder="请输入手机号码" required>
+                                    </div>
+                                    <span class="col-sm-4"><font color="red">*</font></span>
+                                </div>
+                                <div class="form-group">
+                                    <span class="col-sm-2 control-span">联系地址：</span>
+                                    <div class="col-sm-6">
+                                        <input name="address" type="text" class="form-control" placeholder="请输入详细地址" required>
+                                    </div>
+                                    <span class="col-sm-4"><font color="red">*</font></span>
+                                </div>
+                                <div class="form-group upload">
+                                    <span class="col-sm-2 control-span">学校形象图片：</span>
+                                    <div id="up_images">
+                                       <img class="fileImg" src="../Public/images/up_img.jpg"/>
+                                       
+                                    </div>
+                                    <div class="up_r">
+                                    	<div class="txt">为更好的展示您学校形象，请上传清晰照片，<br	>
+并最好在上传前将尺寸大小调整为302*302像素仅限一张，大小不超过200K<br	>
+请上传学校校门、LOGO标志、培训环境照片</div>
+										<label class="up" for="file">上传图片</label>
+		                              	<input type="file" name="file" id="file" class="file" value=" 132" style="width: 0;height: 0;outline: none;" required=""/>      	
+                                    </div>
+                                    <font color="red">*</font>
+                                </div>
+
+								<div class="form-group">
+                                    <span class="col-sm-2 control-span"></span>
+                                    <div class="col-sm-5"><input type="checkbox" name="agreement"checked /><a href="/agreement/" class="red" target="_blank">我已阅读，理解并接受《用户协议》</a></div>
+                                    <font color="red">*</font>
+                                </div>
+                                <div class="col-sm-6" align="center"><button type="submit" class="btn btn-warning">立即注册</button></div></div>
+                        </form>
+
+                        <form method="post" action="{:U('User/Register/doreg2')}" class="tab-pane form-horizontal" id="tab2" >
+                            <input type='hidden' name='formhash' value='{$formhash}' />
+                            <input type="hidden" name="form_submit" value="ok" />
+                        	<input type="hidden" name="user" id="user" value="0" />
+                        	<input type="hidden" id="forward" name="forward" value="{$forward}"/>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <span class="col-sm-2 control-span">用 户 名：</span>
+                                    <div class="col-sm-6">
+                                        <input name="username" id="username2" type="text" class="form-control" placeholder="请输入用户名">
+                                    </div>
+                                    <span class="col-sm-4"><font color="red">*</font></span>
+                                </div>
+                                <div class="form-group">
+                                    <span class="col-sm-2 control-span">登录密码：</span>
+                                    <div class="col-sm-6">
+                                        <input name="password" id="password2" type="password" class="form-control" >
+                                    </div>
+                                    <span class="col-sm-4"><font color="red">*</font></span>
+                                </div>
+                                <div class="form-group">
+                                    <span class="col-sm-2 control-span">确认密码：</span>
+                                    <div class="col-sm-6">
+                                        <input name="repassword" type="password" class="form-control" placeholder="请确认密码" pattern="\w{6,32}" required="">
+                                    </div>
+                                    <span class="col-sm-4"><font color="red">*</font> 重复一次上面的密码</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <span class="col-sm-2 control-span">手机号码：</span>
+                                    <div class="col-sm-6">
+                                        <input name="mobile" type="number" class="form-control" placeholder="请输入手机号码">
+                                    </div>
+                                    <span class="col-sm-4"></span>
+                                </div>
+								<div class="form-group">
+                                    <span class="col-sm-2 control-span">短信验证码：</span>
+                                    <div class="col-sm-3">
+                                        <input name="cord" type="number" class="form-control" placeholder="请输入验证码" maxlength="6" required>
+                                    </div>
+                                    <div class="col-sm-3 sm3">
+                                        <button type="button" class="btm duanx" id="duanxpt">点击获取短信验证码</button>
+                                        <button type="button" class="btm dengd" id="" style="display: none;">点击获取短信验证码</button>
+                                    </div>
+                                    <span class="col-sm-4"><font color="red" >*</font></span>
+                                </div>
+                                <div class="form-group">
+                                    <span class="col-sm-2 control-span">图形验证码：</span>
+                                    <div class="col-sm-3">
+                                        <input name="verify" type="text" class="form-control" placeholder="请输入验证码" maxlength="4" required>
+                                    </div>
+                                    <div class="col-sm-3 sm3">
+                                        <img id="verifyImage2" class="checkcode" style="height: 35px; width: 70px;"
+                                             src="{:U('Home/Index/verify')}" onclick="javascript:resetVerifyCode2();" class="checkcode"
+                                             title="{:L('resetVerifyCode')}"/>
+                                    </div>
+                                    <span class="col-sm-4"><font color="red" >*</font></span>
+                                </div>
+                                <div class="form-group">
+                                    <span class="col-sm-2 control-span">电子邮箱：</span>
+                                    <div class="col-sm-6">
+                                        <input name="email" type="email" class="form-control" placeholder="请输入电子邮箱">
+                                    </div>
+                                    <span class="col-sm-4"></span>
+                                </div>
+								<div class="form-group">
+                                    <span class="col-sm-2 control-span"></span>
+                                    <span class="col-sm-5"><input type="checkbox" name="agreement" checked /> 我已阅读，理解并接受 <a href="/agreement/" class="red" target="_blank">《会员注册条款 》</a></span>
+                                    <font color="red">*</font>
+                                </div>
+                                <div class="col-sm-8" align="center"><button type="submit" class="btn btn-warning">立即注册</button></div></div>
+                        </form>
+                 </div><!--tab_content-->     
+             </div>
+            </div>
+            <div class="main-right" style="width:200px; float:left;">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div style="font-size: 16px;">如果您已经是会员</div><br>
+                        <a href="/User/Login" class="btn" id="loginBtn">点此登录</a>
+                    </div>
+                </div>
+            </div>
+</div>
+<script type="text/javascript" src="../Public/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="../Public/js/messages_zh.js"></script>
+<script type="text/javascript" src="../Public/js/new_file.js?{$now_time}"></script>
+<script type="text/javascript" src="../Public/js/registered.js?{$now_time}"></script>

@@ -1,0 +1,183 @@
+<?php $schoolid=M('school')->where("id=$_GET[p]")->find(); ?>
+<div id="school">
+	<div class="sctop">
+		<div class="mian">
+			<a class="" href="/school2/{$_GET['p']}.html">学校首页</a>
+			<a class="active" href="/kec/{$_GET['p']}.html">最新课程</a>
+			<!-- <a href="/online/?sid={$_GET['sid']}">网上报名</a> -->
+		</div>
+	</div>
+	<div class="Space Course info">
+
+		<div id="main">
+			<div class="space-col">
+				<div class="space-course">
+					<div class="course-info">
+						<div class="img"><img src="{$schoolid.file}" data-original="" alt="{$schoolid.title}" width="286" height="256"></div>
+						<div class="info">
+							<h1>{$title}</h1>
+							<ul>
+								<li style="overflow: hidden;max-height: 116px;">授课对象：{$dx}</li>
+								<li>授课学校：{$schoolid.title}</li>
+								<li>关注人数：{$guanzhu}</li>
+							</ul>
+							<div class="price">课程价格：<b>网上报名{:floatval($pc)}元&nbsp;&nbsp;线下原价{:floatval($price)}元
+                              </b><i class="ico ico-hui"></i>
+							</div>
+							<div class="course-bar">
+								<a href="{$url}" class="yuyue">网上报名</a>
+								<a href="http://wpa.qq.com/msgrd?v=3&uin={$schoolid.QQ}&site=caimaozsw.com&menu=yes" class="zx" target="_blank" rel="nofollow">在线咨询</a>
+								<span style=" width:150px; height:35px; display:inline-table; text-align:center; margin-top:20px;line-height:37px; background:#0A6AB6;color:#fff;font-size:19px;">
+									<span class="">{$schoolid.dianhua}</span>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="kecheng clear">
+						<div class="title">
+							<ul>
+								<li class="active">课程详情</li>
+								<li class="">学校环境</li>
+							</ul>
+							<div class="bdsharebuttonbox">
+								<a href="#" class="bds_more" data-cmd="more"></a>
+								<a href="#" class="bds_qzone" data-cmd="qzone"></a>
+								<a href="#" class="bds_tsina" data-cmd="tsina"></a>
+								<a href="#" class="bds_tqq" data-cmd="tqq"></a>
+								<a href="#" class="bds_renren" data-cmd="renren"></a>
+								<a href="#" class="bds_weixin" data-cmd="weixin"></a>
+							</div>
+
+						</div>
+						<div class="bd">
+							<div class="kc-bd active">
+								<div class="endtext">
+									<font>
+										{$content}
+									</font>
+								</div>
+							</div>
+							<div class="kc-bd">
+								<div class="endtext">
+									{$schoolid.description}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="sbox nomb clear">
+					<div class="title">
+						<h3><i class="ico ico-dh"></i><span>课程评价</span></h3>
+					</div>
+					<div class="comment" id="reviews">
+						<form action="{:URL('User-Index/addview')}" method="post" name="reviews" onsubmit="return review();">
+							<input name="viewid" type="hidden" value="{$id}">
+							<input name="title" type="hidden" value="{$title}">
+							<div class="post">
+								<div class="textarea">
+									<textarea name="content" maxlength="150"></textarea>
+								</div>
+								<div class="btns">
+									<div class="face">
+										<label>
+                    <input name="score" type="radio" value="1">
+                    1星</label>
+										<label>
+                    <input name="score" type="radio" value="2">
+                    2星</label>
+										<label>
+                    <input name="score" type="radio" value="3">
+                    3星</label>
+										<label>
+                    <input name="score" type="radio" value="4">
+                    4星</label>
+										<label>
+                    <input name="score" type="radio" value="5" checked="">
+                    5星</label>
+										<div class="face-ico"></div>
+									</div>
+									<p></p>
+									<button type="submit">发表评论</button>
+								</div>
+							</div>
+						</form>
+						<div class="comment-list"> </div>
+					</div>
+				</div>
+			</div>
+
+			<include file="Home:school_right" />
+		</div>
+
+	</div>
+</div>
+<style type="text/css">
+	.nav_wrap {
+		display: none;
+	}
+	
+	.header {
+		height: 104px;
+	}
+</style>
+<script>
+	window._bd_share_config = {
+
+		"share": {},
+	};
+	with(document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
+
+	$(function() {
+		$('.kecheng .title ul li').click(function() {
+			var index = $(this).index()
+			$(this).addClass('active').siblings().removeClass('active');
+			$('.kecheng .kc-bd').eq(index).addClass('active').siblings().removeClass('active');
+		})
+
+	})
+	//评论前准备
+	function review(){
+		var viewid=$('#reviews form input[name=viewid]').val();
+		var title=$('#reviews form input[name=title]').val();
+		var content=$('#reviews form textarea').val();
+		var score=$('#reviews form input:radio:checked').val();
+		$.ajax({
+		   	type:"post",
+		   	url:"{:URL('User-Index/addview')}",
+		   	dataType:"json",
+		   	data:{'viewid':viewid,'title':title,'content':content,'score':score},
+		   	success:function(msg){
+		   		switch(msg){
+	                    case "-1":  
+	                        alert("您未登陆会员（请先登录并且报名该课程才能评论！）"); 
+
+	                        break;
+	                    case "-2":  
+	                        alert("您尚未报名改课程（请先登录并且报名该课程才能评论！）"); 
+	                        break;  
+	                    case "1":  
+	                        alert("评论成功！请等待评论审核。");
+	                        break;  
+	                    default:  
+	                        alert("系统繁忙，请稍后再试");  
+	            }
+				
+		   	}
+		});
+		return false;
+	}
+	//评论星星返回
+	$(function (){
+		$("#preview_list .viewtwo .lstar i").each(function(){
+			_this = $(this)
+			var star_mub = _this.attr('title');
+		    _this.css('width',''+star_mub*20+'%');
+		  });
+		
+
+	})
+	
+</script>
+
+	
+	
