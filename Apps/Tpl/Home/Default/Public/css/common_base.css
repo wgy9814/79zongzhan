@@ -2735,6 +2735,11 @@ ul.pagination li a:hover, ul.pagination li.active a {
 
 }
 
+.course-bar >.normal{
+    widtH: 95px !important;
+    background-color: #CCCCCC !important;
+}
+
 .course-bar a.zx, .course-bar a.zx:visited {
     background-position: 0 -184px;
     color: #fff;

@@ -63,9 +63,13 @@
 					<div class="course-bar">
 						<a href="#apply" class="yuyue">咨询留言</a>
 						{if $user_mark}
-						<a href="javascript:;" class="tips" title="{$userid.tel}" data-val="电话">电话</a>
-						<a href="javascript:;" class="tips" title="{$userid.wechat}" data-val="微信">微信</a>
-						<a href="javascript:;" class="tips" title="{$userid.email}" data-val="邮箱">邮箱</a>
+							<a href="javascript:;" class="tips" title="{$userid.tel}" data-val="电话">电话</a>
+							<a href="javascript:;" class="tips" title="{$userid.wechat}" data-val="微信">微信</a>
+							<a href="javascript:;" class="tips" title="{$userid.email}" data-val="邮箱">邮箱</a>
+						{else}
+							<a href="javascript:;" class="normal" title="{$userid.tel}" data-val="电话">电话</a>
+							<a href="javascript:;" class="normal" title="{$userid.wechat}" data-val="微信">微信</a>
+							<a href="javascript:;" class="normal" title="{$userid.email}" data-val="邮箱">邮箱</a>
 						{/if}
 					</div>
 				</div>

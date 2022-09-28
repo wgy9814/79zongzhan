@@ -13,9 +13,11 @@
 	<link href="../Public/css/common_header_footer.css" rel="stylesheet" type="text/css" />
 	<link href="../Public/css/common_base.css" rel="stylesheet" type="text/css" />
 	<link href="../Public/css/member.css" rel="stylesheet" type="text/css" />
+	<link href="/Public/Css/layer.css" rel="stylesheet" type="text/css"/>
 
 	<script type="text/javascript" src="/Public/Js/jquery-2.1.1.min.js"></script>
-    <style type="text/css">
+	<script type="text/javascript" src="/Public/Js/layer.js"></script>
+	<style type="text/css">
         html {
             font-family: sans-serif;
             -ms-text-size-adjust: 100%;
@@ -126,6 +128,12 @@
 							<th>{$table.title_4}</th>
 						</tr>
 						</thead>
+							<tr class="pure-table-odd">
+								<td>
+									<button type="button" class="pure-table-btn">增加课程</button>
+								</td>
+								<td colspan= "3">{$table.content_zero_1}</td>
+							</tr>
                         <tr class="pure-table-odd">
 							<td>{$table.content_one_1}</td>
 							<td>{$table.content_one_2}</td>
@@ -433,6 +441,31 @@ var formatDate=function (now,type,style) {
 		}
 	});
 
+
+	$(".pure-table-btn").click(function(){
+		$.ajax({
+			type:"post",
+			url:"/User/Index/addcourse",
+			dataType:"json",
+			data:{
+				'type':1,
+			},
+			beforeSend: function() {
+				$(".pure-table-btn").attr('disabled', true);
+			},
+			error:function(msg){
+				alert('增加课程申请提交失败！请重新发送')
+			},
+			success:function(msg){
+				if(msg.data == 1){
+					$(".pure-table-btn").attr('disabled', false);
+					alert('增加课程申请提交成功！')
+				}else{
+					alert(msg.info)
+				}
+			}
+		});
+	});
 
 
 

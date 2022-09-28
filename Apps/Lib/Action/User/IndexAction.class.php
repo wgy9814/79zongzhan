@@ -175,7 +175,7 @@ class IndexAction extends BaseAction
             $this->error(L('帐号异常，暂不能发布课程，请联系客服处理'),'/User/Index');
             exit;
         }
-        $limit = $school['limit']>0 ? $school['limit'] : 25;
+        $limit = $school['limit']>0 ? $school['limit'] : $this->Config['kecheng_num'];
         $kec= M('kecheng')->where("school_id=$schoolid")->count();
         if($kec >= $limit){
             $this->error(L('您的课程发布数量已达上限，请开通VIP会员以发布更多课程'), '/User/Index/vip');
@@ -484,6 +484,42 @@ class IndexAction extends BaseAction
             $this->success('您已成功提交，请耐心等待批复');
         }else{
             $this->error('添加失败');
+        }
+    }
+
+    //用户申请添加课程
+    function addcourse(){
+        //接收数据
+        $apply_add_course = M("apply_add_course"); //实例化对象
+        $userid = intval(cookie('userid'));
+        $type = get_safe_replace($_POST['type']);
+
+
+
+        $user =M('user')->where('id='.$userid)->find();
+        if(empty($user)){
+            $this->ajaxreturn('0','该用户不存在');
+        }
+
+
+        $ip =get_client_ip();
+
+
+        $data['userid'] = $userid;
+        $data['user_name'] = $user['username'];
+        $data['title'] = $user['title'];
+        $data['lang'] = '2';
+        $data['ip'] = $ip;
+        $data['status'] = 0;
+        $data['createtime'] = time();
+        $date['updatetime'] = time();
+        $re= $apply_add_course->add($data);
+
+        if($re){
+            $r = sendmail($this->Config['site_email'],'新机构申请增加课程','新机构申请增加课程，请登录后台核审核',$this->Config);
+            $this->ajaxReturn(1,'您已成功提交，请耐心等待批复',1);
+        }else{
+            $this->ajaxreturn('0','添加失败');//添加失败
         }
     }
 

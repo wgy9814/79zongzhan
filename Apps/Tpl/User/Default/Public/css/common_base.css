@@ -1220,3 +1220,14 @@ ul.thumb>li .thumb-overlay, ul.thumb>li .thumb-overlay a {color: #FFF;}
     background: #2fb17f;
     border-radius: 5px;
 }
+.pure-table .pure-table-btn  {
+    display: block;
+    width: 80px;
+    height: 32px;
+    line-height: 32px;
+    color: white;
+    background: #40b477;
+    border-radius: 4px;
+    text-align: center;
+    border: 1px solid #FFFFFF;
+}
