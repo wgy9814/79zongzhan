@@ -255,6 +255,7 @@ class AdminbaseAction extends Action
 		$schoolid = intval($_REQUEST['school_id']);
         $userid = intval($_REQUEST['userid']);
         $project = $_REQUEST['project'];
+        $kccity = intval($_REQUEST['kccity']);
 
 
         if(APP_LANG)if($this->moduleid) $map['lang']=array('eq',LANG_ID);
@@ -296,7 +297,8 @@ class AdminbaseAction extends Action
         if($userid) $map['userid'] = $searchParam['userid'] = $userid;
         if($project) $map['project'] = $searchParam['project'] = $project;
         if ('Kecheng' == MODULE_NAME && $schoolid) $map['school_id'] = $searchParam['school_id'] = $schoolid;
-		if($this->isChildModule) {
+        if ('Kecheng' == MODULE_NAME && $kccity) $map['kccity'] = $searchParam['kccity'] = $kccity;
+        if($this->isChildModule) {
 			$map[$this->parentModuleKey] = $searchParam[$this->parentModuleKey] = $_REQUEST[$this->parentModuleKey];
 		}
 		$tables = $model->getDbFields();

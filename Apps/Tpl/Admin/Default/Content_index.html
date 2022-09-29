@@ -24,7 +24,7 @@
 			</select>
 			</if>
 			{if 'Kecheng' == $module_name}
-				<select id="school_id" name="school_id">
+				<select name="school_id" id="school_id">
 					<option value="">选择学校</option>
 					<PHP>
 						$schools = M('School')->field('id,title')->select();
@@ -33,6 +33,18 @@
 						{
 							$selected = $_REQUEST['school_id']==$school['id'] ? 'selected' : '';
 							echo '<option value="', $school['id'], '" ', $selected, '>', $school['title'], '</option>';
+						}
+					</PHP>
+				</select>
+				<select name="kccity" id="kccity">
+					<option value="">选择授课地区</option>
+					<PHP>
+						$city = M('Category')->where(array('parentid' => 69))->field('id,catname')->select();
+						$selected = '';
+						foreach($city as $c)
+						{
+							$selected = $_REQUEST['kccity']==$c['id'] ? 'selected' : '';
+							echo '<option value="', $c['id'], '" ', $selected, '>', $c['catname'], '</option>';
 						}
 					</PHP>
 				</select>
@@ -384,6 +396,6 @@ function changeSatuas(field,productId,obj){
  	$('#pages a').each(function(){
  		
  	});
-     $('#userid,#project').searchableSelect();
+     $('#userid,#project,#school_id,#kccity').searchableSelect();
  });
 </script>

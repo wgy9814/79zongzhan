@@ -193,6 +193,8 @@
 						</yp:list>
 
 					</table>
+						<input type='hidden' name='formhash' value='{$formhash}' />
+						<input type="hidden" name="form_submit" value="ok" />
 						<button type="submit" class="vip-btn">提交</button>
 					</form>
                 </div>
@@ -251,8 +253,9 @@
                 alert('您还没有选中其中的一项');
                 return false;
             }
+			$(".vip-btn").attr('disabled', true);
 
-        }
+		}
 
     function getValue(obj){
         var val = obj.value;
@@ -457,9 +460,10 @@ var formatDate=function (now,type,style) {
 				alert('增加课程申请提交失败！请重新发送')
 			},
 			success:function(msg){
+				// console.log(msg)
 				if(msg.data == 1){
 					$(".pure-table-btn").attr('disabled', false);
-					alert('增加课程申请提交成功！')
+					alert(msg.info)
 				}else{
 					alert(msg.info)
 				}

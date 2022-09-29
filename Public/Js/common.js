@@ -31,3 +31,12 @@ function new_href(href){
     $('.layui-layer-shade').remove();
 
 }
+
+function isNumber(value) {         //验证是否为数字
+    var patrn = /^(-)?\d+(\.\d+)?$/;
+    if (patrn.exec(value) == null || value == "") {
+        return false
+    } else {
+        return true
+    }
+}

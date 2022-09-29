@@ -629,6 +629,8 @@ class BaseAction extends Action
                 if ($user_level) {//后台有审核通过的vip会员信息
                     $user_mark = verify_groupid($user_level['type']);
                     $this->assign('user_mark', $user_mark);
+                    $user_special_mark = verify_special_groupid($user_level['type']);
+                    $this->assign('user_special_mark', $user_special_mark);
                 }
             }
             $param = array();
@@ -658,7 +660,30 @@ class BaseAction extends Action
             //}else{
             //    $seo_title = $data['title'] . '-' . $cat['catname'];
             //}
+            //1.网上报名 线下价格都有填写
+            if(($data['price1'] || $data['price1'] != '0.00') && ($data['pc'] || $data['pc'] != '0.00')){
+                $data['price1_desc'] = $data['price1'].'元';
+                $data['pc_desc'] = $data['pc'].'元';
+            }
 
+            //2.网上报名 线下价格都没有填写
+            if((!$data['price1'] || $data['price1'] == '0.00') && (!$data['pc'] || $data['pc'] == '0.00')){
+                $data['price1_desc'] = '';
+                $data['pc_desc'] = '有优惠';
+            }
+
+            //3.网上报名有填写 线下价格没有填写
+            if((!$data['price1'] || $data['price1'] == '0.00') && ($data['pc'] || $data['pc'] != '0.00')){
+                $data['price1_desc'] = '';
+                $data['pc_desc'] = $data['pc'].'元';
+            }
+
+            //4.网上报名没有填写 线下价格有填写
+            if(($data['price1'] || $data['price1'] != '0.00') && (!$data['pc'] || $data['pc'] == '0.00')){
+                $data['price1_desc'] = $data['price1'].'元';
+                $data['pc_desc'] = '有优惠';
+            }
+//            print_r($data);
             $this->assign('seo_title', $new_title);
             $this->assign('seo_keywords', $new_keywords);
             $this->assign('seo_description', $new_description);

@@ -55,19 +55,23 @@
 						<li><strong>授课学校：</strong>{$schoolid.title}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$user_mark}
 						</li>
 						<li><strong>关注人数：</strong>{$guanzhu}</li>
-					    <li><strong>网上报名：</strong>{$pc}</li>
-						<li><strong>线下原价：</strong>{$price}</li>
+						<li><strong>线下原价：</strong>
+							{$price1_desc}
+						</li>
+						<li><strong>网上报名：</strong>
+							{$pc_desc}
+						</li>
 					
 					</ul>
 					<!--<div class="price"><strong>课程价格：</strong><s></s><b>网上报名{:floatval($pc)}&nbsp;&nbsp;&nbsp;线下原价{:floatval($price)}</b></div>-->
 					<div class="course-bar">
-						<a href="#apply" class="yuyue">咨询留言</a>
-						{if $user_mark}
+						<a href="#apply" class="yuyue" style="height:45px;line-height:24px;">咨询留言<br> 网上报名</a>
+						{if $user_mark || $user_special_mark}
 							<a href="javascript:;" class="tips" title="{$userid.tel}" data-val="电话">电话</a>
 							<a href="javascript:;" class="tips" title="{$userid.wechat}" data-val="微信">微信</a>
 							<a href="javascript:;" class="tips" title="{$userid.email}" data-val="邮箱">邮箱</a>
 						{else}
-							<a href="javascript:;" class="normal" title="{$userid.tel}" data-val="电话">电话</a>
+							<a href="javascript:;" class="tips" title="{$userid.tel}" data-val="电话">电话</a>
 							<a href="javascript:;" class="normal" title="{$userid.wechat}" data-val="微信">微信</a>
 							<a href="javascript:;" class="normal" title="{$userid.email}" data-val="邮箱">邮箱</a>
 						{/if}

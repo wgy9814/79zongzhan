@@ -1683,6 +1683,22 @@ function verify_groupid($type) {
 }
 
 /**
+ * 验证定制会员
+ *
+ * @param string $type    所要验证的type
+ * @return boolean
+ */
+function verify_special_groupid($type) {
+    $is_special_group = 0;
+    switch($type) {
+        case 12:
+            $is_special_group = 1;
+            break;
+    }
+    return $is_special_group;
+}
+
+/**
  * vip过期改变用户组
  *
  * @param string $type    所要验证的type

@@ -454,6 +454,16 @@ class IndexAction extends BaseAction
 
     //添加vip服务
     function addvip(){
+        $result = chksubmit(true,false,'num');
+        if ($result){
+            if ($result === -11){
+                $this->ajaxreturn(0,'网络错误',0);
+            } elseif ($result === -12){
+                $this->ajaxreturn(0,'验证码错误',0);
+            }
+        } else {
+            $this->ajaxreturn(0,'非法提交',0);
+        }
         //接收数据
         $user_level = M("user_level"); //实例化对象
         $type = get_safe_replace($_POST['type']);
@@ -481,7 +491,7 @@ class IndexAction extends BaseAction
         $re= $user_level->add($data);
         if($re){
             $r = sendmail($this->Config['site_email'],'新机构申请VIP会员','新机构申请VIP会员，请登录后台核审核',$this->Config);
-            $this->success('您已成功提交，请耐心等待批复');
+            $this->success('提交成功，请缴费后等待审核或联系客服及时审核通过');
         }else{
             $this->error('添加失败');
         }
@@ -494,7 +504,9 @@ class IndexAction extends BaseAction
         $userid = intval(cookie('userid'));
         $type = get_safe_replace($_POST['type']);
 
-
+        if(!$userid){
+            $this->ajaxreturn('0','该用户已失效，请重新登录');
+        }
 
         $user =M('user')->where('id='.$userid)->find();
         if(empty($user)){
@@ -534,11 +546,19 @@ class IndexAction extends BaseAction
 		$guanzhu = get_safe_replace($_POST['guanzhu']);
 		$industry = get_safe_replace($_POST['industry']);
 		$price = floatval(get_safe_replace($_POST['price']));
-		$pc = get_safe_replace($_POST['pc']);
+        $price1 = floatval(get_safe_replace($_POST['price1']));//线下原价
+		$pc = number_format(floatval(get_safe_replace($_POST['pc'])), 2);//网上报名
 		$systme = get_safe_replace($_POST['systme']);
 		$content = $_POST['content'];
 		$file2 = get_safe_replace($_POST['file2']);
 		$id = get_safe_replace($_POST['id']);
+
+		if($pc > $price1*0.95){
+            $this->error(L('网上报名不能大于线下原价*0.95'));
+            exit;
+        }
+
+
 		//修改图片
 		import("@.ORG.UploadFile");
         $upload = new UploadFile(); 
@@ -575,7 +595,8 @@ class IndexAction extends BaseAction
 		$data['scpic'] = $file;
 		$data['content'] = $content;
 		$data['price'] = $price;
-		$data['pc'] = $pc;
+        $data['price1'] = $price1;
+        $data['pc'] = $pc;
 		$data['systme'] = $systme;
 		$data['catid'] = $industry;
 		$data['updateime'] = time();
