@@ -55,7 +55,7 @@
 					</div>
 				<div id="fabu_right">
 					<div class="ftop">发布课程</div>
-					<form enctype="multipart/form-data" class="tab-pane active" id="fabu" style="display: block;" method="post" action="{:URL('User-Index/addkc')}">
+					<form enctype="multipart/form-data" class="tab-pane active" id="fabu" name="theForm" style="display: block;" method="post" action="{:URL('User-Index/addkc')}" onsubmit="return verify();">
 						<div class="form-group">
 							<label class="col-sm-2 control-label">课程名称：</label>
 							<div class="col-sm-7">
@@ -115,10 +115,17 @@
 							</div>
 							<div class="col-sm-3"></div>
 						</div>
+<!--						<div class="form-group">-->
+<!--							<label class="col-sm-2 control-label">线下原价：</label>-->
+<!--							<div class="col-sm-7">-->
+<!--								<input name="price" type="text" class="form-control" value="" >-->
+<!--							</div>-->
+<!--							<div class="col-sm-3"></div>-->
+<!--						</div>-->
 						<div class="form-group">
 							<label class="col-sm-2 control-label">线下原价：</label>
 							<div class="col-sm-7">
-								<input name="price" type="text" class="form-control" value="" >
+								<input name="price1" type="text" class="form-control" value="" >
 							</div>
 							<div class="col-sm-3"></div>
 						</div>
@@ -232,6 +239,25 @@
 <script type="text/javascript" src="/umeditor/umeditor.config.js"></script>
 <script type="text/javascript" src="/umeditor/umeditor.min.js"></script>
 <script>
+	function verify(){
+		var theCheckboxInputs=document.getElementsByName('theForm');
+		var pc=$('input[name=pc]').val();
+		var price1=$('input[name=price1]').val();
+		if(pc){
+			if(!isNumber(pc)){
+				alert("网上报名必须是数字");
+				return false;
+			}
+		}
+
+		if(price1){
+			if(!isNumber(price1)){
+				alert("线下原价必须是数字");
+				return false;
+			}
+		}
+
+	}
 $(function(){
 	$('input[name="pc"],input[name="price"]').blur(function(){
 		// var val = parseInt($(this).val());

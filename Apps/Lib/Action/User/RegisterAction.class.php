@@ -558,6 +558,7 @@ class RegisterAction extends BaseAction
 		$data['status'] = 1;
 		$data['lang'] = 2;
 		$data['courseid'] = $courseid;
+        $data['createtime'] = time();
 		
 		$System_s=$System->add($data);
 		

@@ -661,25 +661,25 @@ class BaseAction extends Action
             //    $seo_title = $data['title'] . '-' . $cat['catname'];
             //}
             //1.网上报名 线下价格都有填写
-            if(($data['price1'] || $data['price1'] != '0.00') && ($data['pc'] || $data['pc'] != '0.00')){
+            if(($data['price1'] != '0.00') && ($data['pc'] != '0.00')){
                 $data['price1_desc'] = $data['price1'].'元';
                 $data['pc_desc'] = $data['pc'].'元';
             }
 
             //2.网上报名 线下价格都没有填写
-            if((!$data['price1'] || $data['price1'] == '0.00') && (!$data['pc'] || $data['pc'] == '0.00')){
+            if(($data['price1'] == '0.00') && ($data['pc'] == '0.00')){
                 $data['price1_desc'] = '';
                 $data['pc_desc'] = '有优惠';
             }
 
             //3.网上报名有填写 线下价格没有填写
-            if((!$data['price1'] || $data['price1'] == '0.00') && ($data['pc'] || $data['pc'] != '0.00')){
+            if(($data['price1'] == '0.00') && ($data['pc'] != '0.00')){
                 $data['price1_desc'] = '';
                 $data['pc_desc'] = $data['pc'].'元';
             }
 
             //4.网上报名没有填写 线下价格有填写
-            if(($data['price1'] || $data['price1'] != '0.00') && (!$data['pc'] || $data['pc'] == '0.00')){
+            if(($data['price1'] != '0.00') && ($data['pc'] == '0.00')){
                 $data['price1_desc'] = $data['price1'].'元';
                 $data['pc_desc'] = '有优惠';
             }

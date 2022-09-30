@@ -1,7 +1,7 @@
 <style>
 	.xxfk {
-		width: 300px;
-		margin: 0px auto;
+		width: 244px;
+		margin: 20px 0px 0 auto;
 		padding-bottom: 0px;
 		position: fixed;
 		right: 0px;
@@ -16,7 +16,7 @@
 <div class="xxfk">
 
 	<div class="dw">
-		<div class="regist-title">学习课程、反馈问题请留言</div>
+		<div class="regist-title">留言反馈</div>
 		<form id="onlinec" action="{:URL('User-Post/insert')}" method="post">
 			<input type='hidden' name='formhash' value='{$formhash}' />
 			<input type="hidden" name="form_submit" value="ok" />
@@ -26,20 +26,20 @@
 			<input type="hidden" id="title" name="title" value="信息反馈"/>
 			<input type="hidden" id="ref" name="ref" value="/"/>
 			<ul class="clearfix">
+<!--				<li class="li1">-->
+<!--					<input placeholder="职 业：" id="zhiye" name="zhiye" class="c-input" type="text">-->
+<!--				</li>-->
 				<li class="li1">
-					<input placeholder="职 业：" id="zhiye" name="zhiye" class="c-input" type="text">
-				</li>
-				<li class="li2 nomgr">
 					<input placeholder="手 机：" id="telephone" name="telephone" class="c-input"
 						   type="text" >
 				</li>
-				<li class="li3">
-					<input placeholder="姓 名：" id="name" name="username" class="c-input" type="text"
+				<li class="li2 nomgr">
+					<input placeholder="称 呼：" id="name" name="username" class="c-input" type="text"
 					>
 				</li>
-				<li class="li4 nomgr">
-					<input placeholder="邮 箱：" id="email" name="email" class="c-input" type="email">
-				</li>
+<!--				<li class="li4 nomgr">-->
+<!--					<input placeholder="邮 箱：" id="email" name="email" class="c-input" type="email">-->
+<!--				</li>-->
 
 				<li class="li5 nomgr clearfix">
 					<textarea name="content" id="content" class="c-textarea lh22" placeholder="留 言："></textarea>
@@ -54,8 +54,8 @@
 				<li class="li7 nomgr">
 					<input type="text" maxlength="6" name="cord" class="input-text" class="inputbox"
 						   id="verifyCode" placeholder="请输入手机验证码"/>
-					<button type="button" class="btm duanx" id="duanxpt">点击获取短信验证码</button>
-					<button type="button" class="btm dengd" id="" style="display: none;">点击获取短信验证码</button>
+					<button type="button" class="btm duanx" id="duanxpt">获取短信验证码</button>
+					<button type="button" class="btm dengd" id="" style="display: none;">获取短信验证码</button>
 				</li>
 				<li class="li8 nomgr">
 					<button type="submit" class="sub-btn">发送</button>

@@ -256,9 +256,9 @@ class PostAction extends BaseAction
         if(!check_Mobile($telephone)){
             $this->error(L('手机号码格式错误'),$reqUrl);
         };
-        if(!empty($email) && !check_Email($email)){
-            $this->error(L('邮箱格式错误'),$reqUrl);
-        };
+//        if(!empty($email) && !check_Email($email)){
+//            $this->error(L('邮箱格式错误'),$reqUrl);
+//        };
         if(!$content){
             $this->error(L('请输入留言内容'),$reqUrl);
         };
@@ -316,7 +316,7 @@ class PostAction extends BaseAction
 	public function insert2()
     {
     	//权限判断
-        
+
 		$c=A('Admin/Content');
 		$_POST['ip'] = get_client_ip();
 		$ckid = get_safe_replace($_REQUEST['ckid']);
@@ -327,6 +327,10 @@ class PostAction extends BaseAction
 
         $cord_moble=session('tel'.$telephone);
         $verify = get_safe_replace($_POST['verify']);
+
+		$ck_title = get_safe_replace($_REQUEST['kctitle']);
+		$title = get_safe_replace($_POST['username']);
+		$school = get_safe_replace($_REQUEST['project']);
 
         if(!check_Mobile($telephone)){
             $this->error(L('手机号码格式错误'),$reqUrl);
@@ -439,8 +443,72 @@ class PostAction extends BaseAction
     		$b->get_messages($stitle,$scontent,$userid,$ckid);
 		}
 
-		$r = sendmail($this->Config[site_email],$subject,$body,$this->Config);
-//		$r4 = sendmail($uemail,$subject,$body,$this->Config);
+//		$r = sendmail($this->Config[site_email],$subject,$body,$this->Config);
+		$r = sendmail('3208886054@qq.com',$subject,$body,$this->Config);
+
+		//发送手机短信 start
+		//1.发送到学员手机
+		$web_site_code = '[79招生网]';
+		$templateCode = 'SMS_254175123';
+		$content = '报名咨询已发送，请等待老师回复'.$web_site_code;
+		//阿里云短信
+		$argv = array(
+			'templateCode'=>$templateCode,     //必填参数。用户账号
+			'phone'=>$telephone,   //必填参数。手机号码。多个以英文逗号隔开
+			'code'=>  Array(  // 短信模板中字段的值
+				"code"=>$web_site_code,
+			),
+		);
+		$con = $this->sendSms($argv);
+//        var_dump($con);die;
+		$result = $con->Message == 'OK' ? 1 : 0;
+		$file = dirname(APP_PATH) . '/Cache/Logs/sms_' . date('Y_m_d') . '.txt';
+		$fdata = array(
+			'time' => date('Y-m-d H:i:s'),
+			'result' => $result,
+			'content' => $content,
+			'mobile' => $telephone,
+			'school' => $school,
+			'course' => $ck_title,
+			'verify' => $verify,
+			'student' => $title,
+			'createtime' => time(),
+		);
+//        file_put_contents($file, var_export($fdata, true) . "\r\n", FILE_APPEND);
+
+		$res = $this->sendSmsAddLog($fdata);
+
+		//2.发送到机构手机
+		$templateCode = 'SMS_254185135';
+		$content = '有学员咨询，请登录账户查看详情'.$web_site_code;
+		//阿里云短信
+		$argv = array(
+			'templateCode'=>$templateCode,     //必填参数。用户账号
+			'phone'=>$telephone,   //必填参数。手机号码。多个以英文逗号隔开
+			'code'=>  Array(  // 短信模板中字段的值
+				"code"=>$verify,
+			),
+		);
+		$con = $this->sendSms($argv);
+//        var_dump($con);die;
+		$result = $con->Message == 'OK' ? 1 : 0;
+		$file = dirname(APP_PATH) . '/Cache/Logs/sms_' . date('Y_m_d') . '.txt';
+		$fdata = array(
+			'time' => date('Y-m-d H:i:s'),
+			'result' => $result,
+			'content' => $content,
+			'mobile' => $telephone,
+			'school' => $school,
+			'course' => $ck_title,
+			'verify' => $verify,
+			'student' => $title,
+			'createtime' => time(),
+		);
+//        file_put_contents($file, var_export($fdata, true) . "\r\n", FILE_APPEND);
+
+		$res = $this->sendSmsAddLog($fdata);
+		//发送手机短信 end
+
 		if($r){
 //			$this->assign('jumpUrl',"javascript:history.back(-1);");
 //			$this->assign('waitSecond','1');
@@ -532,6 +600,7 @@ class PostAction extends BaseAction
 	            .'select '.$select.',2 as mtype from mqu_system where `type`<>'.self::USER_MESSAGE_DELETE.' AND `status`=1 AND `userid`='.$this->_userid
 	            .' order by createtime desc';
 	    }
+//	    echo $sql;
 	    
 	    import ( "@.ORG.Page" );
 	    $page = new Page($count, 10);
@@ -1071,11 +1140,11 @@ class PostAction extends BaseAction
             'course' => $ck_title,
             'verify' => $verify,
             'student' => $title,
+			'createtime' => time(),
         );
 //        file_put_contents($file, var_export($fdata, true) . "\r\n", FILE_APPEND);
 
         $sms_log = M("sms_log");
-        $fdata['createtime'] = time();
 
 
         $res = $sms_log->add($fdata);
@@ -1093,5 +1162,14 @@ class PostAction extends BaseAction
             echo "<script>alert('发送短信成功!');history.back();</script>";
         }
     }
+
+	//阿里云发送短信添加手机验证码记录表
+	public function sendSmsAddLog($data)
+	{
+		$sms_log = M("sms_log");
+		$res = $sms_log->add($data);
+		return $res;
+	}
+
 }
 ?>

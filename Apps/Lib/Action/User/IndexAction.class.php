@@ -384,9 +384,17 @@ class IndexAction extends BaseAction
 		$schoolid = get_safe_replace($_POST['schoolid']);
 		$industry = get_safe_replace($_POST['industry']);
 		$price = get_safe_replace($_POST['price']);
-		$pc = get_safe_replace($_POST['pc']);
+        $price1 = floatval(get_safe_replace($_POST['price1']));//线下原价
+        $pc = number_format(floatval(get_safe_replace($_POST['pc'])), 2);//网上报名
 		$systme = get_safe_replace($_POST['systme']);
 		$content = $_POST['content'];
+
+        if($pc != '0.00' && $price1) {
+            if ($pc > $price1 * 0.95) {
+                $this->error(L('网上报名不能大于线下原价*0.95'));
+                exit;
+            }
+        }
 
 		//修改图片
 		import("@.ORG.UploadFile");
@@ -429,7 +437,8 @@ class IndexAction extends BaseAction
 		$data['pc'] = $pc;
 		$data['systme'] = $systme;		
 		$data['price'] = $price;
-		$data['lang'] = '2';
+        $data['price1'] = $price1;
+        $data['lang'] = '2';
 		$data['status'] = '1';
 		$data['catid'] = $industry;
 		$data['createtime'] = time();
@@ -538,7 +547,6 @@ class IndexAction extends BaseAction
 	//修改课程
 	function amends(){
 		//接收数据
-		
 		$title = get_safe_replace($_POST['title']);
 		$kccity = get_safe_replace($_POST['kccity']);
         $dx = get_safe_replace($_POST['dx']);
@@ -553,9 +561,11 @@ class IndexAction extends BaseAction
 		$file2 = get_safe_replace($_POST['file2']);
 		$id = get_safe_replace($_POST['id']);
 
-		if($pc > $price1*0.95){
-            $this->error(L('网上报名不能大于线下原价*0.95'));
-            exit;
+        if($pc != '0.00' && $price1) {
+            if ($pc > $price1 * 0.95) {
+                $this->error(L('网上报名不能大于线下原价*0.95'));
+                exit;
+            }
         }
 
 
@@ -600,6 +610,7 @@ class IndexAction extends BaseAction
 		$data['systme'] = $systme;
 		$data['catid'] = $industry;
 		$data['updateime'] = time();
+
 		
 		$re = $savekc->where('id='.$id)->save($data);
 		if($re>=0){

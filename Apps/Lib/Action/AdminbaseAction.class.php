@@ -318,7 +318,10 @@ class AdminbaseAction extends Action
 					unset($_REQUEST[$key]);
 				}
 		}
-
+        //写死 所有会员 1000 搜索出 9,10,11,12的会员
+        if($map['groupid'] == 1000){
+            $map['groupid'] = array('in', $this->vip_list);
+        }
         $this->assign($_REQUEST);
 
 		//取得满足条件的记录总数

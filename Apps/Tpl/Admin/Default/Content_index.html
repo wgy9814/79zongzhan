@@ -105,6 +105,8 @@
 					<volist name="vip_lists" id="row" key='k'>
 						<option value="{$Think.lang.$key}" <eq name="groupid" value="$Think.lang.$key">selected="selected"</eq>>{$row}</option>
 					</volist>
+					<!--写死 所有会员 1000-->
+					<option value="1000" <if condition="isset($groupid) && $groupid ==1000">selected="selected"</if>>{:L('所有会员')}</option>
 				</select>
 				{/if}
 
