@@ -399,5 +399,14 @@ function changeSatuas(field,productId,obj){
  		
  	});
      $('#userid,#project,#school_id,#kccity').searchableSelect();
+
+     //后端select_categorys和jquery-1.11.1.min.js有冲突导致 $catid无法选中
+     var module_name = '{$module_name}'
+	 if(module_name =='Kecheng'){
+	 	//这里用js判断重新选中 catid
+		 var catid = '{$catid}';
+		 $("#catid option[value='"+catid+"']").attr("selected", true);
+	 }
+
  });
 </script>

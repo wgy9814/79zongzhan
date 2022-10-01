@@ -270,8 +270,9 @@ class AdminbaseAction extends Action
 			$searchParam['keyword'] = $keyword;
 			$map[$searchtype] = array('like','%'.$keyword.'%');
 		}
-        
-		if($groupid) $map['groupid'] = $searchParam= $groupid; 
+
+		//如需新增参数做查询条件 需要 添加$map 和 $searchParam两个参数 确保分页参数正确
+		if($groupid) $map['groupid'] = $searchParam['groupid'] = $groupid;
 		//if($catid)$map['catid']=$catid;
         //*edit by jzp end
         //to-do: 如果有副栏目关联表， 加一个条件(exists) add by jzp
@@ -279,6 +280,7 @@ class AdminbaseAction extends Action
             if ($modelname == 'Kecheng')
             {
                 $map['catid'] = array('in', explode(',', $this->categorys[$catid]['arrchildid']));
+                $searchParam['catid'] =$catid;
             }elseif($relationId = hasCatalogField($this->moduleid))
             {
                 $module = $modelname ? $modelname : MODULE_NAME;
@@ -321,6 +323,7 @@ class AdminbaseAction extends Action
         //写死 所有会员 1000 搜索出 9,10,11,12的会员
         if($map['groupid'] == 1000){
             $map['groupid'] = array('in', $this->vip_list);
+            $searchParam['groupid'] = 1000;
         }
         $this->assign($_REQUEST);
 
@@ -338,11 +341,24 @@ class AdminbaseAction extends Action
 			$page = new Page ( $count, $listRows );
 			//分页查询数据
 
+//            if(is_array($map['groupid'])) {
+////                $map['groupid']=array('eq',1000);
+////                $map['groupid']= 1000;
+//
+//            }
+//            if(is_array($map['catid'])) {
+////                $map['catid'] = $catid;
+//                $map['catid']=array('eq',$catid);
+//            }
+
 			$field=$this->module[$this->moduleid]['listfields'];
 			$field= (empty($field) || $field=='*') ? '*' : 'id,catid,url,posid,title,thumb,title_style,userid,username,hits,createtime,updatetime,status,listorder' ;
 			$voList = $model->field($field)->where($map)->order( "`" . $order . "` " . $sort)->limit($page->firstRow . ',' . $page->listRows)->select ( );
 //            echo  $model->getLastSql();
 			//分页跳转的时候保证查询条件
+
+//            echo '<pre>';
+//            print_r($map);
 			foreach ( $map as $key => $val ) {
 				if (! is_array ( $val )) {
 					$page->parameter .= "$key=" . urlencode ( $val ) . "&";
