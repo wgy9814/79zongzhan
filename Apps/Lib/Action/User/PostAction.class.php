@@ -331,8 +331,13 @@ class PostAction extends BaseAction
 		$ck_title = get_safe_replace($_REQUEST['kctitle']);
 		$title = get_safe_replace($_POST['username']);
 		$school = get_safe_replace($_REQUEST['project']);
+		$school_user_id = intval(get_safe_replace($_REQUEST['school_user_id']));//当前课程的机构用户id
+		$address = get_safe_replace($_REQUEST['address']);
+		$form_content = get_safe_replace($_REQUEST['content']);
 
-        if(!check_Mobile($telephone)){
+
+
+		if(!check_Mobile($telephone)){
             $this->error(L('手机号码格式错误'),$reqUrl);
             exit;
         };
@@ -363,7 +368,7 @@ class PostAction extends BaseAction
             $_POST['project'] = $schoolid['title'];
         }
 
-        $userid = $this->_userid;
+        $userid = $this->_userid;//当前登录的用户id
 		$username = get_safe_replace($_POST['username']);
 		//判断是否使用优惠卷
 		$coupons = get_safe_replace($_POST['coupons']);
@@ -436,27 +441,40 @@ class PostAction extends BaseAction
 		}
 		if ($userid)
 		{
-    		//发送成功系统消息
+    		//1.发送成功系统消息
     		$b=A('User/Register');
     		$stitle = '您已成功报名-'.empty($project) ? $_REQUEST['project'] : $project;
     		$scontent = '恭喜你，成功！报名-"'.(empty($project) ? $_REQUEST['project'] : $project).'"课程。-【79教育平台】';
     		$b->get_messages($stitle,$scontent,$userid,$ckid);
+
+    		//2.发送报名信息给该课程的学校
+			$block_info = M('Block')->where(['lang' => 2, 'pos' => 'baoming_send_sysmess'])->find();//后台 碎片管理-学生报名咨询发送到机构账户中心系统消息
+
+			$param_sys = array();
+			$param_sys['code1']     = $title;
+			$param_sys['code2']     = $ck_title;
+			$param_sys['code3']     = $form_content;
+			$param_sys['code4']     = $telephone;
+			$param_sys['code5']     = $address;
+
+			$stitle_other = '学员'.$title.'报名咨询';
+			$scontent_other = ncReplaceText($block_info['content'],$param_sys);
+			$b->get_messages($stitle_other,$scontent_other,$school_user_id,$ckid);
 		}
 
-//		$r = sendmail($this->Config[site_email],$subject,$body,$this->Config);
-		$r = sendmail('3208886054@qq.com',$subject,$body,$this->Config);
+		$r = sendmail($this->Config[site_email],$subject,$body,$this->Config);
+//		$r = sendmail('3208886054@qq.com',$subject,$body,$this->Config);//测试
 
 		//发送手机短信 start
 		//1.发送到学员手机
-		$web_site_code = '[79招生网]';
 		$templateCode = 'SMS_254175123';
-		$content = '报名咨询已发送，请等待老师回复'.$web_site_code;
+		$content = '报名咨询已发送，请等待老师回复';
 		//阿里云短信
 		$argv = array(
 			'templateCode'=>$templateCode,     //必填参数。用户账号
 			'phone'=>$telephone,   //必填参数。手机号码。多个以英文逗号隔开
 			'code'=>  Array(  // 短信模板中字段的值
-				"code"=>$web_site_code,
+//				"code"=>$verify,
 			),
 		);
 		$con = $this->sendSms($argv);
@@ -470,7 +488,7 @@ class PostAction extends BaseAction
 			'mobile' => $telephone,
 			'school' => $school,
 			'course' => $ck_title,
-			'verify' => $verify,
+			'verify' => '',
 			'student' => $title,
 			'createtime' => time(),
 		);
@@ -479,34 +497,36 @@ class PostAction extends BaseAction
 		$res = $this->sendSmsAddLog($fdata);
 
 		//2.发送到机构手机
-		$templateCode = 'SMS_254185135';
-		$content = '有学员咨询，请登录账户查看详情'.$web_site_code;
-		//阿里云短信
-		$argv = array(
-			'templateCode'=>$templateCode,     //必填参数。用户账号
-			'phone'=>$telephone,   //必填参数。手机号码。多个以英文逗号隔开
-			'code'=>  Array(  // 短信模板中字段的值
-				"code"=>$verify,
-			),
-		);
-		$con = $this->sendSms($argv);
+		if(!empty($schoolid['dianhua'])) {
+			$templateCode = 'SMS_254185135';
+			$content = '有学员咨询，请登录账户查看详情';
+			//阿里云短信
+			$argv = array(
+				'templateCode' => $templateCode,     //必填参数。用户账号
+				'phone'=>$schoolid['dianhua'],   //必填参数。手机号码。多个以英文逗号隔开
+				'code' => array(  // 短信模板中字段的值
+//				"code"=>$verify,
+				),
+			);
+			$con = $this->sendSms($argv);
 //        var_dump($con);die;
-		$result = $con->Message == 'OK' ? 1 : 0;
-		$file = dirname(APP_PATH) . '/Cache/Logs/sms_' . date('Y_m_d') . '.txt';
-		$fdata = array(
-			'time' => date('Y-m-d H:i:s'),
-			'result' => $result,
-			'content' => $content,
-			'mobile' => $telephone,
-			'school' => $school,
-			'course' => $ck_title,
-			'verify' => $verify,
-			'student' => $title,
-			'createtime' => time(),
-		);
+			$result = $con->Message == 'OK' ? 1 : 0;
+			$file = dirname(APP_PATH) . '/Cache/Logs/sms_' . date('Y_m_d') . '.txt';
+			$fdata = array(
+				'time' => date('Y-m-d H:i:s'),
+				'result' => $result,
+				'content' => $content,
+				'mobile' => $schoolid['dianhua'],
+				'school' => $school,
+				'course' => $ck_title,
+				'verify' => '',
+				'student' => $title,
+				'createtime' => time(),
+			);
 //        file_put_contents($file, var_export($fdata, true) . "\r\n", FILE_APPEND);
 
-		$res = $this->sendSmsAddLog($fdata);
+			$res = $this->sendSmsAddLog($fdata);
+		}
 		//发送手机短信 end
 
 		if($r){
