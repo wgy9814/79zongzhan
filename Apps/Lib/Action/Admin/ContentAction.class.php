@@ -309,6 +309,47 @@ class ContentAction extends AdminbaseAction
 		    $user = M('User')->find($_POST['userid']);
 		    $_POST['username'] = $user['username'];
 		}
+
+        if ($this->module[$this->moduleid]['name'] == 'Kecheng')
+        {
+            $parent_cat_info = $this->categorys[$_POST['catid']];
+
+            $all_cat = M('Category')->where(array('parentid' => $parent_cat_info['parentid']))->field('id')->select();
+            foreach($all_cat as $val){
+                $all_cat_list[] = $val['id'];
+            }
+//            echo '<pre>';
+//            print_r($parent_cat_info);
+//            die;
+            $top_place_num = $this->Config['top_place_num'];
+
+            if($parent_cat_info['parentid'] != 0) {
+                //只有子类才判断
+                if ($_POST['parent_top_place'] == 1) {
+                    //父类行业置顶
+                    $condition = [];
+                    $condition['catid'] = array('in', $all_cat_list);
+                    $condition['parent_top_place'] = 1;
+                    $parent_top_place_count = M('kecheng')->where($condition)->count();
+//                    echo $top_place_num;die;
+                    if ($parent_top_place_count >= $top_place_num) {
+                        $this->error(L('父类行业置顶课程数量超出默认,添加失败'));
+                    }
+                }
+
+                if ($_POST['child_top_place'] == 1) {
+                    //子类行业置顶
+                    $condition = [];
+                    $condition['catid'] = $_POST['catid'];
+//                    $condition['catid'] = array('in', $all_cat_list);
+                    $condition['child_top_place'] = 1;
+                    $child_top_place_count = M('kecheng')->where($condition)->count();
+                    if ($child_top_place_count >= $top_place_num) {
+                        $this->error(L('子类行业置顶课程数量超出默认,添加失败'));
+                    }
+                }
+            }
+        }
 		
 		if($_POST['style_color']) $_POST['style_color'] = 'color:'.$_POST['style_color'];
 		if($_POST['style_bold']) $_POST['style_bold'] =  ';font-weight:'.$_POST['style_bold'];
@@ -523,6 +564,53 @@ class ContentAction extends AdminbaseAction
                 }
             }
 
+        }
+        if ($this->module[$this->moduleid]['name'] == 'Kecheng')
+        {
+            $parent_cat_info = $this->categorys[$_POST['catid']];
+
+            $all_cat = M('Category')->where(array('parentid' => $parent_cat_info['parentid']))->field('id')->select();
+            foreach($all_cat as $val){
+                $all_cat_list[] = $val['id'];
+            }
+            //删除该catid
+//            $self_cat_id_key = array_search($_POST['catid'],$all_cat_list);
+//            if($self_cat_id_key){
+//                unset($all_cat_list[$self_cat_id_key]);
+//            }
+            echo '<pre>';
+//            echo $_POST['catid'];
+//            print_r($parent_cat_info);
+//            die;
+            $top_place_num = $this->Config['top_place_num'];
+
+            if($parent_cat_info['parentid'] != 0) {
+                if ($_POST['parent_top_place'] == 1) {
+                    //父类行业置顶
+                    $condition = [];
+                    $condition['catid'] = array('in', $all_cat_list);
+                    $condition['parent_top_place'] = 1;
+
+                    $parent_top_place_count = M('kecheng')->where($condition)->count();
+                    if ($parent_top_place_count >= $top_place_num) {
+                        $this->error(L('父类行业置顶课程数量超出默认,添加失败'));
+                    }
+                }
+
+                if ($_POST['child_top_place'] == 1) {
+                    //子类行业置顶
+                    $condition = [];
+                    $condition['catid'] = $_POST['catid'];
+//                    $condition['catid'] = array('in', $all_cat_list);
+                    $condition['child_top_place'] = 1;
+                    $condition['id'] = array('neq', $_POST['id']);
+                    $child_top_place_count = M('kecheng')->where($condition)->count();
+//                    echo $child_top_place_count;die;
+                    if ($child_top_place_count >= $top_place_num) {
+                        $this->error(L('子类行业置顶课程数量超出默认,添加失败'));
+                    }
+                }
+            }
         }
 //        echo '<pre>';
 //        print_r($olddata);

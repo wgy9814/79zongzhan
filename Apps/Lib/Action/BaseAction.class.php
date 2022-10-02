@@ -333,6 +333,30 @@ class BaseAction extends Action
                         $this->assign('seo_title', $new_title);
                         $this->assign('seo_keywords', $new_keywords);
                         $this->assign('seo_description', $new_description);
+                        if($cat['parentid'] == 0){
+//                            echo '<pre>';
+                            //查询所有该父类下的子类id
+                            $all_cat = M('Category')->where(array('parentid' => $cat['id']))->field('id')->select();
+                            foreach($all_cat as $val){
+                                $all_cat_list[] = $val['id'];
+                            }
+
+                            $condition = [];
+                            $condition['catid'] = array('in', $all_cat_list);
+                            $condition['parent_top_place'] = 1; //父类行业置顶
+                            $parent_top_place_list = M('kecheng')->where($condition)->order('listorder asc')->select();
+//                            echo count($parent_top_place_list);
+                            $this->assign('parent_top_place_list', $parent_top_place_list);
+//                            print_r($parent_top_place_list);
+                        }else{
+//                            echo '<pre>';
+                            $condition = [];
+                            $condition['catid'] = $cat['id'];
+                            $condition['child_top_place'] = 1; //子类行业置顶
+                            $child_top_place_list = M('kecheng')->where($condition)->order('listorder asc')->select();
+                            $this->assign('child_top_place_list', $child_top_place_list);
+//                            print_r($child_top_place_list);
+                        }
 
                     }
                     if(!empty($_GET['p']) && $cat['catdir'] == 'kec'){

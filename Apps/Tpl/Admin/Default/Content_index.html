@@ -48,6 +48,16 @@
 						}
 					</PHP>
 				</select>
+				<select name="parent_top_place">
+					<option value="">是否父类行业置顶</option>
+					<option value="1" <if condition="$parent_top_place =='1'">selected="selected"</if>>是</option>
+					<option value="2" <if condition="$parent_top_place =='2'">selected="selected"</if>>否</option>
+				</select>
+				<select name="child_top_place">
+					<option value="">是否子类行业置顶</option>
+					<option value="1" <if condition="$child_top_place =='1'">selected="selected"</if>>是</option>
+					<option value="2" <if condition="$child_top_place =='2'">selected="selected"</if>>否</option>
+				</select>
 			{/if}
 
 			<if condition="$fields['typeid']">

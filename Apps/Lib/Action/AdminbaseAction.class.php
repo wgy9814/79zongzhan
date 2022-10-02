@@ -256,6 +256,9 @@ class AdminbaseAction extends Action
         $userid = intval($_REQUEST['userid']);
         $project = $_REQUEST['project'];
         $kccity = intval($_REQUEST['kccity']);
+        $parent_top_place = intval($_REQUEST['parent_top_place']);
+        $child_top_place = intval($_REQUEST['child_top_place']);
+
 
 
         if(APP_LANG)if($this->moduleid) $map['lang']=array('eq',LANG_ID);
@@ -300,6 +303,9 @@ class AdminbaseAction extends Action
         if($project) $map['project'] = $searchParam['project'] = $project;
         if ('Kecheng' == MODULE_NAME && $schoolid) $map['school_id'] = $searchParam['school_id'] = $schoolid;
         if ('Kecheng' == MODULE_NAME && $kccity) $map['kccity'] = $searchParam['kccity'] = $kccity;
+        if($parent_top_place) $map['parent_top_place'] = $searchParam['parent_top_place'] = $parent_top_place;
+        if($child_top_place) $map['child_top_place'] = $searchParam['child_top_place'] = $child_top_place;
+
         if($this->isChildModule) {
 			$map[$this->parentModuleKey] = $searchParam[$this->parentModuleKey] = $_REQUEST[$this->parentModuleKey];
 		}

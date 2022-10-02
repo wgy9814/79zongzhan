@@ -62,6 +62,84 @@
                     <h4>共找到<b>{$count}</b>条信息</h4>
                     <span></span></div>
                 <ul>
+                    {if isset($parent_top_place_list)}
+                    <volist name='parent_top_place_list' id='r' key='k'>
+                        <!--父类置顶课程-->
+                        <li class="list1>
+                            <p class="img">
+                                <a href="/school2/{$r.school_id}.html">
+                                    <img src="<?php echo M('school')->where(" id='$r[school_id]'")->getfield('file');?>" alt="{$r.title}" width="162" height="110">
+                                </a>
+                            </p>
+                            <div class="info">
+                                <div class="name">
+                                    <h2><a href="{$r.url}">{$r.title}</a></h2>
+                                    {$r.user_mark}
+                                    <p>
+                                        <a href="/school2/{$r.school_id}.html"><?php echo M('school')->where("id='$r[school_id]'")->getfield('title');?></a>
+                                    </p>
+                                    <i class="ico ico-rz"></i></div>
+                                <dl>
+                                    <dd style="height: 48px;"><span>简介：</span><?php echo str_cut(M('school')->where("id='$r[school_id]'")->getfield('description'),105);?></dd>
+                                    <!--<dd><span>群体：</span></dd>-->
+                                    <dd>
+                                        <!--p><span>校区：</span>陕西等1地址</p-->
+                                        <p><span>学制：</span> {$r.systme} </p>
+                                    </dd>
+                                </dl>
+                                <div class="mod">
+                                    <a href="{$r.url}" class="yuyue">我要预约</a>
+                                    <!--<p>已有<i>92</i>人预约</p>-->
+                                    <p>&nbsp;</p>
+                                    <span><a href="{$r.url}">我要评论</a></span><em class="lstar" title="{$avgScore}"><i style="width:80%;"></i></em></div>
+                            </div>
+                            <p class="price"><b>
+                                电询
+                            </b><span><a href="{$r.url}">查看详情</a></span></p>
+                        </li>
+                    </volist>
+                    {/if}
+
+
+                    {if isset($child_top_place_list)}
+                    <volist name='child_top_place_list' id='r' key='k'>
+                        <!--子类置顶课程-->
+                        <li class="list1>
+                            <p class="img">
+                        <a href="/school2/{$r.school_id}.html">
+                            <img src="<?php echo M('school')->where(" id='$r[school_id]'")->getfield('file');?>" alt="{$r.title}" width="162" height="110">
+                        </a>
+                        </p>
+                        <div class="info">
+                            <div class="name">
+                                <h2><a href="{$r.url}">{$r.title}</a></h2>
+                                {$r.user_mark}
+                                <p>
+                                    <a href="/school2/{$r.school_id}.html"><?php echo M('school')->where("id='$r[school_id]'")->getfield('title');?></a>
+                                </p>
+                                <i class="ico ico-rz"></i></div>
+                            <dl>
+                                <dd style="height: 48px;"><span>简介：</span><?php echo str_cut(M('school')->where("id='$r[school_id]'")->getfield('description'),105);?></dd>
+                                <!--<dd><span>群体：</span></dd>-->
+                                <dd>
+                                    <!--p><span>校区：</span>陕西等1地址</p-->
+                                    <p><span>学制：</span> {$r.systme} </p>
+                                </dd>
+                            </dl>
+                            <div class="mod">
+                                <a href="{$r.url}" class="yuyue">我要预约</a>
+                                <!--<p>已有<i>92</i>人预约</p>-->
+                                <p>&nbsp;</p>
+                                <span><a href="{$r.url}">我要评论</a></span><em class="lstar" title="{$avgScore}"><i style="width:80%;"></i></em></div>
+                        </div>
+                        <p class="price"><b>
+                            电询
+                        </b><span><a href="{$r.url}">查看详情</a></span></p>
+                        </li>
+                    </volist>
+                    {/if}
+
+
                     <volist name='list' id='r' key='k'>
 
                         <li class="list{$k}">
