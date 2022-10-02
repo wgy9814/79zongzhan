@@ -357,7 +357,7 @@ class BaseAction extends Action
                             $this->assign('child_top_place_list', $child_top_place_list);
 //                            print_r($child_top_place_list);
                         }
-
+                        $this->assign('cat', $cat);
                     }
                     if(!empty($_GET['p']) && $cat['catdir'] == 'kec'){
                         $schoolid = M('school')->where("id=$_GET[p]")->find();

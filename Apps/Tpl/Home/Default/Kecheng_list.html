@@ -141,8 +141,8 @@
 
 
                     <volist name='list' id='r' key='k'>
-                        <!--列表不显示置顶课程-->
-                        {if $r['parent_top_place'] !=1 && $r['child_top_place'] !=1}
+                        <!--列表不显示置顶课程 判断父类和子类行业-->
+                        {if ($cat['parentid'] ==0 && $r['parent_top_place'] !=1) || ($cat['parentid'] !=0 && $r['child_top_place'] !=1)}
                         <li class="list{$k}">
                             <p class="img">
                                 <a href="/school2/{$r.school_id}.html">
