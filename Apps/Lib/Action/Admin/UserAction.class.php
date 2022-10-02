@@ -150,5 +150,23 @@ class UserAction extends AdminbaseAction {
 			$this->error(L('do_empty'));
 		}
 	}
+
+    //后台-用户申请vip消息 获取用户信息
+    function getUserInfo(){
+        //接收数据
+        $userid = get_safe_replace($_POST['userid']);
+
+        if(!$userid){
+            $this->ajaxreturn('0','该用户已失效，请重新登录');
+        }
+
+        $user =M('user')->where('id='.$userid)->find();
+        if(empty($user)){
+            $this->ajaxreturn('0','该用户不存在');
+        }
+
+        $this->ajaxReturn($user,'获取用户信息成功',1);
+
+    }
 }
 ?>

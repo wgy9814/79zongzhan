@@ -58,6 +58,27 @@
             	</td>
             </tr>
             {/if}
+
+            {if $r['field']=='title' && $module_name=='User_level'}
+            <tr>
+                <td width="10%">指定用户</td>
+                <td width="90%" id="box_user">
+                    <select name="userid" id="userid">
+                        <PHP>
+                            $user = M('User')->where(array('status'=>1, 'id'=>array('neq', 3)))->select();
+                        </PHP>
+                        <option value="">{:L('请选择')}</option>
+                        <volist name="user" id="u">
+                            <option value="{$u.id}" {if $vo['userid']==$u['id']}selected="selected"{/if}>[{$u.id}] {$u.username}</option>
+                        </volist>
+                    </select>
+                </td>
+                <!--searchableSelect不支持change里写方法 通过设置hidden 值来获取-->
+                <input type='hidden' id="user_level_userid" name='user_level_userid' value=''>
+                <input type='hidden' id="user_name" name='user_name' value=''>
+
+            </tr>
+            {/if}
         </if>
         </volist>
 </table>
@@ -74,7 +95,49 @@
 </form>
 </div>
 <script>
+    var module_name = '{$module_name}'
     $(function(){
-        $('#userid').searchableSelect();
+        //searchableSelect模糊搜索插件 选中事件
+
+        if(module_name =='User_level') {
+            $('#userid').searchableSelect({
+                afterSelectItem: function () {
+                    // alert(this.holder.text());
+                    // alert(this.holder.data("value"));
+                    userid = this.holder.data("value");
+                    $('#user_level_userid').val(userid)
+                }
+            });
+            console.log(module_name);
+            //每500毫秒获取user_level_userid
+            var time = setInterval(function(){
+                var user_level_userid = $('#user_level_userid').val()
+                console.log(user_level_userid);
+                if(user_level_userid) {
+                    $.ajax({
+                        type: "post",
+                        url: "/Admin/User/getUserInfo",
+                        async: true,
+                        data: {'userid': user_level_userid},
+                        dataType: 'json',
+                        success: function (data) {
+                            var datas = data.data
+                            if (datas.status == 1) {
+                                $('#title').val(datas.title);
+                                $('#user_name').val(datas.username);
+                            } else {
+                                alert('系统错误');
+                            }
+                        }
+                    })
+                }
+            },500);
+        }else{
+            $('#userid').searchableSelect();
+        }
     });
+
+
+
+
 </script>

@@ -298,9 +298,13 @@ class ContentAction extends AdminbaseAction
 		$_POST['updatetime'] = time();		
 		if ($this->module[$this->moduleid]['name'] != 'System')
 		{
-		    $_POST['userid'] = $module ? $userid : $_SESSION['userid'];
-		    $_POST['username'] = $module ? $username : $_SESSION['username'];
-            $_POST['user_name'] = $schoolname ? $schoolname : '';
+            if ($this->module[$this->moduleid]['name'] != 'User_level')
+            {
+                //用户申请vip消息 使用默认提交参数
+                $_POST['userid'] = $module ? $userid : $_SESSION['userid'];
+                $_POST['username'] = $module ? $username : $_SESSION['username'];
+                $_POST['user_name'] = $schoolname ? $schoolname : '';
+            }
 		}else {
 		    $user = M('User')->find($_POST['userid']);
 		    $_POST['username'] = $user['username'];
