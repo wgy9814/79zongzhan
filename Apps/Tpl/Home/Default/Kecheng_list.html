@@ -141,7 +141,8 @@
 
 
                     <volist name='list' id='r' key='k'>
-
+                        <!--列表不显示置顶课程-->
+                        {if $r['parent_top_place'] !=1 && $r['child_top_place'] !=1}
                         <li class="list{$k}">
                             <p class="img">
                                 <a href="/school2/{$r.school_id}.html">
@@ -174,6 +175,7 @@
                                 电询
                             </b><span><a href="{$r.url}">查看详情</a></span></p>
                         </li>
+                        {/if}
                     </volist>
                 </ul>
                 <div class="huanye">
