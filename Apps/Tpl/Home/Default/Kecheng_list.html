@@ -65,7 +65,7 @@
                     {if isset($parent_top_place_list)}
                     <volist name='parent_top_place_list' id='r' key='k'>
                         <!--父类置顶课程-->
-                        <li class="list1>
+                        <li class="list0">
                             <p class="img">
                                 <a href="/school2/{$r.school_id}.html">
                                     <img src="<?php echo M('school')->where(" id='$r[school_id]'")->getfield('file');?>" alt="{$r.title}" width="162" height="110">
@@ -104,7 +104,7 @@
                     {if isset($child_top_place_list)}
                     <volist name='child_top_place_list' id='r' key='k'>
                         <!--子类置顶课程-->
-                        <li class="list1>
+                        <li class="list0">
                             <p class="img">
                         <a href="/school2/{$r.school_id}.html">
                             <img src="<?php echo M('school')->where(" id='$r[school_id]'")->getfield('file');?>" alt="{$r.title}" width="162" height="110">
