@@ -62,9 +62,9 @@
 .side_con{border: 1px solid #e8e8e8;}
 .course-nav li a, .course-nav li a:visited{text-align: center;}
 .ctitle h3{padding-left: 61px;}
-.courselist .list0 .price{padding-top:45px;background:url(../images/ding.jpg) no-repeat center top;}
-.courselist .list1 .price{padding-top:45px;background:url(../images/ding.jpg) no-repeat center top;}
-.courselist .list2 .price{padding-top:45px;background:url(../images/jiang.jpg) no-repeat center top;}
+.courselist .list0 .price{padding-top:45px;background:url(../images/zhiding.jpg) no-repeat center top;}
+/*.courselist .list1 .price{padding-top:45px;background:url(../images/ding.jpg) no-repeat center top;}*/
+/*.courselist .list2 .price{padding-top:45px;background:url(../images/jiang.jpg) no-repeat center top;}*/
 .courselist{padding-bottom:30px;}
 .bdsharebuttonbox{float: right;margin-top: 5px;}
 
