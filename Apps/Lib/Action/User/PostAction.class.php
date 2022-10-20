@@ -497,7 +497,10 @@ class PostAction extends BaseAction
 		$res = $this->sendSmsAddLog($fdata);
 
 		//2.发送到机构手机
-		if(!empty($schoolid['dianhua'])) {
+		//2.1.网上报名不发送短信手机号
+		$block_not_send_sys = M('Block')->where(['lang' => 2, 'pos' => 'baoming_not_send_sys'])->find();//后台 碎片管理-网上报名不发送短信手机号
+		if(!empty($schoolid['dianhua']) && $schoolid['dianhua'] != $block_not_send_sys['content']) {
+			//如机构手机为18924037954，不发此短信
 			$templateCode = 'SMS_254185135';
 			$content = '有学员咨询，请登录账户查看详情';
 			//阿里云短信

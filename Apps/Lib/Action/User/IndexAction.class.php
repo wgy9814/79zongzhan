@@ -388,7 +388,8 @@ class IndexAction extends BaseAction
         $pc = number_format(floatval(get_safe_replace($_POST['pc'])), 2);//网上报名
 		$systme = get_safe_replace($_POST['systme']);
 		$content = $_POST['content'];
-
+        $pc = str_replace(",","",$pc);
+        $price1 = str_replace(",","",$price1);
         if($pc != '0.00' && $price1) {
             if ($pc > $price1 * 0.95) {
                 $this->error(L('网上报名不能大于线下原价*0.95'));
@@ -560,7 +561,8 @@ class IndexAction extends BaseAction
 		$content = $_POST['content'];
 		$file2 = get_safe_replace($_POST['file2']);
 		$id = get_safe_replace($_POST['id']);
-
+        $pc = str_replace(",","",$pc);
+        $price1 = str_replace(",","",$price1);
         if($pc != '0.00' && $price1) {
             if ($pc > $price1 * 0.95) {
                 $this->error(L('网上报名不能大于线下原价*0.95'));
