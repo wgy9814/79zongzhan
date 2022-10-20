@@ -471,6 +471,43 @@ class ContentAction extends AdminbaseAction
 				$this->assign ( 'jumpUrl',$_SERVER['HTTP_REFERER']);
 				//$this->assign ( 'jumpUrl', U(GROUP_NAME.'-'.MODULE_NAME.'/add?moduleid='.$cat['moduleid']) );
 			}
+            if(MODULE_NAME == 'User_level') {//用户申请vip消息
+                //同时修改 User School Kecheng 的groupid
+                if($_POST['expire_time'] == 0){
+//                    $this->error (L('过期时间不能为空'));
+                }
+                $user = M('User');
+//                echo '<pre>';
+//                print_r($_POST);die;
+                $infos = $user->where("id=".$_POST['userid'])->find();
+                $level = M(MODULE_NAME);
+
+                if($_POST['status'] == 1){
+                    $level->where("userid=".$_POST['userid'].' and id <>'.$id)->delete();
+                    if($_POST['expire_time'] == 0){
+                        $_POST['expire_time'] = time() + (86400*365);
+                    }
+                    $datas = [];
+                    $datas['groupid'] = $_POST['type'];
+                    $user->where("id=".$_POST['userid'])->save($datas);
+                    $school = M('School');
+                    $school->where("id=".$infos['schoolid'])->save($datas);
+                    $kecheng = M('Kecheng');
+                    $kecheng->where("school_id=".$infos['schoolid'])->save($datas);
+                }else{
+                    $old = $level->where("userid=".$_POST['userid'].' and id <>'.$id.' and status =1')->find();
+                    if(!$old){//未审核先查找有没有已审核通过的消息 没有的话才修改信息
+                        $datas = [];
+                        $datas['groupid'] = 6;
+                        $user->where("id=".$_POST['userid'])->save($datas);
+                        $school = M('School');
+                        $school->where("id=".$infos['schoolid'])->save($datas);
+                        $kecheng = M('Kecheng');
+                        $kecheng->where("school_id=".$infos['schoolid'])->save($datas);
+                    }
+                }
+
+            }
 			if ('feedback' !=  strtolower($module))
 			{
                 $this->success (L('add_ok'));
@@ -532,6 +569,7 @@ class ContentAction extends AdminbaseAction
             }
         }
         if(MODULE_NAME == 'User_level') {//用户申请vip消息
+            //同时修改 User School Kecheng 的groupid
             if($_POST['expire_time'] == 0){
                 $this->error (L('过期时间不能为空'));
             }
@@ -545,22 +583,24 @@ class ContentAction extends AdminbaseAction
                 if($olddata['expire_time'] == 0){
                     $_POST['expire_time'] = time() + (86400*365);
                 }
-                $data['groupid'] = $_POST['type'];
+                $datas = [];
+                $datas['groupid'] = $_POST['type'];
 //                print_r($olddata);die;
-                $user->where("id=".$olddata['userid'])->save($data);
+                $user->where("id=".$olddata['userid'])->save($datas);
                 $school = M('School');
-                $school->where("id=".$info['schoolid'])->save($data);
+                $school->where("id=".$info['schoolid'])->save($datas);
                 $kecheng = M('Kecheng');
-                $kecheng->where("school_id=".$info['schoolid'])->save($data);
+                $kecheng->where("school_id=".$info['schoolid'])->save($datas);
             }else{
                 $old = $level->where("userid=".$olddata['userid'].' and id <>'.$_POST['id'].' and status =1')->find();
                 if(!$old){//未审核先查找有没有已审核通过的消息 没有的话才修改信息
-                    $data['groupid'] = 6;
-                    $user->where("id=".$olddata['userid'])->save($data);
+                    $datas = [];
+                    $datas['groupid'] = 6;
+                    $user->where("id=".$olddata['userid'])->save($datas);
                     $school = M('School');
-                    $school->where("id=".$info['schoolid'])->save($data);
+                    $school->where("id=".$info['schoolid'])->save($datas);
                     $kecheng = M('Kecheng');
-                    $kecheng->where("school_id=".$info['schoolid'])->save($data);
+                    $kecheng->where("school_id=".$info['schoolid'])->save($datas);
                 }
             }
 
@@ -578,7 +618,7 @@ class ContentAction extends AdminbaseAction
 //            if($self_cat_id_key){
 //                unset($all_cat_list[$self_cat_id_key]);
 //            }
-            echo '<pre>';
+//            echo '<pre>';
 //            echo $_POST['catid'];
 //            print_r($parent_cat_info);
 //            die;

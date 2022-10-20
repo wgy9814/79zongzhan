@@ -647,7 +647,7 @@ class BaseAction extends Action
                 $where['userid'] = $user['id'];
                 $where['status'] = 1;
                 $where['expire_time'] = array('gt',$now);
-//                $where['type'] = $user['groupid'];
+                $where['type'] = $user['groupid'];
                 $user_level = M('User_level')->where($where)->find();
 //                echo M('User_level')->getLastSql();
                 if ($user_level) {//后台有审核通过的vip会员信息
