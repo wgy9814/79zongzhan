@@ -5,7 +5,7 @@
 			<form action="{:U('User/index')}" method="get">
 			<input type="hidden" name="g" value="{$Think.GROUP_NAME}" />
 			<input type="hidden" name="m" value="{$Think.MODULE_NAME}" />
-			<input type="hidden" name="a" value="{$Think.ACTION_NAME}" />			
+			<input type="hidden" name="a" value="{$Think.ACTION_NAME}" />
 			{:L('user_select_option')}: <input type="text" name="keyword"  class="input-text" value="{$keyword}"/>
 			<select name="searchtype">
 			<option value="username" <eq name="searchtype" value="username">selected</eq>>{:L('username')}</option>
@@ -18,6 +18,9 @@
 			<option value="{$row['id']}" <eq name="groupid" value="$row['id']">selected="selected"</eq>>{$row['name']}</option>
 			</volist>
 			</select>
+			<span style="padding-left:4px;">{:L('display_yes')}&nbsp;
+				<input type="text" size="3" class="input-text" name="listRows" value="{$Think.get.listRows}" />&nbsp;{:L('listRows')}
+			</span>
 			<input type="submit" value="{:L('chaxun')}"  class="button" />
 			<input type="reset" value="{:L('reset')}" class="button"  />
 			</form>
@@ -61,14 +64,19 @@
       		{:L('disable')}
       		</eq>
       		</td>
-			<td align="center"><a href="{:U('User/edit',array(id=>$user['id']))}">{:L('edit')}</a> | <a href="javascript:confirm_delete('{:U('User/delete',array(id=>$user['id']))}')">{:L('delete')}</a></td>      		
+			<td align="center"><a href="{:U('User/edit',array(id=>$user['id']))}">{:L('edit')}</a> | <a href="javascript:confirm_delete('{:U('User/delete',array(id=>$user['id']))}')">{:L('delete')}</a></td>
       		</tr>
 			{/if}
       		</volist>
       	</tbody>
     </table>
   
-    <div class="btn"><input type="submit" class="button" name="dosubmit" value="<?php echo L('delete')?>" /></div>  </div>
+    <div class="btn">
+		<input type="submit" class="button" name="dosubmit" value="<?php echo L('delete')?>" />
+		<input type="submit" value="<?php echo L('Exceltable')?>" name="dosubmit" class="button" onclick="myform.action='?g=Admin&amp;m=<?php echo MODULE_NAME?>&amp;a=excel'"/>
+
+	</div>
+</div>
 </div>
 </form>
 

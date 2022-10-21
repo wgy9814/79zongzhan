@@ -95,7 +95,7 @@ class Page extends Think {
 		}
 
 		$output = '';
-		/*$output .= '<a class="a1">'.$this->totalRows.L('page_item').'</a>';*/
+		$output .= '<a class="a1">'.$this->totalRows.L('page_item').'</a>';
 		$output .= '<li><a class="page-first" href="'.$this->pageurl($urlrule, 1,$this->parameter).'">&lt|</a></li>';
 		$output .= '<li><a class="page-prev" href="'.$this->pageurl($urlrule, $pre_page,$this->parameter).'">上一页</a></li>';
 		$show_nums = $this->rollPage*2+1;// 显示页码的个数

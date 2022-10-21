@@ -36,9 +36,15 @@ class UserAction extends AdminbaseAction {
 		}
 		if($groupid)$where['groupid']=$groupid;
 
+        if (! empty ( $_REQUEST ['listRows'] ) && $_REQUEST ['listRows'] > 0) {
+            $listRows = $searchParam['listRows'] = $_REQUEST ['listRows'];
+        }else{
+            $listRows = 20;
+        }
+
 		$user=$this->dao;
 		$count=$user->where($where)->count();
-		$page=new Page($count,20);
+		$page=new Page($count,$listRows);
 		$show=$page->show(1);
 		$this->assign("page",$show);
 		$list=$user->order('id')->where($where)
