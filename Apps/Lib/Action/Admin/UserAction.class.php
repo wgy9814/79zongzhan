@@ -174,5 +174,11 @@ class UserAction extends AdminbaseAction {
         $this->ajaxReturn($user,'获取用户信息成功',1);
 
     }
+
+    //群发短信
+    function sendBtachSms(){
+        $con = $this->sendBatchSms($argv=[]);
+//        var_dump($con);
+    }
 }
 ?>

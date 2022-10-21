@@ -1095,6 +1095,41 @@ class AdminbaseAction extends Action
          
     }
 
+    //阿里云发送短信
+    public function sendSms($data)
+    {
+        set_time_limit(0);
+        header('Content-Type: text/plain; charset=utf-8');
+        vendor("AliSms.AliSms");
+        $sms = new AliSms($this->Config['accessKeyId'],$this->Config['accessKeySecret']);
+        $res = $sms->sendSms(
+            "79招生网", // 短信签名
+            $data['templateCode'], // 短信模板编号
+            $data["phone"], // 短信接收者
+            $data["code"] // 短信模板中字段的值
+        );
+        return $res;
+
+    }
+
+    //阿里云群发送短信
+    public function sendBatchSms($data)
+    {
+        set_time_limit(0);
+        header('Content-Type: text/plain; charset=utf-8');
+        vendor("AliSms.AliSms");
+        $sms = new AliSms($this->Config['accessKeyId'],$this->Config['accessKeySecret']);
+        $res = $sms->sendBatchSms(
+//            "79招生网", // 短信签名
+//            $data['templateCode'], // 短信模板编号
+//            $data["phone"], // 短信接收者
+//            $data["code"] // 短信模板中字段的值
+        );
+        return $res;
+
+    }
+
+
 
 }
 ?>

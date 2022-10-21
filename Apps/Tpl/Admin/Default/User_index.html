@@ -1,4 +1,4 @@
-
+<link href="/Public/Css/layer.css" rel="stylesheet" type="text/css"/>
 <table  class="search_table" width="100%">
 	<tr>
 		<td>
@@ -74,10 +74,69 @@
     <div class="btn">
 		<input type="submit" class="button" name="dosubmit" value="<?php echo L('delete')?>" />
 		<input type="submit" value="<?php echo L('Exceltable')?>" name="dosubmit" class="button" onclick="myform.action='?g=Admin&amp;m=<?php echo MODULE_NAME?>&amp;a=excel'"/>
-
+		<input type="button" class="button" name="dosubmit" id="send" value="群发短信" />
 	</div>
 </div>
 </div>
 </form>
 
+
+<div id="fuwu_content" style="display: none;">
+	<form id="myform" action="?g=Admin&amp;m=Node&amp;a=insert" method="post">
+		<table cellpadding="0" cellspacing="0" class="table_form" width="100%">
+
+			<tbody><tr>
+				<td>群发短信模板</td>
+				<td>
+					<select name="sms_id" id="sms_id">
+						<option value="">选择短信</option>
+						<PHP>
+							$sendsms = M('Batch_sendsms')->field('id,title')->select();
+							$selected = '';
+							foreach ($sendsms as $data)
+							{
+							$selected = $_REQUEST['sendsms_id']==$data['id'] ? 'selected' : '';
+							echo '<option value="', $data['id'], '" ', $selected, '>', $data['title'], '</option>';
+							}
+						</PHP>
+					</select>
+				</td>
+			</tr>
+
+
+			</tbody>
+		</table>
+		<div class="btn">
+			<input type="button" value="发送" id="sendBatchSms" class="button" onclick="del();">
+		</div>
+	</form>
+</div>
+
 <div id="pages" class="page">{$page}</div>
+<script type="text/javascript" src="/Public/Js/layer.js"></script>
+<script>
+	$('#send').click(function(){
+		var html = $('#fuwu_content').html()
+
+		layer.open({
+			type: 1,
+			title: false,
+
+			shadeClose: true,
+			area: ['400px', '100px'],
+			skin: 'yourclass'
+			,content: html
+		});
+	})
+	$('#sendBatchSms').click(function(){
+
+		var sms_id = $('#sms_id option:selected').val();
+		alert(555)
+
+	})
+	function del(){
+		var sms_id = $('#sms_id option:selected').val();
+		alert(sms_id)
+
+	}
+</script>
