@@ -570,6 +570,9 @@ class ContentAction extends AdminbaseAction
         }
         if(MODULE_NAME == 'User_level') {//用户申请vip消息
             //同时修改 User School Kecheng 的groupid
+            if($_POST['userid'] != $olddata['userid']){
+                $this->error (L('用户无法更改'));
+            }
             if($_POST['expire_time'] == 0){
                 $this->error (L('过期时间不能为空'));
             }
@@ -583,11 +586,17 @@ class ContentAction extends AdminbaseAction
                 if($olddata['expire_time'] == 0){
                     $_POST['expire_time'] = time() + (86400*365);
                 }
-
-                if($_POST['userid'] != $olddata['userid']){
-                    //用户不一样
-                    $info = $user->where("id=".$olddata['userid'])->find();
-                    $level->where("userid=".$_POST['userid'].' and id <>'.$_POST['id'])->delete();
+                $datas = [];
+                $datas['groupid'] = $_POST['type'];
+//                print_r($olddata);die;
+                $user->where("id=".$olddata['userid'])->save($datas);
+                $school = M('School');
+                $school->where("id=".$info['schoolid'])->save($datas);
+                $kecheng = M('Kecheng');
+                $kecheng->where("school_id=".$info['schoolid'])->save($datas);
+            }else{
+                $old = $level->where("userid=".$olddata['userid'].' and id <>'.$_POST['id'].' and status =1')->find();
+                if(!$old){//未审核先查找有没有已审核通过的消息 没有的话才修改信息
                     $datas = [];
                     $datas['groupid'] = 6;
                     $user->where("id=".$olddata['userid'])->save($datas);
@@ -595,40 +604,6 @@ class ContentAction extends AdminbaseAction
                     $school->where("id=".$info['schoolid'])->save($datas);
                     $kecheng = M('Kecheng');
                     $kecheng->where("school_id=".$info['schoolid'])->save($datas);
-
-                    $info = $user->where("id=".$_POST['userid'])->find();
-                    $datas = [];
-                    $datas['groupid'] = $_POST['type'];
-//                print_r($olddata);die;
-                    $user->where("id=".$_POST['userid'])->save($datas);
-                    $school = M('School');
-                    $school->where("id=".$info['schoolid'])->save($datas);
-                    $kecheng = M('Kecheng');
-                    $kecheng->where("school_id=".$info['schoolid'])->save($datas);
-                }else{
-                    $datas = [];
-                    $datas['groupid'] = $_POST['type'];
-//                print_r($olddata);die;
-                    $user->where("id=".$olddata['userid'])->save($datas);
-                    $school = M('School');
-                    $school->where("id=".$info['schoolid'])->save($datas);
-                    $kecheng = M('Kecheng');
-                    $kecheng->where("school_id=".$info['schoolid'])->save($datas);
-                }
-            }else{
-                $old = $level->where("userid=".$olddata['userid'].' and id <>'.$_POST['id'].' and status =1')->find();
-                if(!$old){//未审核先查找有没有已审核通过的消息 没有的话才修改信息
-                    if($_POST['userid'] != $olddata['userid']) {
-                        //用户不一样
-                    }else{
-                        $datas = [];
-                        $datas['groupid'] = 6;
-                        $user->where("id=".$olddata['userid'])->save($datas);
-                        $school = M('School');
-                        $school->where("id=".$info['schoolid'])->save($datas);
-                        $kecheng = M('Kecheng');
-                        $kecheng->where("school_id=".$info['schoolid'])->save($datas);
-                    }
                 }
             }
 
