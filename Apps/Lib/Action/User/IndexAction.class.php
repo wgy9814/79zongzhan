@@ -392,7 +392,7 @@ class IndexAction extends BaseAction
         $price1 = str_replace(",","",$price1);
         if($pc != '0.00' && $price1) {
             if ($pc > $price1 * 0.95) {
-                $this->error(L('网上报名不能大于线下原价*0.95'));
+                $this->error(L('网上报名价不能大于课程原价*0.95'));
                 exit;
             }
         }
@@ -565,7 +565,7 @@ class IndexAction extends BaseAction
         $price1 = str_replace(",","",$price1);
         if($pc != '0.00' && $price1) {
             if ($pc > $price1 * 0.95) {
-                $this->error(L('网上报名不能大于线下原价*0.95'));
+                $this->error(L('网上报名价不能大于课程原价*0.95'));
                 exit;
             }
         }

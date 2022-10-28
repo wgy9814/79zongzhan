@@ -118,21 +118,21 @@
 							<div class="col-sm-3"></div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-2 control-label">网上报名：</label>
+							<label class="col-sm-2 control-label">网上报名价：</label>
 							<div class="col-sm-7">
 								<input name="pc" type="text" class="form-control" value="{$kcshow.pc}" ><label class="control-label">&nbsp;</label>
 							</div>
 							<div class="col-sm-3"></div>
 						</div>
 <!--						<div class="form-group">-->
-<!--							<label class="col-sm-2 control-label">线下原价：</label>-->
+<!--							<label class="col-sm-2 control-label">课程原价：</label>-->
 <!--							<div class="col-sm-7">-->
 <!--								<input name="price" type="text" class="form-control" value="{$kcshow.price}" ><label class="control-label">&nbsp;</label>-->
 <!--							</div>-->
 <!--							<div class="col-sm-3"></div>-->
 <!--						</div>-->
 						<div class="form-group">
-							<label class="col-sm-2 control-label">线下原价：</label>
+							<label class="col-sm-2 control-label">课程原价：</label>
 							<div class="col-sm-7">
 								<input name="price1" type="text" class="form-control" value="{$kcshow.price1}" ><label class="control-label">&nbsp;</label>
 							</div>
@@ -236,14 +236,14 @@
 		var price1=$('input[name=price1]').val();
 		if(pc){
 			if(!isNumber(pc)){
-				alert("网上报名必须是数字");
+				alert("课程报价必须是数字");
 				return false;
 			}
 		}
 
 		if(price1){
 			if(!isNumber(price1)){
-				alert("线下原价必须是数字");
+				alert("课程原价必须是数字");
 				return false;
 			}
 		}

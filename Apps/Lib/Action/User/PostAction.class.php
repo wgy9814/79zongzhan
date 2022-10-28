@@ -460,6 +460,28 @@ class PostAction extends BaseAction
 			$stitle_other = '学员'.$title.'报名咨询';
 			$scontent_other = ncReplaceText($block_info['content'],$param_sys);
 			$b->get_messages($stitle_other,$scontent_other,$school_user_id,$ckid);
+		}else{
+			//游客用户
+			//1.发送成功系统消息
+			$userid = $school_user_id;
+			$b=A('User/Register');
+			$stitle = '您已成功报名-'.empty($project) ? $_REQUEST['project'] : $project;
+			$scontent = '恭喜你，成功！报名-"'.(empty($project) ? $_REQUEST['project'] : $project).'"课程。-【79教育平台】';
+			$b->get_messages($stitle,$scontent,$userid,$ckid);
+
+			//2.发送报名信息给该课程的学校
+			$block_info = M('Block')->where(['lang' => 2, 'pos' => 'baoming_send_sysmess'])->find();//后台 碎片管理-学生报名咨询发送到机构账户中心系统消息
+
+			$param_sys = array();
+			$param_sys['code1']     = $title;
+			$param_sys['code2']     = $ck_title;
+			$param_sys['code3']     = $form_content;
+			$param_sys['code4']     = $telephone;
+			$param_sys['code5']     = $address;
+
+			$stitle_other = '学员'.$title.'报名咨询';
+			$scontent_other = ncReplaceText($block_info['content'],$param_sys);
+			$b->get_messages($stitle_other,$scontent_other,$school_user_id,$ckid);
 		}
 
 		$r = sendmail($this->Config[site_email],$subject,$body,$this->Config);
