@@ -1,0 +1,24 @@
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /index.php?s=$1 [QSA,PT,L]
+RewriteRule ^(.*)Yourphp/Tpl/(.*).html$ /403.html [QSA,PT,L]
+RewriteRule ^(.*)/(.*).php$ /403.html [QSA,PT,L]
+
+Order Deny,Allow
+Deny from 104.151.46.233   ##输入要屏蔽的IP地址
+Deny from 47.56.158.94   ##输入要屏蔽的IP地址
+Deny from 172.121.25  ## 屏蔽IP段
+Deny from 185.191.171  ## 屏蔽IP段
+
+#iis��α��̬
+#[ISAPI_Rewrite]
+# 3600 = 1 hour
+#CacheClockRate 3600
+#RepeatLimit 32
+#RewriteRule ^/index.htl   /index.php 
+#RewriteRule .*\.(?:gif|jpg|png|css|js|txt|jpeg|swf|flv) $0 [I,L] 
+#RewriteRule /httpd(?:\.ini|\.parse\.errors) / [F,I,O]
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule (?!/index.php)(?!/admin.php)(?!/Scripts)(?!/Uploads)(?!/Public)(?!/Common)(.*)$ /index\.php\?s=$1 [I]
