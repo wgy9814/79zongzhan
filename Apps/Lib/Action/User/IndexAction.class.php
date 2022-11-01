@@ -425,8 +425,8 @@ class IndexAction extends BaseAction
 
 		
         $category = M('category')->where('id='.$industry)->find();
-        
-		$addkc = M("kecheng"); //实例化对象
+        $user_info =M('user')->where('schoolid='.$schoolid)->find();
+        $addkc = M("kecheng"); //实例化对象
 		$data['title'] = $title;
 		$data['dx'] = $dx;
 		$data['address'] = $address;
@@ -444,7 +444,8 @@ class IndexAction extends BaseAction
 		$data['catid'] = $industry;
 		$data['createtime'] = time();
 		$date['updatetime'] = time();
-		$re=$addkc->add($data);
+        $data['groupid'] = $user_info['groupid'];
+        $re=$addkc->add($data);
 		if($re){
 			//成功插入后再拼接url
 			$save_url = M("kecheng");
