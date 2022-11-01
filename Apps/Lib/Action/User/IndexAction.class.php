@@ -444,7 +444,7 @@ class IndexAction extends BaseAction
 		$data['catid'] = $industry;
 		$data['createtime'] = time();
 		$date['updatetime'] = time();
-        $data['groupid'] = $user_info['groupid'];
+        $data['groupid'] = !empty($user) ? $user_info['groupid'] : 0;
         $re=$addkc->add($data);
 		if($re){
 			//成功插入后再拼接url
