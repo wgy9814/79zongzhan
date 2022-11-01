@@ -18,6 +18,29 @@ class AdminbaseAction extends Action
 
 	function _initialize()
 	{
+        $node=M('Kecheng');
+
+        $list=$node->where("groupid=0")->limit('0','2000')->select();
+
+//        echo $node->getLastSql();
+//        die;
+//        echo '<pre>';
+//        print_r($list);
+//        die;
+        foreach($list as $r) {
+            $user_info =M('user')->where('schoolid='.$r['school_id'])->find();
+
+            if($user_info){
+                $save_url = M("kecheng");
+                $data['groupid'] = $user_info['groupid'];
+                $re2 = $save_url->where('id='.$r['id'])->save($data);
+                echo $save_url->getLastSql();
+            }
+
+
+
+        }
+        die;
 		$this->sysConfig = F('sys.config');
 		$this->menudata = F('Menu');		
 		$this->module = F('Module');
