@@ -443,9 +443,9 @@ class PostAction extends BaseAction
 		{
     		//1.发送成功系统消息
     		$b=A('User/Register');
-    		$stitle = '您已成功报名-'.empty($project) ? $_REQUEST['project'] : $project;
-    		$scontent = '恭喜你，成功！报名-"'.(empty($project) ? $_REQUEST['project'] : $project).'"课程。-【79教育平台】';
-    		$b->get_messages($stitle,$scontent,$userid,$ckid);
+//    		$stitle = '您已成功报名-'.empty($project) ? $_REQUEST['project'] : $project;
+//    		$scontent = '恭喜你，成功！报名-"'.(empty($project) ? $_REQUEST['project'] : $project).'"课程。-【79教育平台】';
+//    		$b->get_messages($stitle,$scontent,$userid,$ckid);
 
     		//2.发送报名信息给该课程的学校
 			$block_info = M('Block')->where(['lang' => 2, 'pos' => 'baoming_send_sysmess'])->find();//后台 碎片管理-学生报名咨询发送到机构账户中心系统消息
@@ -465,9 +465,9 @@ class PostAction extends BaseAction
 			//1.发送成功系统消息
 			$userid = $school_user_id;
 			$b=A('User/Register');
-			$stitle = '您已成功报名-'.empty($project) ? $_REQUEST['project'] : $project;
-			$scontent = '恭喜你，成功！报名-"'.(empty($project) ? $_REQUEST['project'] : $project).'"课程。-【79教育平台】';
-			$b->get_messages($stitle,$scontent,$userid,$ckid);
+//			$stitle = '您已成功报名-'.empty($project) ? $_REQUEST['project'] : $project;
+//			$scontent = '恭喜你，成功！报名-"'.(empty($project) ? $_REQUEST['project'] : $project).'"课程。-【79教育平台】';
+//			$b->get_messages($stitle,$scontent,$userid,$ckid);
 
 			//2.发送报名信息给该课程的学校
 			$block_info = M('Block')->where(['lang' => 2, 'pos' => 'baoming_send_sysmess'])->find();//后台 碎片管理-学生报名咨询发送到机构账户中心系统消息
