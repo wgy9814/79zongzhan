@@ -5,63 +5,65 @@ html{_overflow-y:scroll}
 .mainnav_title {display:none;}
 </style>
 <link href="__ROOT__/Public/Js/swfupload/swfupload.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="__ROOT__/Public/Js/swfupload/swfupload.js"></script>
-<script type="text/javascript" src="__ROOT__/Public/Js/swfupload/fileprogress.js"></script>
+<!--<script type="text/javascript" src="__ROOT__/Public/Js/swfupload/swfupload.js"></script>-->
+<!--<script type="text/javascript" src="__ROOT__/Public/Js/swfupload/fileprogress.js"></script>-->
 <script type="text/javascript" src="__ROOT__/Public/Js/swfupload/handlers.js"></script>
+<link href="__ROOT__/Public/layui/css/layui.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__ROOT__/Public/layui/layui.js"></script>
 <script type="text/javascript">
 		$.ajaxSetup ({ cache: false });
 
 		var file_limit = {$file_limit};
 		var swfu;
- 		window.onload = function() {
-			
-			var settings = {
-				flash_url : "__ROOT__/Public/Js/swfupload/swfupload.swf?"+Math.random(),
-				upload_url: "index.php{:U('Attachment/upload')}",
-				file_post_name : "filedata",
-				post_params: {"PHPSESSID" : "<?php echo  $sessid;?>", "isadmin" : "<?php echo $isadmin;?>","userid":"<?php echo $userid?>","swf_auth_key": "<?php echo $swf_auth_key;?>","isthumb" : "<?php echo $isthumb;?>","moduleid" : "<?php echo $moduleid?>","addwater":"<?php echo intval($watermark_enable);?>","lang":"<?php echo $lang;?>"},
-				file_size_limit : "<?php echo $file_size;?> MB",
-				file_types : "<?php echo $file_types;?>",
-				file_types_description : "All Files",
-				file_upload_limit : "<?php echo $file_limit;?>",
-				file_queue_limit : 0,
-				custom_settings : {
-					progressTarget : "fsUploadProgress",
-					cancelButtonId : "btnCancel",
-					tdFilesQueued : document.getElementById("tdFilesQueued"),
-					tdFilesUploaded : document.getElementById("tdFilesUploaded"),
-					tdErrors : document.getElementById("tdErrors")
-				},
-				debug: false,
-				prevent_swf_caching : false,
+		/*window.onload = function() {
 
-				button_image_url : "",
-				button_placeholder_id: "spanButtonPlaceHolder",
-				button_width: 75,
-				button_height: 29,
-				button_text : '',
-				button_text_style : '',
-				button_text_top_padding: 0,
-				button_text_left_padding: 0,
-				button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
-				button_cursor: SWFUpload.CURSOR.HAND,
-				swfupload_preload_handler : preLoad,
-				swfupload_load_failed_handler : loadFailed,
+           var settings = {
+               flash_url : "__ROOT__/Public/Js/swfupload/swfupload.swf?"+Math.random(),
+               upload_url: "index.php{:U('Attachment/upload')}",
+               file_post_name : "filedata",
+               post_params: {"PHPSESSID" : "<?php echo  $sessid;?>", "isadmin" : "<?php echo $isadmin;?>","userid":"<?php echo $userid?>","swf_auth_key": "<?php echo $swf_auth_key;?>","isthumb" : "<?php echo $isthumb;?>","moduleid" : "<?php echo $moduleid?>","addwater":"<?php echo intval($watermark_enable);?>","lang":"<?php echo $lang;?>"},
+               file_size_limit : "<?php echo $file_size;?> MB",
+               file_types : "<?php echo $file_types;?>",
+               file_types_description : "All Files",
+               file_upload_limit : "<?php echo $file_limit;?>",
+               file_queue_limit : 0,
+               custom_settings : {
+                   progressTarget : "fsUploadProgress",
+                   cancelButtonId : "btnCancel",
+                   tdFilesQueued : document.getElementById("tdFilesQueued"),
+                   tdFilesUploaded : document.getElementById("tdFilesUploaded"),
+                   tdErrors : document.getElementById("tdErrors")
+               },
+               debug: false,
+               prevent_swf_caching : false,
 
-				file_queued_handler : fileQueued,
-				file_queue_error_handler : fileQueueError,
-				upload_start_handler : uploadStart,
-				upload_progress_handler : uploadProgress,
-				upload_error_handler : uploadError,
-				upload_success_handler : uploadSuccess,
-				upload_complete_handler : uploadComplete,
-				file_dialog_complete_handler:fileDialogComplete
-			};
+               button_image_url : "",
+               button_placeholder_id: "spanButtonPlaceHolder",
+               button_width: 75,
+               button_height: 29,
+               button_text : '',
+               button_text_style : '',
+               button_text_top_padding: 0,
+               button_text_left_padding: 0,
+               button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
+               button_cursor: SWFUpload.CURSOR.HAND,
+               swfupload_preload_handler : preLoad,
+               swfupload_load_failed_handler : loadFailed,
 
-			
-			swfu = new SWFUpload(settings);
-			
-	     };
+               file_queued_handler : fileQueued,
+               file_queue_error_handler : fileQueueError,
+               upload_start_handler : uploadStart,
+               upload_progress_handler : uploadProgress,
+               upload_error_handler : uploadError,
+               upload_success_handler : uploadSuccess,
+               upload_complete_handler : uploadComplete,
+               file_dialog_complete_handler:fileDialogComplete
+           };
+
+
+           swfu = new SWFUpload(settings);
+
+        };*/
  
 	function del (aid) {
 			var data = '';
@@ -71,14 +73,14 @@ html{_overflow-y:scroll}
 		         url: url,
 		         data: data,
 		         success: function(msg){
-		         	
-					ajaxload(1,1,'filelist',<?php echo $isadmin;?>);	
-					
+
+					ajaxload(1,1,'filelist',<?php echo $isadmin;?>);
+
 		         }
 		    });
 
 				
-				}			
+	}
 
 
 function ajaxload(typeid,page,inputid,isadmin)
@@ -121,12 +123,14 @@ function addwater_enable(){
 
 	<div class="content_1">
 		<div class="tabbox" style="display:block;">
-				<div id="divMovieContainer">
-					<div class="selectbut"><span id="spanButtonPlaceHolder"></span></div>
-					<input type="button" value="{:L('start_upload')}" id="uploadbut" onclick="swfu.startUpload();"/>
-					<div style="color:#959595;line-height:24px;height:24px;background:url() no-repeat;padding-left:20px;"><input type="checkbox" id="addwater" name="addwater" value="1" onclick="addwater_enable();" <if condition="$watermark_enable==1"> checked</if>/> <font color="green">{:L('upload_add_water')}</font> , {:L('upload_say4')} <font color="red">{$file_types}</font> {:L('upload_say5')}</div><br>
-					<div style="color:#454545;clear:both;line-height:24px;height:24px;"> {:L('upload_say1')} <font color="red">{$small_upfile_limit}</font> {:L('upload_say2')} <font color="red">{$file_size}</font>	{:L('upload_say3')}</div>
-				</div>
+			<div id="divMovieContainer">
+				<div class="selectbut"><!--<span id="spanButtonPlaceHolder"></span>--><button type="button" class="layui-btn" id="spanButtonPlaceHolder" style="width:75px; height:28px; background:none;"></button></div>
+				<!--<input type="button" value="{:L('start_upload')}" id="uploadbut" onclick="swfu.startUpload();"/>-->
+				<input type="button" value="{:L('start_upload')}" id="uploadbut" />
+				<div style="color:#959595;line-height:24px;height:24px;background:url() no-repeat;padding-left:20px;"><!--<input type="checkbox" id="addwater" name="addwater" value="0" onclick="addwater_enable();" <if condition="$watermark_enable==1"> checked</if>/> <font color="green">{:L('upload_add_water')}</font> ,--> {:L('upload_say4')} <font color="red">{$file_types}</font> {:L('upload_say5')}</div><br>
+				<!--<div style="color:#454545;clear:both;line-height:24px;height:24px;"> {:L('upload_say1')} <font color="red">{$small_upfile_limit}</font> {:L('upload_say2')} <font color="red">{$file_size}</font>	{:L('upload_say3')}</div>-->
+				<div style="color:#454545;clear:both;line-height:24px;height:24px;"> {:L('upload_say1')} <font color="red">{$small_upfile_limit}</font> {:L('upload_say2')} <font color="red">{$file_size}</font>{:L('upload_say3')} ,建议图片大小<font color="red">600kb</font>以内，最大图片宽度<font color="red">1920 px（像素）</font></div>
+			</div>
 
 
 				<div id="divStatus">{:L('upload_say6')}<span id="tdFilesQueued">0</span>{:L('upload_say7')}<span id="tdErrors">0</span> {:L('upload_say8')}<span id="tdFilesUploaded">0</span> {:L('upload_say9')}</div>
@@ -144,13 +148,23 @@ function addwater_enable(){
 
 		</div>
 		<div class="tabbox">
-			<div id="filelist"></div>
+			<input type="text" class="layui-input fl" style="width:200px; height:28px;line-height:28px;" id="serchkeyval" value="" />
+			<input type="submit" class="layui-btn layui-btn-danger fl" style="height:28px; line-height:28px; margin-left:10px;" value="提交" onclick="ajaxloadtow(1,1,'filelist',<?php echo $isadmin;?>);" />
+			<div style="clear:both;"></div>
+			<div id="filelist" style="margin-top:18px;"></div>
 		</div>
 		<div class="tabbox">
 			<div id="nouselist"></div>
 		</div>
 	</div>
 </div>
+	<script type="text/javascript">
+		function ajaxloadtow(typeid,page,inputid,isadmin){
+			var serchkey = $('#serchkeyval').val();
+			//console.log(typeid);return false;
+			ajaxload(typeid,page,inputid,isadmin,serchkey);
+		}
+	</script>
 
 <div  id="myuploadform" style="display:none;" ></div>
 <script>
@@ -189,6 +203,149 @@ var insert2Xheditor =  insert2Xheditor || function(){
 		callback(arrMsg);
 }
 </script>
+	<script>
+		layui.use('upload', function(){
+			var $ = layui.jquery
+					,upload = layui.upload;
+
+			/*  //普通图片上传
+              var uploadInst = upload.render({
+                elem: '#test1'
+                ,url: 'https://httpbin.org/post' //改成您自己的上传接口
+                ,before: function(obj){
+                  //预读本地文件示例，不支持ie8
+                  obj.preview(function(index, file, result){
+                    $('#demo1').attr('src', result); //图片链接（base64）
+                  });
+                }
+                ,done: function(res){
+                  //如果上传失败
+                  if(res.code > 0){
+                    return layer.msg('上传失败');
+                  }
+                  //上传成功
+                }
+                ,error: function(){
+                  //演示失败状态，并实现重传
+                  var demoText = $('#demoText');
+                  demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                  demoText.find('.demo-reload').on('click', function(){
+                    uploadInst.upload();
+                  });
+                }
+              });*/
+
+			//多图片上传
+			upload.render({
+				elem: '#spanButtonPlaceHolder111'
+				,url: '{:U('Attachment/upload')}' //改成您自己的上传接口
+					,multiple: true
+					,auto: false
+
+					,bindAction: '#uploadbut111'
+					,before: function(obj){
+				//预读本地文件示例，不支持ie8
+				obj.preview(function(index, file, result){
+					$('#fsUploadProgress').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')
+				});
+			}
+		,done: function(res){
+				//上传完毕
+
+			}
+		,error: function(){
+				//演示失败状态，并实现重传
+				console.log('上传失败');
+				/*var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function(){
+                  uploadInst.upload();
+                });*/
+			}
+		});
+
+			//多文件列表示例
+			var demoListView = $('#fsUploadProgress')
+					,uploadListIns = upload.render({
+				elem: '#spanButtonPlaceHolder'
+				,url: '{:U('Attachment/upload')}' //改成您自己的上传接口
+					,accept: 'file'
+					,multiple: true
+					,number:<?php echo $file_limit;?>
+		,size: 1024*<?php echo $file_size;?>
+			//,accept: "<?php echo $file_types;?>"
+			//,acceptMime: "<?php echo $file_types;?>"
+		,auto: false
+					,bindAction: '#uploadbut'
+					,data: {
+				PHPSESSID : '<?php echo  $sessid;?>',
+						isadmin : '<?php echo $isadmin;?>',
+						userid : '<?php echo $userid?>',
+						swf_auth_key : '<?php echo $swf_auth_key;?>',
+						isthumb : '<?php echo $isthumb;?>',
+						moduleid : '<?php echo $moduleid?>',
+						addwater : '<?php echo intval($watermark_enable);?>',
+						lang : '<?php echo $lang;?>',
+				/*addwater: function(){
+                  return $('#addwater').val();
+                }*/
+			}
+			/*post_params: {"PHPSESSID" : "<?php echo  $sessid;?>", "isadmin" : "<?php echo $isadmin;?>","userid":"<?php echo $userid?>","swf_auth_key": "<?php echo $swf_auth_key;?>","isthumb" : "<?php echo $isthumb;?>","moduleid" : "<?php echo $moduleid?>","addwater":"<?php echo intval($watermark_enable);?>","lang":"<?php echo $lang;?>"},*/
+		,choose: function(obj){
+				var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
+				//读取本地文件
+				obj.preview(function(index, file, result){
+					var tr = $(['<tr width="100%" id="upload-'+ index +'">'
+						,'<td width="25%" height="30" align="center">'+ file.name +'</td>'
+						//,'<td width="25%" height="30" align="center">'+ (file.size/1024).toFixed(1) +'kb</td>'
+						,'<td width="25%" height="30" align="center">等待上传</td>'
+						,'<td width="25%" height="30" align="center">'
+						,'<button class="layui-btn layui-btn-xs demo-reload layui-hide">重传</button>'
+						,'<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>'
+						,'</td>'
+						,'</tr>'].join(''));
+
+					//单个重传
+					tr.find('.demo-reload').on('click', function(){
+						obj.upload(index, file);
+					});
+
+					//删除
+					tr.find('.demo-delete').on('click', function(){
+						delete files[index]; //删除对应的文件
+						tr.remove();
+						uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
+					});
+
+					demoListView.append(tr);
+				});
+			}
+		,done: function(res, index, upload){
+				//console.log(res);return false;
+				if(res.status==1){ //上传成功
+					var tr = demoListView.find('tr#upload-'+ index)
+							,tds = tr.children();
+					tds.eq(2).html('<span style="color: #5FB878;">上传成功</span>');
+					tds.eq(3).html(''); //清空操作
+					add_uploadok(res.data);
+					//demoListView.html('');
+					return delete this.files[index]; //删除文件队列已经上传成功的文件
+
+
+				}
+				this.error(index, upload);
+			}
+		,error: function(index, upload){
+				var tr = demoListView.find('tr#upload-'+ index)
+						,tds = tr.children();
+				tds.eq(2).html('<span style="color: #FF5722;">上传失败</span>');
+				tds.eq(3).find('.demo-reload').removeClass('layui-hide'); //显示重传
+			}
+		});
+
+
+		});
+	</script>
 <if condition="!empty($_GET[editorid])">
 <div id="bootline"></div>
 <div id="btnbox" class="btn" style="padding-left:450px;">
